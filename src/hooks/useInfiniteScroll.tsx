@@ -1,44 +1,67 @@
-import { PostListItemType } from '../@types/PostItem.types'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { MutableRefObject, useState, useEffect, useRef, useMemo } from 'react'
+import { PostListItemType } from 'types/PostItem.types'
+
+export type useInfiniteScrollType = {
+  containerRef: MutableRefObject<HTMLDivElement | null>
+  postList: PostListItemType[]
+}
 
 const NUMBER_OF_ITEMS_PER_PAGE = 10
 
-const useInfiniteScroll = function (selectedCategory: string, posts: PostListItemType[]) {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [count, setCount] = useState(1)
-  const observer = new IntersectionObserver((entries, observer) => {
-    if (!entries[0].isIntersecting) return
-    setCount(prev => prev + 1)
-    observer.disconnect()
-  })
+const useInfiniteScroll = function (
+  selectedCategory: string,
+  posts: PostListItemType[],
+): useInfiniteScrollType {
+  const containerRef: MutableRefObject<HTMLDivElement | null> =
+    useRef<HTMLDivElement>(null)
+  const observer: MutableRefObject<IntersectionObserver | null> =
+    useRef<IntersectionObserver>(null)
+  const [count, setCount] = useState<number>(1)
 
-  const postListByCagory = useMemo(
+  const postListByCategory = useMemo<PostListItemType[]>(
     () =>
       posts.filter(
         ({
-          node: {
-            frontmatter: { categories },
-          },
-        }) => (selectedCategory !== 'All' ? categories.includes(selectedCategory) : true),
+           node: {
+             frontmatter: { categories },
+           },
+         }: PostListItemType) =>
+          selectedCategory !== 'All'
+            ? categories.includes(selectedCategory)
+            : true,
       ),
     [selectedCategory],
   )
+
+  useEffect(() => {
+    observer.current = new IntersectionObserver((entries, observer) => {
+      if (!entries[0].isIntersecting) return
+
+      setCount(value => value + 1)
+      observer.unobserve(entries[0].target)
+    })
+  }, [])
 
   useEffect(() => setCount(1), [selectedCategory])
 
   useEffect(() => {
     if (
-      NUMBER_OF_ITEMS_PER_PAGE * count >= postListByCagory.length ||
+      NUMBER_OF_ITEMS_PER_PAGE * count >= postListByCategory.length ||
       containerRef.current === null ||
-      containerRef.current.children.length === 0
-    ) {
+      containerRef.current.children.length === 0 ||
+      observer.current === null
+    )
       return
-    }
 
-    observer.observe(containerRef.current.children[containerRef.current.children.length - 1])
+    observer.current.observe(
+      containerRef.current.children[containerRef.current.children.length - 1],
+    )
   }, [count, selectedCategory])
 
-  return { containerRef, postList: postListByCagory.slice(0, count * NUMBER_OF_ITEMS_PER_PAGE) }
+  return {
+    containerRef,
+    postList: postListByCategory.slice(0, count * NUMBER_OF_ITEMS_PER_PAGE),
+  }
 }
 
 export default useInfiniteScroll

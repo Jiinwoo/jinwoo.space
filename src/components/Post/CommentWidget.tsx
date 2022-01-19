@@ -1,4 +1,5 @@
 import React, { createRef, FunctionComponent, useEffect } from 'react'
+import styled from "@emotion/styled"
 
 const src = 'https://utteranc.es/client.js'
 const repo = 'Jiinwoo/jinwoo.space' // 자신 계정의 레포지토리로 설정
@@ -30,7 +31,6 @@ const CommentWidget: FunctionComponent = function () {
       crossorigin: 'anonymous',
       async: 'true',
     }
-
     Object.entries(attributes).forEach(([key, value]) => {
       utterances.setAttribute(key, value)
     })
@@ -38,7 +38,13 @@ const CommentWidget: FunctionComponent = function () {
     element.current.appendChild(utterances)
   }, [])
 
-  return <div ref={element} />
+  return <UtteranceWrapper ref={element} />
 }
+
+const UtteranceWrapper = styled.div`
+  @media (max-width: 768px) {
+    padding: 0 20px;
+  }
+`
 
 export default CommentWidget
