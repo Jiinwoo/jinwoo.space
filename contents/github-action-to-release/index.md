@@ -1,9 +1,9 @@
 ---
 date: '2020-07-29'
-title: 'Test'
-categories: ['Web', 'SEO', 'Optimization',"ASDASDASDASDA"]
-summary: '홈페이지를 운영하는 많은 사람들 또는 기업들이 검색 페이지 최상단에 보여지게 하기 위해 어떤 최적화 작업을 하는지 알아보자.'
-thumbnail: './test.png'
+title: 'Github Action 부터 Release 까지 Workflow 작성하기'
+categories: ['Web', 'SEO', 'Optimization']
+summary: '내가 만든 컴포넌트들을 Github Action Workflow 를 통해 배포해보자'
+thumbnail: '../common.png'
 ---
 
 ### 1. Help Google Bot to Find My Contents
