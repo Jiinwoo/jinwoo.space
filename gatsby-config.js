@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: `정리 블로그`,
+    title: `코딩 메모리`,
     description: `어제보다 더 나은 내일이 되기 위해 정리하는 블로그입니다.`,
     author: `jwjung5038@gmail.com`,
     siteUrl: `https://jinwoo.space`,
