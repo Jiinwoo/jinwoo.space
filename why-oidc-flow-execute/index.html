@@ -61,41 +61,69 @@
               <span class="token punctuation">-</span> profile
               <span class="token punctuation">-</span> openid</code></pre></div>
 <p>다음과 같이 지정하였으며</p>
-<div class="gatsby-highlight" data-language="kotlin20-30"><pre class="language-kotlin20-30"><code class="language-kotlin20-30">class CustomAuthenticationProvider(
-    private val passwordEncoder: PasswordEncoder,
-    private val customUserDetailsService: CustomUserDetailsService,
-): AbstractUserDetailsAuthenticationProvider() {
-    override fun additionalAuthenticationChecks(
-        userDetails: UserDetails?,
-        authentication: UsernamePasswordAuthenticationToken?
-    ) {
-        if (authentication!!.credentials == null) {
-            logger.debug(&quot;Failed to authenticate since no credentials provided&quot;)
-            throw BadCredentialsException(
-                messages
-                    .getMessage(&quot;AbstractUserDetailsAuthenticationProvider.badCredentials&quot;, &quot;Bad credentials&quot;)
-            )
-        }
-        val password = authentication.credentials.toString()
-        if(!passwordEncoder.matches(password, userDetails?.password)) {
-            throw BadCredentialsException(
-                messages
-                    .getMessage(&quot;AbstractUserDetailsAuthenticationProvider.badCredentials&quot;, &quot;Bad credentials&quot;)
-            )
-        }
-    }
+<div class="gatsby-highlight" data-language="kotlin"><pre class="language-kotlin"><code class="language-kotlin"><span class="token annotation builtin">@Service</span>
+<span class="token keyword">class</span> <span class="token function">CustomUserDetailsService</span><span class="token punctuation">(</span>
+    <span class="token keyword">private</span> <span class="token keyword">val</span> memberRepository<span class="token operator">:</span> MemberRepository
+<span class="token punctuation">)</span> <span class="token operator">:</span>UserDetailsService<span class="token punctuation">{</span>
 
-    override fun retrieveUser(username: String, authentication: UsernamePasswordAuthenticationToken?): UserDetails {
-        try {
-            val loadedUser: UserDetails = customUserDetailsService.loadUserByUsername(username)
-            return loadedUser
-        } catch (ex: UsernameNotFoundException) {
-            throw ex;
-        } catch (ex: InternalAuthenticationServiceException) {
-            throw ex;
-        } catch (ex: Exception) {
-            throw InternalAuthenticationServiceException(ex.message, ex)
-        }
-
-    }
-}</code></pre></div></div><style data-emotion="css hx9xpc">@media (max-width: 768px){.css-hx9xpc{padding:0 20px;}}</style><div class="css-hx9xpc e1gqsjds0"></div><style data-emotion="css 9w9jmx">.css-9w9jmx{display:grid;place-items:center;margin-top:auto;padding:50px 0;font-size:15px;text-align:center;line-height:1.5;}@media (max-width: 768px){.css-9w9jmx{font-size:13px;}}</style><footer class="css-9w9jmx e1oae0v80">Thank You for Visiting My Blog, Have a Good Day 😆<br/>© 2022 Developer Jung, Powered By Gatsby.</footer></main></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/why-oidc-flow-execute/";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"polyfill":["/polyfill-635a9dfd597478a1f0fa.js"],"app":["/app-e3646533029f8b929070.js"],"component---src-pages-404-tsx":["/component---src-pages-404-tsx-5a9e8ed8077594208750.js"],"component---src-pages-index-tsx":["/component---src-pages-index-tsx-753099406de593d5435b.js"],"component---src-pages-info-tsx":["/component---src-pages-info-tsx-b0538a52e4addd833b28.js"],"component---src-templates-post-template-tsx":["/component---src-templates-post-template-tsx-a635a0e08329cc420b0d.js"]};/*]]>*/</script><script src="/polyfill-635a9dfd597478a1f0fa.js" nomodule=""></script><script src="/component---src-templates-post-template-tsx-a635a0e08329cc420b0d.js" async=""></script><script src="/d0dcf9c1039535d44ee74defc829dfbf62dac3c5-71c73446752829e05c89.js" async=""></script><script src="/cb1608f2-3d1f96b69f7c4498694b.js" async=""></script><script src="/app-e3646533029f8b929070.js" async=""></script><script src="/framework-6bdc9aaa9caa3de6408b.js" async=""></script><script src="/webpack-runtime-92ddb6ffcfa1ebd510a7.js" async=""></script></body></html>
+    <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">loadUserByUsername</span><span class="token punctuation">(</span>username<span class="token operator">:</span> String<span class="token punctuation">)</span><span class="token operator">:</span> UserDetails <span class="token punctuation">{</span>
+        <span class="token keyword">val</span> member <span class="token operator">=</span> memberRepository<span class="token punctuation">.</span><span class="token function">findByEmail</span><span class="token punctuation">(</span>username<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">orElseThrow</span> <span class="token punctuation">{</span>
+            <span class="token function">UsernameNotFoundException</span><span class="token punctuation">(</span><span class="token string">"해당하는 유저가 없습니다. : <span class="token interpolation"><span class="token delimiter variable">${</span>username<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> MemberPrincipal<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span>member<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre></div>
+<p>다음과 같이 CustomUserDetails 를 반환하도록 구현하였습니다.</p>
+<p>하지만 기본적으로 적용된 OAuth2LoginAuthenticationProvider 클래스 내에서
+openid가 scope에 포함되어있으면
+다음 부분에서 저희가 등록한 CustomUserDetailsService 가 동작하지 않고
+다음 provider로 넘어가게 됩니다.</p>
+<p><span
+      class="gatsby-resp-image-wrapper"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 768px; "
+    >
+      <a
+    class="gatsby-resp-image-link"
+    href="/static/a806a53c1f502e2da37035a535ce86cb/46d5f/openid-skip-provider.png"
+    style="display: block"
+    target="_blank"
+    rel="noopener"
+  >
+    <span
+    class="gatsby-resp-image-background-image"
+    style="padding-bottom: 39.0625%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAICAYAAAD5nd/tAAAACXBIWXMAAAsTAAALEwEAmpwYAAABYUlEQVQoz2WSW2/cIBSE/YMSm4uBA5irvbtppFz60Ickippu//9vmMpnt1XTPnyaOSMYkGAIXqMVAx8TQgjI0SHECB8XUIicEzkET+zjkjm3jhhjHcyuVwY93SJ5Qq8FLUdsNWGtGb1kpOCRokeOHmXxCGThrQEZzRg1YZY7I+s+D+P6Dfr+HeHrT/jnM+jpDP90Bj1+wD18wD58Bz3+YK+/vEGeXiBOLxiPFxWn16t/5XmQlCBcQlrvkI/3iNsdQjuCygG+Hlhd3mDTCh0qJOX/EH/5QUsJqwX8PMHICVoKZlby4pX4kyk5QYw3EOPtVW8gps9+UEpfHqOuKH1DqR25NCy5IJWKXBty7ShtRcoVjghu1rCzgzPE2J3ZQUp1KZyEgJQS5ANaa2i9o/YD2npA347MfojWGkopKCWvqqHV70xxx7AvIqNA5LmwtM43ikvib+F2yMNaxxuEEJ/4N/sFpMILsBnPw1EAAAAASUVORK5CYII='); background-size: cover; display: block;"
+  ></span>
+  <picture>
+          <source
+              srcset="/static/a806a53c1f502e2da37035a535ce86cb/a59e9/openid-skip-provider.webp 192w,
+/static/a806a53c1f502e2da37035a535ce86cb/0ca9f/openid-skip-provider.webp 384w,
+/static/a806a53c1f502e2da37035a535ce86cb/dc9b9/openid-skip-provider.webp 768w,
+/static/a806a53c1f502e2da37035a535ce86cb/e2c2f/openid-skip-provider.webp 1152w,
+/static/a806a53c1f502e2da37035a535ce86cb/09a89/openid-skip-provider.webp 1364w"
+              sizes="(max-width: 768px) 100vw, 768px"
+              type="image/webp"
+            />
+          <source
+            srcset="/static/a806a53c1f502e2da37035a535ce86cb/3b721/openid-skip-provider.png 192w,
+/static/a806a53c1f502e2da37035a535ce86cb/66595/openid-skip-provider.png 384w,
+/static/a806a53c1f502e2da37035a535ce86cb/fe486/openid-skip-provider.png 768w,
+/static/a806a53c1f502e2da37035a535ce86cb/d2d74/openid-skip-provider.png 1152w,
+/static/a806a53c1f502e2da37035a535ce86cb/46d5f/openid-skip-provider.png 1364w"
+            sizes="(max-width: 768px) 100vw, 768px"
+            type="image/png"
+          />
+          <img
+            class="gatsby-resp-image-image"
+            src="/static/a806a53c1f502e2da37035a535ce86cb/fe486/openid-skip-provider.png"
+            alt="SKIP_Provider"
+            title="SKIP_Provider"
+            loading="lazy"
+            decoding="async"
+            style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;"
+          />
+        </picture>
+  </a>
+    </span></p>
+<h2>해결 방법</h2>
+<p>일단은 openid 를 제거하는 방법으로 해결했습니다.</p>
+<p>추후에 OAuth2 와 OIDC 차이점을 정리해보겠습니다.</p></div><style data-emotion="css hx9xpc">@media (max-width: 768px){.css-hx9xpc{padding:0 20px;}}</style><div class="css-hx9xpc e1gqsjds0"></div><style data-emotion="css 9w9jmx">.css-9w9jmx{display:grid;place-items:center;margin-top:auto;padding:50px 0;font-size:15px;text-align:center;line-height:1.5;}@media (max-width: 768px){.css-9w9jmx{font-size:13px;}}</style><footer class="css-9w9jmx e1oae0v80">Thank You for Visiting My Blog, Have a Good Day 😆<br/>© 2022 Developer Jung, Powered By Gatsby.</footer></main></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/why-oidc-flow-execute/";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"polyfill":["/polyfill-635a9dfd597478a1f0fa.js"],"app":["/app-e3646533029f8b929070.js"],"component---src-pages-404-tsx":["/component---src-pages-404-tsx-5a9e8ed8077594208750.js"],"component---src-pages-index-tsx":["/component---src-pages-index-tsx-753099406de593d5435b.js"],"component---src-pages-info-tsx":["/component---src-pages-info-tsx-b0538a52e4addd833b28.js"],"component---src-templates-post-template-tsx":["/component---src-templates-post-template-tsx-a635a0e08329cc420b0d.js"]};/*]]>*/</script><script src="/polyfill-635a9dfd597478a1f0fa.js" nomodule=""></script><script src="/component---src-templates-post-template-tsx-a635a0e08329cc420b0d.js" async=""></script><script src="/d0dcf9c1039535d44ee74defc829dfbf62dac3c5-71c73446752829e05c89.js" async=""></script><script src="/cb1608f2-3d1f96b69f7c4498694b.js" async=""></script><script src="/app-e3646533029f8b929070.js" async=""></script><script src="/framework-6bdc9aaa9caa3de6408b.js" async=""></script><script src="/webpack-runtime-92ddb6ffcfa1ebd510a7.js" async=""></script></body></html>
