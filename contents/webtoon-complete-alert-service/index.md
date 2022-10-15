@@ -3,7 +3,7 @@ date: '2022-10-15'
 title: '네이버, 카카오 웹툰 완결 알림 서비스'
 categories: ['tools']
 summary: '완결 웹툰 알림을 받아보세요!'
-thumbnail: '../common.png'
+thumbnail: './logo.png'
 ---
 
 저는 현재 출퇴근 시간이 짧아 웹툰을 매일매일 챙겨보지 않고 정말 심심한 시간에 몰아서보는 편입니다. 그런데 웹툰을 몰아 볼 때 완결이 아니면 조금
