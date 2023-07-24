@@ -1,4 +1,3 @@
 User-agent: *
-Allow: /
-Sitemap: https://jinwoo.space/sitemap/sitemap-index.xml
-Host: https://jinwoo.space
+
+sitemap: https://minimal-blog.lekoarts.de/sitemap.xml
