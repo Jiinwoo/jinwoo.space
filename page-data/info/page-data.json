@@ -1,5 +1,1 @@
-{
-    "componentChunkName": "component---src-pages-info-tsx",
-    "path": "/info/",
-    "result": {"data":{"site":{"siteMetadata":{"title":"코딩 메모리","description":"어제보다 더 나은 내일이 되기 위해 정리하는 블로그입니다.","author":"jwjung5038@gmail.com"}}},"pageContext":{}},
-    "staticQueryHashes": []}
+{"componentChunkName":"component---src-pages-info-tsx","path":"/info/","result":{"data":{"site":{"siteMetadata":{"title":"코딩 메모리","description":"어제보다 더 나은 내일이 되기 위해 정리하는 블로그입니다.","author":"jwjung5038@gmail.com"}}},"pageContext":{}},"staticQueryHashes":[],"slicesMap":{}}

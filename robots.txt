@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://jinwoo.space/sitemap/sitemap-index.xml
+Sitemap: https://jinwoo.space/sitemap-index.xml
 Host: https://jinwoo.space
