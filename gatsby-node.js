@@ -49,6 +49,9 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
         allMarkdownRemark(sort: { order: DESC, fields: [frontmatter___date, frontmatter___title] }) {
           edges {
             node {
+              frontmatter {
+                draft
+              }
               fields {
                 slug
               }
@@ -68,21 +71,34 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   // Import Post Template Component
   const PostTemplateComponent = path.resolve(__dirname, 'src/templates/post_template.tsx')
 
-  // Page Generating Function
-  const generatePostPage = ({
-    node: {
-      fields: { slug },
-    },
-  }) => {
+  // Generate Post Page And Passing Slug Props for Query
+  queryAllMarkdownData.data.allMarkdownRemark.edges.forEach(({node: {fields: {slug, draft}}})=>{
+
     const pageOptions = {
       path: slug,
       component: PostTemplateComponent,
       context: { slug },
     }
 
-    createPage(pageOptions)
-  }
+    const isDevelopment = process.env.NODE_ENV === 'development'
 
-  // Generate Post Page And Passing Slug Props for Query
-  queryAllMarkdownData.data.allMarkdownRemark.edges.forEach(generatePostPage)
+    if (isDevelopment) {
+      console.log("draft")
+      console.log(draft)
+      createPage(pageOptions)
+    }else {
+      console.log("draft")
+      console.log(draft)
+      // console.log(node.frontmatter.draft)
+      createPage(pageOptions)
+      // if (!draft) {
+      //   createPage(pageOptions)
+      // }
+    }
+
+
+
+    // createPage(pageOptions)
+
+  })
 }

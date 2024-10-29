@@ -11,6 +11,7 @@ export type PostFrontmatterType = {
     }
     publicURL: string
   }
+  draft?: string | null
 }
 
 export type PostListItemType = {
@@ -18,6 +19,7 @@ export type PostListItemType = {
     id: string
     fields: {
       slug: string
+      draft?: string
     }
     frontmatter: PostFrontmatterType
   }
