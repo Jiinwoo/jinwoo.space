@@ -1,5 +1,4 @@
 import React, { FunctionComponent, useMemo } from "react"
-import styled from "@emotion/styled"
 import CategoryList, { CategoryListProps } from "components/Main/CategoryList"
 import Introduction from "components/Main/Introduction"
 import PostList from "components/Main/PostList"
@@ -97,7 +96,10 @@ export const getPostList = graphql`
                 siteUrl
             }
         }
-        allMarkdownRemark(sort: { order: DESC, fields: [frontmatter___date, frontmatter___title] }) {
+        allMarkdownRemark(
+        filter: { frontmatter: { draft: { in: [null, false] } } }
+        sort: { order: DESC, fields: [frontmatter___date, frontmatter___title] }
+        ) {
             edges {
                 node {
                     id
@@ -114,6 +116,7 @@ export const getPostList = graphql`
                                 gatsbyImageData(width: 768, height: 400)
                             }
                         }
+                        draft
                     }
                 }
             }

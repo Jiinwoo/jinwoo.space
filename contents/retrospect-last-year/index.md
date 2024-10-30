@@ -4,6 +4,7 @@ title: '2024년 회고'
 categories: []
 summary: '2024년 회고'
 thumbnail: '../common.png'
+draft: true
 ---
 
 # 시작하며

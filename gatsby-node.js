@@ -6,10 +6,10 @@
 
 // You can delete this file if you're not using it
 
-const path = require('path')
+const path = require("path")
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
-console.log(process.env.NODE_ENV, 'env')
+console.log(process.env.NODE_ENV, "env")
 
 // Setup Import Alias
 exports.onCreateWebpackConfig = ({ getConfig, actions }) => {
@@ -19,11 +19,11 @@ exports.onCreateWebpackConfig = ({ getConfig, actions }) => {
     output,
     resolve: {
       alias: {
-        components: path.resolve(__dirname, 'src/components'),
-        utils: path.resolve(__dirname, 'src/utils'),
-        hooks: path.resolve(__dirname, 'src/hooks'),
-      },
-    },
+        components: path.resolve(__dirname, "src/components"),
+        utils: path.resolve(__dirname, "src/utils"),
+        hooks: path.resolve(__dirname, "src/hooks")
+      }
+    }
   })
 }
 
@@ -34,7 +34,7 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
   if (node.internal.type === `MarkdownRemark`) {
     const slug = createFilePath({ node, getNode })
 
-    createNodeField({ node, name: 'slug', value: slug })
+    createNodeField({ node, name: "slug", value: slug })
   }
 }
 
@@ -59,7 +59,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
           }
         }
       }
-    `,
+    `
   )
 
   // Handling GraphQL Query Error
@@ -69,36 +69,26 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   }
 
   // Import Post Template Component
-  const PostTemplateComponent = path.resolve(__dirname, 'src/templates/post_template.tsx')
+  const PostTemplateComponent = path.resolve(__dirname, "src/templates/post_template.tsx")
 
   // Generate Post Page And Passing Slug Props for Query
-  queryAllMarkdownData.data.allMarkdownRemark.edges.forEach(({node: {fields: {slug, draft}}})=>{
+  queryAllMarkdownData.data.allMarkdownRemark.edges.forEach(({
+                                                               node: {
+                                                                 fields: { slug },
+                                                                 frontmatter: { draft }
+                                                               }
+                                                             }) => {
 
     const pageOptions = {
       path: slug,
       component: PostTemplateComponent,
-      context: { slug },
+      context: { slug }
     }
 
-    const isDevelopment = process.env.NODE_ENV === 'development'
-
-    if (isDevelopment) {
-      console.log("draft")
-      console.log(draft)
+    const isDevelopment = process.env.NODE_ENV === "development"
+    console.log("!draft : ", !draft)
+    if (isDevelopment || !draft) {
       createPage(pageOptions)
-    }else {
-      console.log("draft")
-      console.log(draft)
-      // console.log(node.frontmatter.draft)
-      createPage(pageOptions)
-      // if (!draft) {
-      //   createPage(pageOptions)
-      // }
     }
-
-
-
-    // createPage(pageOptions)
-
   })
 }
