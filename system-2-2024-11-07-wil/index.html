@@ -1,0 +1,408 @@
+<!DOCTYPE html><html lang="ko"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="ie=edge"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><meta name="generator" content="Gatsby 5.13.3"/><meta data-react-helmet="true" name="description" content="접근성 서비스"/><meta data-react-helmet="true" name="viewport" content="width=device-width, initial-scale=1.0"/><meta data-react-helmet="true" http-equiv="Content-Type" content="text/html;charset=UTF-8"/><meta data-react-helmet="true" property="og:type" content="website"/><meta data-react-helmet="true" property="og:title" content="대규모 시스템 설계 기초 2 - 접근성 발표자료"/><meta data-react-helmet="true" property="og:description" content="접근성 서비스"/><meta data-react-helmet="true" property="og:image" content="/static/a229594a2de7c0ed63d877869e75fd38/common.png"/><meta data-react-helmet="true" property="og:url"/><meta data-react-helmet="true" property="og:site_name" content="대규모 시스템 설계 기초 2 - 접근성 발표자료"/><meta data-react-helmet="true" name="twitter:card" content="summary"/><meta data-react-helmet="true" name="twitter:title" content="대규모 시스템 설계 기초 2 - 접근성 발표자료"/><meta data-react-helmet="true" name="twitter:description" content="접근성 서비스"/><meta data-react-helmet="true" name="twitter:image" content="/static/a229594a2de7c0ed63d877869e75fd38/common.png"/><meta data-react-helmet="true" name="twitter:site" content="@사용자이름"/><meta data-react-helmet="true" name="twitter:creator" content="@사용자이름"/><style data-href="/styles.9e907bc32054b7771552.css" data-identity="gatsby-global-css">code[class*=language-],pre[class*=language-]{word-wrap:normal;background:none;color:#ccc;font-family:Consolas,Monaco,Andale Mono,Ubuntu Mono,monospace;font-size:1em;-webkit-hyphens:none;hyphens:none;line-height:1.5;tab-size:4;text-align:left;white-space:pre;word-break:normal;word-spacing:normal}pre[class*=language-]{margin:.5em 0;overflow:auto;padding:1em}:not(pre)>code[class*=language-],pre[class*=language-]{background:#2d2d2d}:not(pre)>code[class*=language-]{border-radius:.3em;padding:.1em;white-space:normal}.token.block-comment,.token.cdata,.token.comment,.token.doctype,.token.prolog{color:#999}.token.punctuation{color:#ccc}.token.attr-name,.token.deleted,.token.namespace,.token.tag{color:#e2777a}.token.function-name{color:#6196cc}.token.boolean,.token.function,.token.number{color:#f08d49}.token.class-name,.token.constant,.token.property,.token.symbol{color:#f8c555}.token.atrule,.token.builtin,.token.important,.token.keyword,.token.selector{color:#cc99cd}.token.attr-value,.token.char,.token.regex,.token.string,.token.variable{color:#7ec699}.token.entity,.token.operator,.token.url{color:#67cdcc}.token.bold,.token.important{font-weight:700}.token.italic{font-style:italic}.token.entity{cursor:help}.token.inserted{color:green}</style><link rel="sitemap" type="application/xml" href="/sitemap-index.xml"/><link rel="canonical" href="https://jinwoo.space/system-2-2024-11-07-wil/" data-baseprotocol="https:" data-basehost="jinwoo.space"/><title data-react-helmet="true">대규모 시스템 설계 기초 2 - 접근성 발표자료</title><style>.gatsby-image-wrapper{position:relative;overflow:hidden}.gatsby-image-wrapper picture.object-fit-polyfill{position:static!important}.gatsby-image-wrapper img{bottom:0;height:100%;left:0;margin:0;max-width:none;padding:0;position:absolute;right:0;top:0;width:100%;object-fit:cover}.gatsby-image-wrapper [data-main-image]{opacity:0;transform:translateZ(0);transition:opacity .25s linear;will-change:opacity}.gatsby-image-wrapper-constrained{display:inline-block;vertical-align:top}</style><noscript><style>.gatsby-image-wrapper noscript [data-main-image]{opacity:1!important}.gatsby-image-wrapper [data-placeholder-image]{opacity:0!important}</style></noscript><script type="module">const e="undefined"!=typeof HTMLImageElement&&"loading"in HTMLImageElement.prototype;e&&document.body.addEventListener("load",(function(e){const t=e.target;if(void 0===t.dataset.mainImage)return;if(void 0===t.dataset.gatsbyImageSsr)return;let a=null,n=t;for(;null===a&&n;)void 0!==n.parentNode.dataset.gatsbyImageWrapper&&(a=n.parentNode),n=n.parentNode;const o=a.querySelector("[data-placeholder-image]"),r=new Image;r.src=t.currentSrc,r.decode().catch((()=>{})).then((()=>{t.style.opacity=1,o&&(o.style.opacity=0,o.style.transition="opacity 500ms linear")}))}),!0);</script></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><style data-emotion="css 13ku56z">.css-13ku56z{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;height:100%;}</style><main class="css-13ku56z e1strnqo0"><style data-emotion="css-global rtmpxr">@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');*{padding:0;margin:0;box-sizing:border-box;font-family:나눔고딕,'NanumGothic',Nanum Gothic,sans-serif;}html,body,#___gatsby{height:100%;}a,a:hover{color:inherit;-webkit-text-decoration:none;text-decoration:none;cursor:pointer;}</style><style data-emotion="css 16cz9yp">.css-16cz9yp{position:relative;width:100%;height:400px;}@media (max-width: 768px){.css-16cz9yp{height:300px;}}</style><div class="css-16cz9yp e1opi4mu1"><style data-emotion="css 1bjn9yo">.css-1bjn9yo{z-index:-1;width:100%;height:400px;object-fit:cover;-webkit-filter:brightness(0.25);filter:brightness(0.25);}@media (max-width: 768px){.css-1bjn9yo{height:300px;}}</style><div data-gatsby-image-wrapper="" style="position:absolute" class="gatsby-image-wrapper gatsby-image-wrapper-constrained css-1bjn9yo e1opi4mu0"><div style="max-width:1080px;display:block"><img alt="" role="presentation" aria-hidden="true" src="data:image/svg+xml;charset=utf-8,%3Csvg%20height=&#x27;1080&#x27;%20width=&#x27;1080&#x27;%20xmlns=&#x27;http://www.w3.org/2000/svg&#x27;%20version=&#x27;1.1&#x27;%3E%3C/svg%3E" style="max-width:100%;display:block;position:static"/></div><img aria-hidden="true" data-placeholder-image="" style="opacity:1;transition:opacity 500ms linear" decoding="async" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAABjElEQVR42u2U207CQBCG+8g+go9hYvTCExeoGAWDB2JQsIDFghwUiJwKrXLoAkVUvPidWUAw8cIE4pUXf3e7s/v905lmlZ5dwyKl/AMXC3REfXFAhomWgX5nPqjSIchwYCEQTGBp2YtS8REv3Qm0Do5326zaeBypJ+j9RyAFPwioJ+/hP9cl8K1vwm5U5YHhi4W3nol3h0bHJFl4pZGNBrTuiJrUt082KkX4Azo8xzcIhu9kBmo0De9pHFEtg0TyAXriHvHbrDSOxTO4UlNIp3MQTQNtNm+Pgc2nKjTamM8XcKNlkcsVpI78GtZdIRyQyfZeBKtbIbgPY9h0q3DtRxCOpOAjQzU2Mj670FEghsKHr65TaBGYg+x4QtnG9ax05lpxWdidY9y4SUY8t2mNy1MpF9GwKlCezQplEsbaTghbuypWNi7h8Wl4pfpMOu5Qc7hOfVGXf8PXupiKG8kxhR/sxkUWY/Hmrj3t4uz8V//hrNNsx/4vhz8CitE9MNKcQIY0n8owjBLsliX1CTPZynf2Ss39AAAAAElFTkSuQmCC" alt=""/><picture><source type="image/webp" data-srcset="/static/a229594a2de7c0ed63d877869e75fd38/7e223/common.webp 270w,/static/a229594a2de7c0ed63d877869e75fd38/5cfb6/common.webp 540w,/static/a229594a2de7c0ed63d877869e75fd38/941f9/common.webp 1080w" sizes="(min-width: 1080px) 1080px, 100vw"/><img data-gatsby-image-ssr="" data-main-image="" style="opacity:0" sizes="(min-width: 1080px) 1080px, 100vw" decoding="async" loading="lazy" data-src="/static/a229594a2de7c0ed63d877869e75fd38/d0859/common.png" data-srcset="/static/a229594a2de7c0ed63d877869e75fd38/f1689/common.png 270w,/static/a229594a2de7c0ed63d877869e75fd38/42fd3/common.png 540w,/static/a229594a2de7c0ed63d877869e75fd38/d0859/common.png 1080w" alt="thumbnail"/></picture><noscript><picture><source type="image/webp" srcSet="/static/a229594a2de7c0ed63d877869e75fd38/7e223/common.webp 270w,/static/a229594a2de7c0ed63d877869e75fd38/5cfb6/common.webp 540w,/static/a229594a2de7c0ed63d877869e75fd38/941f9/common.webp 1080w" sizes="(min-width: 1080px) 1080px, 100vw"/><img data-gatsby-image-ssr="" data-main-image="" style="opacity:0" sizes="(min-width: 1080px) 1080px, 100vw" decoding="async" loading="lazy" src="/static/a229594a2de7c0ed63d877869e75fd38/d0859/common.png" srcSet="/static/a229594a2de7c0ed63d877869e75fd38/f1689/common.png 270w,/static/a229594a2de7c0ed63d877869e75fd38/42fd3/common.png 540w,/static/a229594a2de7c0ed63d877869e75fd38/d0859/common.png 1080w" alt="thumbnail"/></picture></noscript><script type="module">const t="undefined"!=typeof HTMLImageElement&&"loading"in HTMLImageElement.prototype;if(t){const t=document.querySelectorAll("img[data-main-image]");for(let e of t){e.dataset.src&&(e.setAttribute("src",e.dataset.src),e.removeAttribute("data-src")),e.dataset.srcset&&(e.setAttribute("srcset",e.dataset.srcset),e.removeAttribute("data-srcset"));const t=e.parentNode.querySelectorAll("source[data-srcset]");for(let e of t)e.setAttribute("srcset",e.dataset.srcset),e.removeAttribute("data-srcset");e.complete&&(e.style.opacity=1,e.parentNode.parentNode.querySelector("[data-placeholder-image]").style.opacity=0)}}</script></div><style data-emotion="css m1156n">.css-m1156n{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;width:768px;height:100%;margin:0 auto;padding:60px 0;color:#ffffff;}@media (max-width: 768px){.css-m1156n{width:100%;padding:40px 20px;}}</style><div class="css-m1156n e1st1jau3"><style data-emotion="css gywgo7">.css-gywgo7{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:#ffffff;color:#000000;font-size:22px;cursor:pointer;box-shadow:0 0 10px rgba(0, 0, 0, 0.3);}@media (max-width: 768px){.css-gywgo7{width:30px;height:30px;font-size:18px;}}</style><div class="css-gywgo7 e1st1jau2"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="arrow-left" class="svg-inline--fa fa-arrow-left " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"></path></svg></div><style data-emotion="css gn4qtp">.css-gn4qtp{display:-webkit-box;overflow:hidden;overflow-wrap:break-word;margin-top:auto;text-overflow:ellipsis;white-space:normal;-webkit-line-clamp:2;-webkit-box-orient:vertical;font-size:45px;font-weight:800;}@media (max-width: 768px){.css-gn4qtp{font-size:30px;}}</style><div class="css-gn4qtp e1st1jau1">대규모 시스템 설계 기초 2 - 접근성 발표자료</div><style data-emotion="css 3gcnt2">.css-3gcnt2{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:justify;-webkit-justify-content:space-between;justify-content:space-between;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;margin-top:10px;font-size:18px;font-weight:700;}@media (max-width: 768px){.css-3gcnt2{-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;-webkit-align-items:flex-start;-webkit-box-align:flex-start;-ms-flex-align:flex-start;align-items:flex-start;font-size:15px;font-weight:400;}}</style><div class="css-3gcnt2 e1st1jau0"><div>study / WIL</div><div>2024.11.02.</div></div></div></div><style data-emotion="css uo146q">.css-uo146q{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;width:768px;margin:0 auto;padding:100px 0;word-break:break-all;line-height:1.8;font-size:16px;font-weight:400;}.css-uo146q p{padding:3px 0;}.css-uo146q h1,.css-uo146q h2,.css-uo146q h3{font-weight:800;margin-bottom:30px;}.css-uo146q *+h1,.css-uo146q *+h2,.css-uo146q *+h3{margin-top:80px;}.css-uo146q hr+h1,.css-uo146q hr+h2,.css-uo146q hr+h3{margin-top:0;}.css-uo146q h1{font-size:30px;}.css-uo146q h2{font-size:25px;}.css-uo146q h3{font-size:20px;}.css-uo146q blockquote{margin:30px 0;padding:5px 15px;border-left:2px solid #000000;font-weight:800;}.css-uo146q ol,.css-uo146q ul{margin-left:20px;padding:30px 0;}.css-uo146q hr{border:1px solid #000000;margin:100px 0;}.css-uo146q a{color:#4263eb;-webkit-text-decoration:underline;text-decoration:underline;}.css-uo146q pre[class*='language-']{margin:30px 0;padding:15px;font-size:15px;}.css-uo146q pre[class*='language-']::-webkit-scrollbar-thumb{background:rgba(255, 255, 255, 0.5);border-radius:3px;}.css-uo146q code[class*='language-'],.css-uo146q pre[class*='language-']{tab-size:2;}@media (max-width: 768px){.css-uo146q{width:100%;padding:80px 20px;line-height:1.6;font-size:14px;}.css-uo146q h1{font-size:23px;}.css-uo146q h2{font-size:20px;}.css-uo146q h3{font-size:17px;}.css-uo146q img{width:100%;}.css-uo146q hr{margin:50px 0;}}</style><div class="css-uo146q e1ijh0y10"><h1>발표에 앞서</h1>
+<h1>문제 이해 및 설계 범위 확정</h1>
+<h2>기능 요구사항</h2>
+<ol>
+<li>사용자의 위치(위도, 경도)와 검색 반경 정보(0.5KM, 1KM, …) 입력 시, 해당 위치 반경 내의 사업장 정보 검색</li>
+<li>사업자 정보 등록, 수정, 삭제 기능 + 조회는 실시간 반영되지 않아도 무방</li>
+<li>사업장의 상세 정보를 조회하는 기능</li>
+</ol>
+<h2>비기능 요구사항</h2>
+<ol>
+<li><a href="https://www.appsflyer.com/ko/trust/privacy/" target="_blank" rel="nofollow">GDPR, CCPA 준수</a> -> 가장 가까운 리전을 사용해서 데이터 저장</li>
+</ol>
+<p>광고 대행사에서 Appsflyer 를 통해서 데이터 수집을 하고 해당 데이터를 기반으로
+마케팅 비용을 책정한 경험이 있음. 이에 따라 Appsflyer 를 연동하였는데,
+연동하는 과정에서 사용자의 데이터를 굉장히 조심스럽게 수집한다는 느낌을 받음.</p>
+<ol start="2">
+<li>낮은 응답지연 -> <a href="https://aws.amazon.com/ko/global-accelerator/" target="_blank" rel="nofollow">AWS Global Accelerator</a> 활용</li>
+</ol>
+<p>처음에는 AWS Route53의 지리적 위치 기반 라우팅이 있던데 그걸 사용하면 되는게 아닌가 했는데
+AWS Global Accelerator 는 좀 더 풍부한 기능을 제공.</p>
+<ul>
+<li>엣지 로케이션 뒤의 백본 네트워크 활용가능 -> 단일 리전에서 사용해도 좋아보임.</li>
+<li>Global IP 제공</li>
+<li>자동 장애조치 및 트래픽 라우팅</li>
+<li>AWS Shield 기본 적용</li>
+</ul>
+<p>AWS Global Accelerator 는 잘 몰랐을 때 ALB의 고정 IP 가 필요해서 사용해본 기억이 있다.
+이런 기능들도 있었다는걸 깨달음.</p>
+<ol start="3">
+<li>고가용성</li>
+</ol>
+<p>AWS ASG, EKS 등 활용</p>
+<h1>개략적 설계안 제시 및 피드백</h1>
+<h2>트래픽 분석</h2>
+<ul>
+<li>기본 데이터
+<ul>
+<li>DAU: 1억명</li>
+<li>사업장 수: 2억개</li>
+<li>사용자당 일일 검색 횟수: 5회</li>
+</ul>
+</li>
+<li>계산식
+<ul>
+<li>QPS = (1억 * 5회) / (24시간 * 60분 * 60초)</li>
+<li>결과: 약 5,000 QPS</li>
+</ul>
+</li>
+<li>특정 시간대 트래픽 집중
+<ul>
+<li>피크 시간대
+사전 <a href="https://docs.aws.amazon.com/ko_kr/autoscaling/ec2/userguide/ec2-auto-scaling-warm-pools.html" target="_blank" rel="nofollow">AWS Warm pool</a>
+고려</li>
+</ul>
+</li>
+</ul>
+<h1>상세 설계</h1>
+<h2>API 설계</h2>
+<p>인증은 API 경로로 구분할 것이며 상세 설계에 포함되지는 않을 예정.</p>
+<h3>Client API</h3>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">GET /v1/search/nearby</code></pre></div>
+<h3>Admin API</h3>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">GET    /v1/business/:id
+POST   /v1/business
+PUT    /v1/business/:id
+DELETE /v1/business/:id</code></pre></div>
+<h3>현재 이슈</h3>
+<ul>
+<li>읽기 위주 작업에 RDB 사용의 적절성 검토 필요</li>
+<li>지리 데이터 처리를 위한 DB 선택
+<ul>
+<li>PostgreSQL + PostGIS 일반적 사용</li>
+<li>NoSQL 등 대체 솔루션과 비교 분석 필요</li>
+</ul>
+</li>
+</ul>
+<h3>아키텍처 방향</h3>
+<ul>
+<li>Read/Write 분리 클러스터링
+<ul>
+<li>최종 일관성 1일 이내 허용</li>
+<li>Replication Lag 허용</li>
+</ul>
+</li>
+</ul>
+<h3>서비스 분리</h3>
+<ul>
+<li>Client-Service (사업장 서비스)</li>
+<li>Admin-Service (관리자 서비스)</li>
+</ul>
+<h2>알고리즘 선택 및 검토</h2>
+<h3>2차원 검색</h3>
+<p>일반적으로 데이터베이 색인은 한 차원의 검색 속도만 개선 가능.
+각각 한 차원씩 색인을 만들어두고 교집합을 검색하는 경우는 데이터의 양이 상당히 많아질 수 있음.</p>
+<p>위도, 경도를 하나의 차원으로 색인을 만들 수 있는 방법이 있을까?</p>
+<h3>해시 - 균등 격자</h3>
+<p>지도를 균등하게 나누어서 색인을 만드는 방법.
+한 차원으로 색인은 성공. 하지만 단점으로는 균등하게 나눠진 부분에서 사업장 분포가 균등하지 않을 수 있음.</p>
+<h3>해시 - 지오 해시</h3>
+<p>위도, 경도 데이터를 지오해시 알고리즘을 통해 1차원의 문자열로 변환.
+이 때 문자열의 길이는 정확도를 결정.</p>
+<p>사업장 분포가 균등하지 않을 수 있나 인접한 지오해시로부터 점점 확장하면 됨. (상수 시간 해결)</p>
+<p>솔루션: Redis GeoSpatial</p>
+<blockquote>
+<p>Spring Data Redis 를 사용해서 Redis Geospatial 을 사용할 수 있다.
+많은 예제가 있어서 나중에 사용한다면 참고하면 좋을 것 같다.</p>
+</blockquote>
+<p>단점:</p>
+<ul>
+<li>접두사가 같으면 비슷한 위치에 있다. 하지만 그 역은 성립하지 않음.</li>
+</ul>
+<div class="gatsby-highlight" data-language="python"><pre class="language-python"><code class="language-python"><span class="token comment"># 특정 지오해시가 주어졌을 때 주변의 지오해시를 계산하는 방법</span>
+
+<span class="token keyword">def</span> <span class="token function">get_neighbor</span><span class="token punctuation">(</span>geohash<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">,</span> direction<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token builtin">str</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    주어진 지오해시의 특정 방향 인접 영역을 계산합니다.
+
+    Args:
+        geohash: 기준 지오해시 문자열
+        direction: 방향 ('n','s','e','w','ne','nw','se','sw' 중 하나)
+
+    Returns:
+        str: 인접한 지오해시 문자열
+    """</span>
+
+    <span class="token comment"># 지오해시 base32 인코딩 문자</span>
+    base32 <span class="token operator">=</span> <span class="token string">'0123456789bcdefghjkmnpqrstuvwxyz'</span>
+
+    <span class="token comment"># 각 문자의 이웃 관계 정의</span>
+    neighbors <span class="token operator">=</span> <span class="token punctuation">{</span>
+        <span class="token string">'n'</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'bc01fg45238967deuvhjyznpkmstqrwx'</span><span class="token punctuation">,</span> <span class="token string">'p0r21436x8zb9dcf5h7kjnmqesgutwvy'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token string">'s'</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'238967debc01fg45kmstqrwxuvhjyznp'</span><span class="token punctuation">,</span> <span class="token string">'14365h7k9dcfesgujnmqp0r2twvyx8zb'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token string">'e'</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'p0r21436x8zb9dcf5h7kjnmqesgutwvy'</span><span class="token punctuation">,</span> <span class="token string">'bc01fg45238967deuvhjyznpkmstqrwx'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token string">'w'</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'14365h7k9dcfesgujnmqp0r2twvyx8zb'</span><span class="token punctuation">,</span> <span class="token string">'238967debc01fg45kmstqrwxuvhjyznp'</span><span class="token punctuation">]</span>
+    <span class="token punctuation">}</span>
+
+    border <span class="token operator">=</span> <span class="token punctuation">{</span>
+        <span class="token string">'n'</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'bcfguvyz'</span><span class="token punctuation">,</span> <span class="token string">'prxz'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token string">'s'</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'0145hjnp'</span><span class="token punctuation">,</span> <span class="token string">'028b'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token string">'e'</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'prxz'</span><span class="token punctuation">,</span> <span class="token string">'bcfguvyz'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token string">'w'</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'028b'</span><span class="token punctuation">,</span> <span class="token string">'0145hjnp'</span><span class="token punctuation">]</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment"># 대각선 방향은 두 방향의 조합</span>
+    <span class="token keyword">if</span> <span class="token builtin">len</span><span class="token punctuation">(</span>direction<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">2</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> get_neighbor<span class="token punctuation">(</span>get_neighbor<span class="token punctuation">(</span>geohash<span class="token punctuation">,</span> direction<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span> direction<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+    last_ch <span class="token operator">=</span> geohash<span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span>  <span class="token comment"># 마지막 문자</span>
+    parent <span class="token operator">=</span> geohash<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span>  <span class="token comment"># 마지막 문자를 제외한 부분</span>
+
+    type_idx <span class="token operator">=</span> <span class="token builtin">len</span><span class="token punctuation">(</span>parent<span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">2</span>
+
+    <span class="token comment"># 경계에 있는 경우</span>
+    <span class="token keyword">if</span> last_ch <span class="token keyword">in</span> border<span class="token punctuation">[</span>direction<span class="token punctuation">]</span><span class="token punctuation">[</span>type_idx<span class="token punctuation">]</span><span class="token punctuation">:</span>
+        parent <span class="token operator">=</span> get_neighbor<span class="token punctuation">(</span>parent<span class="token punctuation">,</span> direction<span class="token punctuation">)</span>
+
+    <span class="token comment"># 이웃 문자 찾기</span>
+    next_idx <span class="token operator">=</span> neighbors<span class="token punctuation">[</span>direction<span class="token punctuation">]</span><span class="token punctuation">[</span>type_idx<span class="token punctuation">]</span><span class="token punctuation">.</span>find<span class="token punctuation">(</span>last_ch<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> next_idx <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">:</span>
+        next_idx <span class="token operator">=</span> base32<span class="token punctuation">.</span>find<span class="token punctuation">(</span>last_ch<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> next_idx <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> parent
+    <span class="token keyword">return</span> parent <span class="token operator">+</span> base32<span class="token punctuation">[</span>next_idx<span class="token punctuation">]</span>
+
+
+<span class="token comment"># wydm2의 모든 인접 영역 계산</span>
+geohash <span class="token operator">=</span> <span class="token string">'wydm2'</span>
+
+neighbors <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token string">'n'</span><span class="token punctuation">:</span> get_neighbor<span class="token punctuation">(</span>geohash<span class="token punctuation">,</span> <span class="token string">'n'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token string">'ne'</span><span class="token punctuation">:</span> get_neighbor<span class="token punctuation">(</span>geohash<span class="token punctuation">,</span> <span class="token string">'ne'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token string">'e'</span><span class="token punctuation">:</span> get_neighbor<span class="token punctuation">(</span>geohash<span class="token punctuation">,</span> <span class="token string">'e'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token string">'se'</span><span class="token punctuation">:</span> get_neighbor<span class="token punctuation">(</span>geohash<span class="token punctuation">,</span> <span class="token string">'se'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token string">'s'</span><span class="token punctuation">:</span> get_neighbor<span class="token punctuation">(</span>geohash<span class="token punctuation">,</span> <span class="token string">'s'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token string">'sw'</span><span class="token punctuation">:</span> get_neighbor<span class="token punctuation">(</span>geohash<span class="token punctuation">,</span> <span class="token string">'sw'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token string">'w'</span><span class="token punctuation">:</span> get_neighbor<span class="token punctuation">(</span>geohash<span class="token punctuation">,</span> <span class="token string">'w'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token string">'nw'</span><span class="token punctuation">:</span> get_neighbor<span class="token punctuation">(</span>geohash<span class="token punctuation">,</span> <span class="token string">'nw'</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment"># 결과 출력</span>
+<span class="token keyword">for</span> direction<span class="token punctuation">,</span> value <span class="token keyword">in</span> neighbors<span class="token punctuation">.</span>items<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"</span><span class="token interpolation"><span class="token punctuation">{</span>direction<span class="token punctuation">}</span></span><span class="token string">: </span><span class="token interpolation"><span class="token punctuation">{</span>value<span class="token punctuation">}</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+</code></pre></div>
+<blockquote>
+<p>표시할 사업장이 충분하지 않은 경우</p>
+</blockquote>
+<ol>
+<li>사용자의 지오해시로부터 인접한 지오해시 List 를 반환하고</li>
+<li>인접한 지오해시 List 에서 사업장을 찾는다.</li>
+<li>사업장이 충분하지 않은 경우 인접한 지오해시로부터 인접한 지오해시를 계속 찾는다.</li>
+<li>사업장이 충분해질 때까지 반복한다.</li>
+</ol>
+<h3>트리 - 쿼드 트리</h3>
+<p>어플리케이션이 시작할 때 말단 노드가 최소 사업장 갯수를 만족할 때까지 트리를 구축한다.</p>
+<blockquote>
+<p>메모리 계산</p>
+</blockquote>
+<ol>
+<li>데이터베이스에 구축하는게 아니라 메모리 내부에 존재하기 때문에 메모리 계산이 중요.</li>
+<li>Application Server 가 시작할 때 구축이 되어야 함.</li>
+<li>사용하는 메모리 크기는 얼마정도 될까?
+<ol>
+<li>말단 노드에 포함되어야할 사업장의 갯수는?</li>
+<li>말단 노드, 내부 노드 각각의 크기를 우선 계산.</li>
+<li>말단 노드, 내부 노드의 수를 계산.
+<ol>
+<li>말단 노드의 수 -> 요구사항에 달림. 전체의 값 중에 각 격자 안에 몇개의 값이 포함되어야 하는지?</li>
+<li>내부 노드의 수 = 말단 노드의 수 * (1 / 3) <a href="https://www.acmicpc.net/board/view/65494" target="_blank" rel="nofollow">설명</a></li>
+</ol>
+</li>
+<li>말단 노드, 내부 노드의 크기를 곱해서 메모리 크기를 계산.</li>
+</ol>
+</li>
+</ol>
+<ul>
+<li>결론 -> 생각보다 많이 잡아먹지 않음.</li>
+</ul>
+<blockquote>
+<p>탐색</p>
+</blockquote>
+<ol>
+<li>위도, 경도가 주어짐.</li>
+<li>2.루트 노드부터 각 좌상단, 우하단 좌표를 비교해서 말단 노드까지 내려감.</li>
+<li>말단 노드에 충분한 사업장 갯수가 있으면 반환, 그렇지 않다면 인접노드도 추가</li>
+</ol>
+<blockquote>
+<p>주의사항</p>
+</blockquote>
+<ul>
+<li>서버가 가동될 때 몇분간 트리 구축 시간이 소요됨 -> 한꺼번에 동시 업데이트 시 문제 발생가능성</li>
+<li>장소가 추가될 때 실시간으로 트리 재구축 하는것이 어려움 ( 캐시무효화, 락 등의 문제 )</li>
+</ul>
+<h3>트리 - 구글 S2</h3>
+<ul>
+<li>구글 S2 는 지오펜스를 구현할 수 있다.</li>
+<li>지오펜스는 어떤것?
+<ul>
+<li>기본적인 주변 사업장 검색 지원</li>
+<li>관심있는 영역을 설정하고 해당 경계를 벗어나면 알림을 주는 게 가능.
+<ul>
+<li>배민 기존 지역과 다른 지역에서 어플리케이션을 실행했을 때 다른지역이라고 알림을 주는것?이 될 수 있나?</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>개인적으로 사용한다면 지오해시를 사용할 것 같다.</p>
+<ul>
+<li>상용 제품들이 많이 나와있음.</li>
+<li>레퍼런스가 많음.</li>
+<li>상대적으로 쿼드 트리보다 구축이 쉬워보임</li>
+</ul>
+</blockquote>
+<h2>지리 정보 테이블 구조 설계</h2>
+<ol>
+<li>Hash 와 business_ids</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>geo hash</th>
+<th>business_ids</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>32feac</td>
+<td>343, 123,</td>
+</tr>
+<tr>
+<td>f3lcad</td>
+<td>456, 789, 111</td>
+</tr>
+</tbody>
+</table>
+<ol start="2">
+<li>Hash 와 business_id</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>geo hash</th>
+<th>business_id</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>32feac</td>
+<td>343</td>
+</tr>
+<tr>
+<td>32feac</td>
+<td>123</td>
+</tr>
+<tr>
+<td>f3lcad</td>
+<td>456</td>
+</tr>
+<tr>
+<td>f3lcad</td>
+<td>789</td>
+</tr>
+<tr>
+<td>f3lcad</td>
+<td>111</td>
+</tr>
+</tbody>
+</table>
+<p>전자 보다 후자가 나은 이유</p>
+<ol>
+<li>생성 및 업데이트 비용이 적음.</li>
+<li>병렬적으로 갱신이 발생한다면 락을 고려해야해서 성능 저하가 발생할 수 있음.</li>
+</ol>
+<h2>지리 정보 색인 규모 확장</h2>
+<ol>
+<li>샤딩을 진행하려면 실제 저장되는 데이터의 양을 고려해야함.</li>
+<li>지리 정보 색인은 전부 저장한다고해도 1.71G 밖에 안됨.</li>
+<li>이 경우 Read 데이터베이스를 늘리는게 좋은 판단.</li>
+</ol>
+<h2>캐시</h2>
+<p>캐시를 적용하려면 일단 캐시가 정말 필요한지 판단해야함.</p>
+<p>“데이터 베이스 크기가 상대적으로 작다.” -> 질의문은 I/O 에 좌우되지 않고 메모리 캐시와 비슷함.</p>
+<p>위의 이유를 일단 기본적으로 생각해야함. 그래도 도입해야 판단이 된다면 비용 분석에 유의.</p>
+<h3>캐시 키</h3>
+<ul>
+<li>사용자의 위도 및 경도 -> 위치 정보는 추정치 이며 같은 자리라고 해도 다른 위도, 경도를 가질 수 있기 때문에 고려대상 X</li>
+<li>사용자의 위도 및 경도를 기반으로 한 geo hash -> 사용자의 위치를 기반으로 한 캐시 키를 사용하는 것이 좋음.
+<ul>
+<li>Value 에 해당하는 작업장 정보는 자주 수정되지 않는다.</li>
+<li>검색 반경이 500m, 1km, 2km 여러가지가 존재. 모두 캐시적용 해놓아야함.</li>
+</ul>
+</li>
+</ul>
+<h3>캐시 무효화</h3>
+<ul>
+<li>사업장 정보의 변경이 발생할 때 캐시를 무효화
+<ul>
+<li>빈도수가 적기 때문에 락을 고려하지 않아도 됨.</li>
+</ul>
+</li>
+</ul>
+<h2>지역 및 가용성 구역</h2>
+<ul>
+<li>여러 지역에 나눠서 설치</li>
+<li>빠른 응답속도와 데이터보안의 이점이 존재.</li>
+<li>위에서 언급한 AWS Global Accelerator 사용</li>
+</ul>
+<h2>추가질문</h2>
+<ol>
+<li>현재 영업중인 사업장, 식당 정보만 받아오기 등의 요구사항 처리는 어떻게?
+사용자의 위치에 해당하는 geo hash 를 찾아서 모든 사업장을 가져온다. 해당하는 사업장들의 개수가 적기 때문에
+여기서 필터링하여 반환.</li>
+</ol>
+<h2>AWS 아키텍처</h2>
+<p><span
+      class="gatsby-resp-image-wrapper"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 768px; "
+    >
+      <a
+    class="gatsby-resp-image-link"
+    href="/static/84ab3b65774523daecb903a0e5dff395/44e21/img.png"
+    style="display: block"
+    target="_blank"
+    rel="noopener"
+  >
+    <span
+    class="gatsby-resp-image-background-image"
+    style="padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAAAsTAAALEwEAmpwYAAACTklEQVR42l2Sa2sTURCGI2iLqLns7exukt3c7xuTNIlNbYwVjbfSEltt7QelKIoIVkXwD9hvgiB+Efyvj3MSbbUfXuZwOPPMO3MmViyW6HS7tFotet0+rz7/pNoecmv2kqi3xuO3xxRKTWrVGpbKEGQrWKkkynGwTQszmcDz0niuL9EnVq83WOkPWBkMaTYiNg8+Um52mDx8SrMzZHx3l9H6hG8/frE9imgHAdOD95SjIf3xlFt7RyQTV3AchSvQWL5QEIc9InFYLpX5slngWsUlKZVrWUMeX8b3fYZrEw5vVFgpWIy3nlOqX6U9uM5k+5BUIi5AZwEMwxztXo3BvS2qUZ/1Zp6sZ6OUT6PcxncVjmWgRI5Ko9w0F5fOc/jiNduzHZYvnMPW7Vs6xyMWBCHd1Q7RcEChWMW0PZJGirQXMO4/ohRkWKkGfN+PKGcUlq3EdYLZzhNuT+8TF3e2Y2PbtjgUYDabJcx4hGlRGOLLYHUR35dBe57EDGnRsF7EUy6WZZFMxYnH4yQErEH67gQY5gs8eHfMcDoj42kHiwd6JlpKhm1Ku0uXljHEeV5+OaqMTiA6mqb5T8u5HHsfjpk+O5KVyMyrKKX+DNmTudl0GiP273ySe5dSvkG/tTGHaNhfnbYcZMn5Dq3Vm1Q6A1wB6H3SUP3AtFIM2hu82f0qu5aeg1JGQiD2/0BLDCw+JSCXy5OT+YVy1gmGYczjqQwMczEvRz7F0nfWGYdSYA7Un5KTtrUCgepWdeJZnbQlScpxcUVqfl7IlTXTLf8GN+Y11+3cRUAAAAAASUVORK5CYII='); background-size: cover; display: block;"
+  ></span>
+  <picture>
+          <source
+              srcset="/static/84ab3b65774523daecb903a0e5dff395/a59e9/img.webp 192w,
+/static/84ab3b65774523daecb903a0e5dff395/0ca9f/img.webp 384w,
+/static/84ab3b65774523daecb903a0e5dff395/dc9b9/img.webp 768w,
+/static/84ab3b65774523daecb903a0e5dff395/e2c2f/img.webp 1152w,
+/static/84ab3b65774523daecb903a0e5dff395/883d7/img.webp 1367w"
+              sizes="(max-width: 768px) 100vw, 768px"
+              type="image/webp"
+            />
+          <source
+            srcset="/static/84ab3b65774523daecb903a0e5dff395/3b721/img.png 192w,
+/static/84ab3b65774523daecb903a0e5dff395/66595/img.png 384w,
+/static/84ab3b65774523daecb903a0e5dff395/fe486/img.png 768w,
+/static/84ab3b65774523daecb903a0e5dff395/d2d74/img.png 1152w,
+/static/84ab3b65774523daecb903a0e5dff395/44e21/img.png 1367w"
+            sizes="(max-width: 768px) 100vw, 768px"
+            type="image/png"
+          />
+          <img
+            class="gatsby-resp-image-image"
+            src="/static/84ab3b65774523daecb903a0e5dff395/fe486/img.png"
+            alt="AWS 설계도"
+            title=""
+            loading="lazy"
+            decoding="async"
+            style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;"
+          />
+        </picture>
+  </a>
+    </span></p>
+<h1>마무리</h1></div><style data-emotion="css hx9xpc">@media (max-width: 768px){.css-hx9xpc{padding:0 20px;}}</style><div class="css-hx9xpc e1gqsjds0"></div><style data-emotion="css 9w9jmx">.css-9w9jmx{display:grid;place-items:center;margin-top:auto;padding:50px 0;font-size:15px;text-align:center;line-height:1.5;}@media (max-width: 768px){.css-9w9jmx{font-size:13px;}}</style><footer class="css-9w9jmx e1oae0v80">Thank You for Visiting My Blog, Have a Good Day 😆<br/>© 2022 Developer Jung, Powered By Gatsby.</footer></main></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/system-2-2024-11-07-wil/";/*]]>*/</script><!-- slice-start id="_gatsby-scripts-1" -->
+          <script
+            id="gatsby-chunk-mapping"
+          >
+            window.___chunkMapping="{\"app\":[\"/app-ee4cf338f4a893e52645.js\"],\"component---src-pages-404-tsx\":[\"/component---src-pages-404-tsx-bdbd25ee81c542fefa8b.js\"],\"component---src-pages-index-tsx\":[\"/component---src-pages-index-tsx-2aa8699a20311f44b931.js\"],\"component---src-pages-info-tsx\":[\"/component---src-pages-info-tsx-bfa1691d232f76d31ef7.js\"],\"component---src-templates-post-template-tsx\":[\"/component---src-templates-post-template-tsx-01a689a965e97aa946a4.js\"]}";
+          </script>
+        <script>window.___webpackCompilationHash="4b5d091ecfc85b4335ec";</script><script src="/webpack-runtime-51de550a5549236a2840.js" async></script><script src="/framework-d072e4fbb9b3275b110b.js" async></script><script src="/app-ee4cf338f4a893e52645.js" async></script><!-- slice-end id="_gatsby-scripts-1" --></body></html>
