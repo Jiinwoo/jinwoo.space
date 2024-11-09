@@ -1,12 +1,10 @@
 ---
-date: '2024-11-02'
+date: '2024-11-07'
 title: "대규모 시스템 설계 기초 2 - 접근성 발표자료"
 categories: [ 'study', "WIL" ]
 summary: "접근성 서비스"
 thumbnail: '../common.png'
 ---
-
-# 발표에 앞서
 
 # 문제 이해 및 설계 범위 확정
 
