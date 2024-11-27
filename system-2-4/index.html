@@ -1,0 +1,338 @@
+<!DOCTYPE html><html lang="ko"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="ie=edge"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><meta name="generator" content="Gatsby 5.13.3"/><meta data-react-helmet="true" name="description" content="대규모 시스템 설계 기초 2 4장 분산 메시지 큐 발표 자료"/><meta data-react-helmet="true" name="viewport" content="width=device-width, initial-scale=1.0"/><meta data-react-helmet="true" http-equiv="Content-Type" content="text/html;charset=UTF-8"/><meta data-react-helmet="true" property="og:type" content="website"/><meta data-react-helmet="true" property="og:title" content="4장 분산 메시지 큐"/><meta data-react-helmet="true" property="og:description" content="대규모 시스템 설계 기초 2 4장 분산 메시지 큐 발표 자료"/><meta data-react-helmet="true" property="og:image" content="/static/a229594a2de7c0ed63d877869e75fd38/common.png"/><meta data-react-helmet="true" property="og:url"/><meta data-react-helmet="true" property="og:site_name" content="4장 분산 메시지 큐"/><meta data-react-helmet="true" name="twitter:card" content="summary"/><meta data-react-helmet="true" name="twitter:title" content="4장 분산 메시지 큐"/><meta data-react-helmet="true" name="twitter:description" content="대규모 시스템 설계 기초 2 4장 분산 메시지 큐 발표 자료"/><meta data-react-helmet="true" name="twitter:image" content="/static/a229594a2de7c0ed63d877869e75fd38/common.png"/><meta data-react-helmet="true" name="twitter:site" content="@사용자이름"/><meta data-react-helmet="true" name="twitter:creator" content="@사용자이름"/><style data-href="/styles.9e907bc32054b7771552.css" data-identity="gatsby-global-css">code[class*=language-],pre[class*=language-]{word-wrap:normal;background:none;color:#ccc;font-family:Consolas,Monaco,Andale Mono,Ubuntu Mono,monospace;font-size:1em;-webkit-hyphens:none;hyphens:none;line-height:1.5;tab-size:4;text-align:left;white-space:pre;word-break:normal;word-spacing:normal}pre[class*=language-]{margin:.5em 0;overflow:auto;padding:1em}:not(pre)>code[class*=language-],pre[class*=language-]{background:#2d2d2d}:not(pre)>code[class*=language-]{border-radius:.3em;padding:.1em;white-space:normal}.token.block-comment,.token.cdata,.token.comment,.token.doctype,.token.prolog{color:#999}.token.punctuation{color:#ccc}.token.attr-name,.token.deleted,.token.namespace,.token.tag{color:#e2777a}.token.function-name{color:#6196cc}.token.boolean,.token.function,.token.number{color:#f08d49}.token.class-name,.token.constant,.token.property,.token.symbol{color:#f8c555}.token.atrule,.token.builtin,.token.important,.token.keyword,.token.selector{color:#cc99cd}.token.attr-value,.token.char,.token.regex,.token.string,.token.variable{color:#7ec699}.token.entity,.token.operator,.token.url{color:#67cdcc}.token.bold,.token.important{font-weight:700}.token.italic{font-style:italic}.token.entity{cursor:help}.token.inserted{color:green}</style><link rel="sitemap" type="application/xml" href="/sitemap-index.xml"/><link rel="canonical" href="https://jinwoo.space/system-2-4/" data-baseprotocol="https:" data-basehost="jinwoo.space"/><title data-react-helmet="true">4장 분산 메시지 큐</title><style>.gatsby-image-wrapper{position:relative;overflow:hidden}.gatsby-image-wrapper picture.object-fit-polyfill{position:static!important}.gatsby-image-wrapper img{bottom:0;height:100%;left:0;margin:0;max-width:none;padding:0;position:absolute;right:0;top:0;width:100%;object-fit:cover}.gatsby-image-wrapper [data-main-image]{opacity:0;transform:translateZ(0);transition:opacity .25s linear;will-change:opacity}.gatsby-image-wrapper-constrained{display:inline-block;vertical-align:top}</style><noscript><style>.gatsby-image-wrapper noscript [data-main-image]{opacity:1!important}.gatsby-image-wrapper [data-placeholder-image]{opacity:0!important}</style></noscript><script type="module">const e="undefined"!=typeof HTMLImageElement&&"loading"in HTMLImageElement.prototype;e&&document.body.addEventListener("load",(function(e){const t=e.target;if(void 0===t.dataset.mainImage)return;if(void 0===t.dataset.gatsbyImageSsr)return;let a=null,n=t;for(;null===a&&n;)void 0!==n.parentNode.dataset.gatsbyImageWrapper&&(a=n.parentNode),n=n.parentNode;const o=a.querySelector("[data-placeholder-image]"),r=new Image;r.src=t.currentSrc,r.decode().catch((()=>{})).then((()=>{t.style.opacity=1,o&&(o.style.opacity=0,o.style.transition="opacity 500ms linear")}))}),!0);</script></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><style data-emotion="css 13ku56z">.css-13ku56z{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;height:100%;}</style><main class="css-13ku56z e1strnqo0"><style data-emotion="css-global rtmpxr">@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');*{padding:0;margin:0;box-sizing:border-box;font-family:나눔고딕,'NanumGothic',Nanum Gothic,sans-serif;}html,body,#___gatsby{height:100%;}a,a:hover{color:inherit;-webkit-text-decoration:none;text-decoration:none;cursor:pointer;}</style><style data-emotion="css 16cz9yp">.css-16cz9yp{position:relative;width:100%;height:400px;}@media (max-width: 768px){.css-16cz9yp{height:300px;}}</style><div class="css-16cz9yp e1opi4mu1"><style data-emotion="css 1bjn9yo">.css-1bjn9yo{z-index:-1;width:100%;height:400px;object-fit:cover;-webkit-filter:brightness(0.25);filter:brightness(0.25);}@media (max-width: 768px){.css-1bjn9yo{height:300px;}}</style><div data-gatsby-image-wrapper="" style="position:absolute" class="gatsby-image-wrapper gatsby-image-wrapper-constrained css-1bjn9yo e1opi4mu0"><div style="max-width:1080px;display:block"><img alt="" role="presentation" aria-hidden="true" src="data:image/svg+xml;charset=utf-8,%3Csvg%20height=&#x27;1080&#x27;%20width=&#x27;1080&#x27;%20xmlns=&#x27;http://www.w3.org/2000/svg&#x27;%20version=&#x27;1.1&#x27;%3E%3C/svg%3E" style="max-width:100%;display:block;position:static"/></div><img aria-hidden="true" data-placeholder-image="" style="opacity:1;transition:opacity 500ms linear" decoding="async" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAABjElEQVR42u2U207CQBCG+8g+go9hYvTCExeoGAWDB2JQsIDFghwUiJwKrXLoAkVUvPidWUAw8cIE4pUXf3e7s/v905lmlZ5dwyKl/AMXC3REfXFAhomWgX5nPqjSIchwYCEQTGBp2YtS8REv3Qm0Do5326zaeBypJ+j9RyAFPwioJ+/hP9cl8K1vwm5U5YHhi4W3nol3h0bHJFl4pZGNBrTuiJrUt082KkX4Azo8xzcIhu9kBmo0De9pHFEtg0TyAXriHvHbrDSOxTO4UlNIp3MQTQNtNm+Pgc2nKjTamM8XcKNlkcsVpI78GtZdIRyQyfZeBKtbIbgPY9h0q3DtRxCOpOAjQzU2Mj670FEghsKHr65TaBGYg+x4QtnG9ax05lpxWdidY9y4SUY8t2mNy1MpF9GwKlCezQplEsbaTghbuypWNi7h8Wl4pfpMOu5Qc7hOfVGXf8PXupiKG8kxhR/sxkUWY/Hmrj3t4uz8V//hrNNsx/4vhz8CitE9MNKcQIY0n8owjBLsliX1CTPZynf2Ss39AAAAAElFTkSuQmCC" alt=""/><picture><source type="image/webp" data-srcset="/static/a229594a2de7c0ed63d877869e75fd38/7e223/common.webp 270w,/static/a229594a2de7c0ed63d877869e75fd38/5cfb6/common.webp 540w,/static/a229594a2de7c0ed63d877869e75fd38/941f9/common.webp 1080w" sizes="(min-width: 1080px) 1080px, 100vw"/><img data-gatsby-image-ssr="" data-main-image="" style="opacity:0" sizes="(min-width: 1080px) 1080px, 100vw" decoding="async" loading="lazy" data-src="/static/a229594a2de7c0ed63d877869e75fd38/d0859/common.png" data-srcset="/static/a229594a2de7c0ed63d877869e75fd38/f1689/common.png 270w,/static/a229594a2de7c0ed63d877869e75fd38/42fd3/common.png 540w,/static/a229594a2de7c0ed63d877869e75fd38/d0859/common.png 1080w" alt="thumbnail"/></picture><noscript><picture><source type="image/webp" srcSet="/static/a229594a2de7c0ed63d877869e75fd38/7e223/common.webp 270w,/static/a229594a2de7c0ed63d877869e75fd38/5cfb6/common.webp 540w,/static/a229594a2de7c0ed63d877869e75fd38/941f9/common.webp 1080w" sizes="(min-width: 1080px) 1080px, 100vw"/><img data-gatsby-image-ssr="" data-main-image="" style="opacity:0" sizes="(min-width: 1080px) 1080px, 100vw" decoding="async" loading="lazy" src="/static/a229594a2de7c0ed63d877869e75fd38/d0859/common.png" srcSet="/static/a229594a2de7c0ed63d877869e75fd38/f1689/common.png 270w,/static/a229594a2de7c0ed63d877869e75fd38/42fd3/common.png 540w,/static/a229594a2de7c0ed63d877869e75fd38/d0859/common.png 1080w" alt="thumbnail"/></picture></noscript><script type="module">const t="undefined"!=typeof HTMLImageElement&&"loading"in HTMLImageElement.prototype;if(t){const t=document.querySelectorAll("img[data-main-image]");for(let e of t){e.dataset.src&&(e.setAttribute("src",e.dataset.src),e.removeAttribute("data-src")),e.dataset.srcset&&(e.setAttribute("srcset",e.dataset.srcset),e.removeAttribute("data-srcset"));const t=e.parentNode.querySelectorAll("source[data-srcset]");for(let e of t)e.setAttribute("srcset",e.dataset.srcset),e.removeAttribute("data-srcset");e.complete&&(e.style.opacity=1,e.parentNode.parentNode.querySelector("[data-placeholder-image]").style.opacity=0)}}</script></div><style data-emotion="css m1156n">.css-m1156n{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;width:768px;height:100%;margin:0 auto;padding:60px 0;color:#ffffff;}@media (max-width: 768px){.css-m1156n{width:100%;padding:40px 20px;}}</style><div class="css-m1156n e1st1jau3"><style data-emotion="css gywgo7">.css-gywgo7{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:#ffffff;color:#000000;font-size:22px;cursor:pointer;box-shadow:0 0 10px rgba(0, 0, 0, 0.3);}@media (max-width: 768px){.css-gywgo7{width:30px;height:30px;font-size:18px;}}</style><div class="css-gywgo7 e1st1jau2"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="arrow-left" class="svg-inline--fa fa-arrow-left " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"></path></svg></div><style data-emotion="css gn4qtp">.css-gn4qtp{display:-webkit-box;overflow:hidden;overflow-wrap:break-word;margin-top:auto;text-overflow:ellipsis;white-space:normal;-webkit-line-clamp:2;-webkit-box-orient:vertical;font-size:45px;font-weight:800;}@media (max-width: 768px){.css-gn4qtp{font-size:30px;}}</style><div class="css-gn4qtp e1st1jau1">4장 분산 메시지 큐</div><style data-emotion="css 3gcnt2">.css-3gcnt2{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:justify;-webkit-justify-content:space-between;justify-content:space-between;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;margin-top:10px;font-size:18px;font-weight:700;}@media (max-width: 768px){.css-3gcnt2{-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;-webkit-align-items:flex-start;-webkit-box-align:flex-start;-ms-flex-align:flex-start;align-items:flex-start;font-size:15px;font-weight:400;}}</style><div class="css-3gcnt2 e1st1jau0"><div>study / DIL</div><div>2024.11.27.</div></div></div></div><style data-emotion="css uo146q">.css-uo146q{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;width:768px;margin:0 auto;padding:100px 0;word-break:break-all;line-height:1.8;font-size:16px;font-weight:400;}.css-uo146q p{padding:3px 0;}.css-uo146q h1,.css-uo146q h2,.css-uo146q h3{font-weight:800;margin-bottom:30px;}.css-uo146q *+h1,.css-uo146q *+h2,.css-uo146q *+h3{margin-top:80px;}.css-uo146q hr+h1,.css-uo146q hr+h2,.css-uo146q hr+h3{margin-top:0;}.css-uo146q h1{font-size:30px;}.css-uo146q h2{font-size:25px;}.css-uo146q h3{font-size:20px;}.css-uo146q blockquote{margin:30px 0;padding:5px 15px;border-left:2px solid #000000;font-weight:800;}.css-uo146q ol,.css-uo146q ul{margin-left:20px;padding:30px 0;}.css-uo146q hr{border:1px solid #000000;margin:100px 0;}.css-uo146q a{color:#4263eb;-webkit-text-decoration:underline;text-decoration:underline;}.css-uo146q pre[class*='language-']{margin:30px 0;padding:15px;font-size:15px;}.css-uo146q pre[class*='language-']::-webkit-scrollbar-thumb{background:rgba(255, 255, 255, 0.5);border-radius:3px;}.css-uo146q code[class*='language-'],.css-uo146q pre[class*='language-']{tab-size:2;}@media (max-width: 768px){.css-uo146q{width:100%;padding:80px 20px;line-height:1.6;font-size:14px;}.css-uo146q h1{font-size:23px;}.css-uo146q h2{font-size:20px;}.css-uo146q h3{font-size:17px;}.css-uo146q img{width:100%;}.css-uo146q hr{margin:50px 0;}}</style><div class="css-uo146q e1ijh0y10"><p>메시지 큐 장점</p>
+<blockquote>
+<ul>
+<li>결합도 완화</li>
+<li>규모 확장성 완화</li>
+<li>가용성 개선</li>
+<li>성능 개선 (비동기 처리)</li>
+</ul>
+</blockquote>
+<p>메시지 큐 단점</p>
+<blockquote>
+<ul>
+<li>시스템 복잡성 증가</li>
+<li>일관성 보장 어려움</li>
+<li>성능 오버헤드</li>
+<li>DLQ 나 처리 실패 시나리오 처리</li>
+<li>모니터링 및 디버깅 어려움</li>
+</ul>
+</blockquote>
+<p>AWS 메시지 큐, 이벤트 스트리밍 플랫폼</p>
+<blockquote>
+<p>SQS: 메시지 큐,
+MSK(Managed Service Kafka)
+Kinesis: 스트리밍 데이터 플랫폼</p>
+</blockquote>
+<p><a href="https://programmaticponderings.com/2023/04/23/streaming-data-on-aws-amazon-kinesis-data-streams-or-amazon-msk/" target="_blank" rel="nofollow">Kinesis 와 MSK 비교</a></p>
+<p>이번 장에서는</p>
+<ul>
+<li>데이터 장기 보관</li>
+<li>메시지 반복 소비
+기능을 가진 분산 메시지 큐를 설계해 볼 것.</li>
+</ul>
+<h1>문제 이해 및 설계 범위 확정</h1>
+<h3>기능 요구사항</h3>
+<ul>
+<li>생산자는 메시지 큐에 메시지 보냄</li>
+<li>소비자는 메시지 큐에서 메시지 가져옴</li>
+<li>메시지는 반복적으로 수신할 수도 있고 단 한 번만 수신하도록 할 수도 있어야 함</li>
+<li>오래된 이력 데이터는 삭제될 수 있음.</li>
+<li>메시지 크기는 킬로바이트 수준</li>
+<li>메시지는 생산된 순서대로 소비자에게 전달될 수 있어야 함.</li>
+<li>메시지 전달 방식
+<ul>
+<li>최소 한 번</li>
+<li>최대 한 번</li>
+<li>정확히 한 번</li>
+</ul>
+</li>
+</ul>
+<h3>비기능 요구사항</h3>
+<ul>
+<li>높은 대역폭과 낮은 전송 지연 가운데 하나를 설정</li>
+<li>규모 확장성. 수백만 개의 메시지를 처리할 수 있어야 함.</li>
+<li>지속성 및 내구성. 데이터는 디스크에 지속적으로 보관되어야 하며 여러 노드에 복제되어야 함.</li>
+</ul>
+<h3>전통적 메시지 큐와 다른점</h3>
+<ul>
+<li>데이터 장기 보관</li>
+<li>메시지 전달 순서 보존 (파티션 내에서만 순서 보존)</li>
+</ul>
+<h1>개략적 설계안 제시 및 동의 구하기</h1>
+<h2>일대일 모델</h2>
+<ul>
+<li>각 메시지는 한 소비자만 가져갈 수 있다.</li>
+<li>ACK 를 받은 메시지는 삭제</li>
+</ul>
+<h2>발행/구독 모델</h2>
+<ul>
+<li>“토픽” 이라는 개념이 등장.</li>
+</ul>
+<blockquote>
+<ul>
+<li>RabbitMQ 에서는 Topic Exchange 로 라우팅 방식을 결정</li>
+</ul>
+</blockquote>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">> 예를 들어 Order Server 에서 order.created 라는 토픽으로 메시지를 보내면
+> Payment Server 에서는 order.created, order.* 등의 패턴으로 큐를 만들어서 메시지를 받을 수 있음.</code></pre></div>
+<blockquote>
+<ul>
+<li>Kafka 에서는 Topic 이라는 개념이 있음. Topic 은 여러 파티션으로 나뉘어져 있음.</li>
+</ul>
+</blockquote>
+<h2>토픽, 파티션, 브로커</h2>
+<p>토픽에 보관되는 양이 많아지면? -> 파티션, 즉 샤딩기법을 활용
+토픽을 여러 파티션으로 나누어 모든 파티션에 균등하게 분배.</p>
+<p>파티션을 유지하는 서버는 브로커라고 부름.</p>
+<p>파티션을 균등하게 분배하는 것 -> 높은 규모의 확장성,</p>
+<p>토픽의 용량을 확장하고 싶으면 파티션 개수를 늘리면 됨.</p>
+<p>각 토픽의 파티션은 FIFO 큐 처럼 동작. -> 같은 파티션 안에서는 메시지 순서가 유지됨.</p>
+<p>파티션 내에서 메시지 위치는 오프셋(offset) 이라 불림.</p>
+<p>메시지는 사용자ID 같은 키를 붙일 수 있는데, 같은 키를 가진 메시지는 같은 파티션으로 보내짐.</p>
+<p>키가 없으면 무작위 파티션을 선택.</p>
+<p>소비자는 하나 이상의 파티션에서 데이터를 가져옴.</p>
+<h2>소비자 그룹</h2>
+<p>하나의 소비자 그룹은 여러 토픽을 구독할 수 있고 별도로 오프셋을 관리함.</p>
+<blockquote>
+<p>다른 소비자 그룹이 존재하고 서로 다른 소비자 그룹이 같은 파티션을 소비하더라도
+별도의 오프셋으로 관리하기 때문에 데이터를 읽는데 영향을 주지 않음.</p>
+</blockquote>
+<p>같은 그룹 내 소비자는 메시지를 병렬로 소비가능.</p>
+<p>여기서 문제가 발생하는 부분: 병렬로 소비하면 대역폭 측면에서는 좋지만 메시지 순서가 보장되지 않음.</p>
+<p>제약사항: 어떤 파티션은 하나의 소비자 그룹안에서는 오직 하나의 소비자만 소비하도록 제한.</p>
+<blockquote>
+<p><a href="https://stackoverflow.com/questions/21363302/rabbitmq-message-order-of-delivery" target="_blank" rel="nofollow">RabbitMQ는 순서를 보장할 수 없을까?</a></p>
+<p>Kafka 도 파티션내에서만 유지되기 때문에 적절한 파티셔닝을 해야 순서가 보장됨.</p>
+</blockquote>
+<h1>상세 설계</h1>
+<ol>
+<li>데이터 장기 보관</li>
+<li>높은 대역폭</li>
+</ol>
+<p>만족하는 다음의 결정.</p>
+<ul>
+<li>회전 디스크의 높은 순차 탐색 성능, 적극적 디스크 캐시 전략을 사용가능한 디스크 기반 자료구조 선택</li>
+<li>생산자로부터 소비자에게 전달되는 순간까지 아무 수정 없는 메시지 자료구조. (메시지 복사에 드는 비용을 최소화)</li>
+<li>일괄 처리(Batching) 우선하는 시스템 설계. 소규모 I/O 작업을 줄이기 위해 메시지를 배치로 전송, 소비자도 배치로 메시지를 가져옴.</li>
+</ul>
+<h3>데이터 저장소</h3>
+<p>고려사항</p>
+<ul>
+<li>읽기와 쓰기가 빈번함.</li>
+<li>갱신 / 삭제는 이루어지지 않음.</li>
+<li>순차적인 읽기/쓰기가 대부분.</li>
+</ul>
+<ol>
+<li>
+<p>데이터베이스:<br>
+읽기 쓰기가 동시에 대규모로 빈번하게 발생. -> 데이터베이스는 부하가 커짐.</p>
+</li>
+<li>
+<p>쓰기 우선 로그(Write-Ahead Log, WAL)<br>
+새로운 항목이 추가되기만 하는 일반 파일. Mysql 의 redo log, 아파치 주키퍼가 활용중
+WAL에 대한 접근 패턴은 읽기/쓰기 전부 순차적. 디스크는 아주 좋은 성능에 가격도 저렴.</p>
+</li>
+</ol>
+<p>파일은 무한정 커질 수 없으니 세그먼트(segment)로 나누어 관리.
+활성 세그먼트, 비활성 세그먼트가 존재하며 데이터의 추가는 활성 세그먼트에만 이루어지고
+해당 활성 세그먼트의 크기가 일정 한계에 도달하면 새 활성 세그먼트를 만들어 새로운 메시지를 수용.
+비활성 세그먼트는 보관 기한이 만료되거나 용량 한계에 도달하면 삭제가능.</p>
+<p>성능 유의사항.
+회전식 디스크가 느리다는 것은 접근 패턴이 무작위일때.</p>
+<h3>메시지 자료구조</h3>
+<ul>
+<li>메시지 키
+<ul>
+<li>파티션을 결정하는데 사용가능.</li>
+</ul>
+</li>
+<li>메시지 값</li>
+<li>토픽</li>
+<li>파티션</li>
+<li>오프셋</li>
+<li>타임 스탬프</li>
+<li>크기</li>
+<li>CRC (순환 중복 검사)</li>
+</ul>
+<p>WAL 로 오프셋, 파티션 등등을 추가해서 저장하며 한번 저장한 뒤로는 수정 X</p>
+<h3>일괄처리</h3>
+<p>장점</p>
+<ol>
+<li>I/O 작업을 줄임</li>
+<li>여러 메시지를 한 번에 로그에 기록 -> 큰 규모의 순차 쓰기 연산 -> 운영체제의 디스크 캐시에서 큰 규모의 연속된 공간점유 -> 높은 디스크 접근 대역폭</li>
+</ol>
+<p>높은 대역폭과 낮은 응답 지연은 동시에 달성하기 힘듬.</p>
+<h2>생산자 측 작업 흐름</h2>
+<h3>프로세스 1</h3>
+<p>가정: 생산자가 특정 파티션에 메시지를 보낸다고 가정.</p>
+<p>문제: 어느 브로커에 메시지를 보내야 할지 결정해야 함.</p>
+<p>해결: 라우팅 계층 도입. 라우팅 계층은 적절한 브로커를 선택하고 메시지를 전달.</p>
+<p>이 때 적절한 브로커는 리더 브로커(Leader Broker) 라고 부름.</p>
+<p>리더 브로커는 우선 메시지를 받고 해당 리더를 따르는 다른 브로커는 리더 브로커로부터 데이터를 받음.</p>
+<p>‘충분한’ 수의 사본이 동기화되면 리더는 데이터를 디스크에 기록. 기록이 끝나면 생산자에게 회신</p>
+<p>리더와 사본이 필요한 이유? 장애 감내(fault tolerance)를 위해.</p>
+<h3>프로세스 2</h3>
+<p>프로세스 1의 문제점: 라우팅 계층은 네트워크 오버헤드가 발생, 일괄처리가 불가능한 부분</p>
+<p>해결: 라우팅 계층을 생산자에게 두어서 생산자가 직접 브로커에게 메시지를 보내도록 함.</p>
+<p>장점: 전송 지연이 줄어듬, 어느 파티션에 보내야 하는 결정 로직을 가질 수 있음, 일괄 처리가능.</p>
+<h2>소비자 측 작업 흐름</h2>
+<p>소비자는 특정 파티션의 오프셋을 주고 해당 위치로부터 이벤트를 묶어 가져옴.</p>
+<h3>푸시 / 풀</h3>
+<p>Push</p>
+<p>장점:</p>
+<ul>
+<li>낮은 지연 (받는 즉시 client 에게 전달)</li>
+</ul>
+<p>단점:</p>
+<ul>
+<li>소비자가 처리할 수 없을 정도로 빠르게 메시지가 들어오면 부하 증가</li>
+<li>생산자가 데이터 전송 속도를 좌우하므로 소비자는 그에 맞는 컴퓨팅 자원을 준비해야함.</li>
+</ul>
+<p>Pull</p>
+<p>장점:</p>
+<ul>
+<li>어떤 소비자는 실시간으로 어떤 소비자는 Batch 로 처리하도록 조절 가능.</li>
+</ul>
+<p>단점:</p>
+<ul>
+<li>메시지가 없어도 계속 데이터 요구, 즉 소비자측 컴퓨팅 자원낭비 발생.</li>
+</ul>
+<p>대부분 Pull 방식을 사용.</p>
+<p>풀 모델을 지원하는 메시지 큐의 동작 흐름도.</p>
+<ol>
+<li>소비자 그룹에 합류하고 토픽을 구독하길 원하는 새로운 소비자가 등장.</li>
+<li>소비자는 그룹 이름을 해싱하여 브로커 노드를 찾는다. -> 같은 소비자 그룹의 모든 소비자들은 같은 브로커에 연결됨</li>
+<li>해당 브로커 노드는 소비자 그룹의 코디네이터라고 부름. 브로커 클러스터 조정 작업과 다름.</li>
+<li>코디네이터는 소비자를 그룹에 참여하고 파티션을 할당. 파티션 할당 정책에는 라운드 로빈, 범위 기반 정책 등 여러가지가 존재.</li>
+<li>소비자는 상태저장소(state storage) 로부터 오프셋 정보를 가져옴.</li>
+<li>소비자는 메시지를 처리하고 새로운 오프셋을 브로커에 보냄.</li>
+</ol>
+<blockquote>
+<p>여기서 코디네이터는 리더 브로커와는 다름.</p>
+</blockquote>
+<h3>상태 저장소</h3>
+<ul>
+<li>소비자에 대한 파티션의 배치 관계 저장.</li>
+<li>각 소비자 그룹이 각 파티션에서 처리한 마지막 오프셋 정보 저장.</li>
+</ul>
+<p>데이터 특징.</p>
+<ol>
+<li>읽기 쓰기가 빈번하게 발생하지만 양은 많지 않음.</li>
+<li>데이터 갱신은 빈번하게 일어나지만 삭제되는 일은 거의 없다.</li>
+<li>읽기 쓰기가 무작위적 패턴.</li>
+<li>데이터 일관성이 중요.</li>
+</ol>
+<p>Apache Zookeeper, etcd</p>
+<blockquote>
+<p><a href="https://psm1782.medium.com/%EB%8F%99%EB%AC%BC%EC%9B%90%EC%9D%84-%ED%83%88%EC%B6%9C%ED%95%9C-%EC%B9%B4%ED%94%84%EC%B9%B4-zookeeper-less-kafka-a71cba58d5d9" target="_blank" rel="nofollow">동물원을-탈출한-카프카</a></p>
+</blockquote>
+<h3>메타데이터 저장소.</h3>
+<ul>
+<li>토픽 설정이나 속성 정보를 저장. (파티션 수, 메시지 보관 기간, 사본 배치 정보 등</li>
+</ul>
+<p>데이터 특징.</p>
+<ol>
+<li>자주 변경되지 않으며 양도 적음.</li>
+<li>높은 일관성 요구</li>
+</ol>
+<p>마찬가지로 Zookeeper, etcd 등을 활용.</p>
+<h2>복제.</h2>
+<p>하드웨어 장애에 대비하여서 파티션 내의 데이터를 복제하여 안정성을 확보.</p>
+<p>사본을 어떻게 어떻게 분산할지 기술하는 것 -> 사본 분산 계획 (replica distribution plan)</p>
+<p>예) 토픽 A의 파티션-1: 사본 3개 리더는 브로커-1, 단순 사본은 브로커-2, 브로커-3 배치</p>
+<p>사본 분산 계획은 조정 서비스에 의해서 브로커 노드 가운데 하나가 선정되면 해당 리더 브로커 노드가
+사본 분산 계획을 만들고 메타데이터 저장소에 보관.</p>
+<h3>사본 동기화</h3>
+<p>메시지 소실을 대비해서 각 파티션은 여러 사본으로 복제됨.</p>
+<p>메시지는 리더한테만 보내고 다른 단순 사본은 리더에서 메시지를 가져와서 동기화.</p>
+<p>동기화는 어떻게??</p>
+<p>In-Sync Replicas (ISR) : 리더와 동기화된 사본들.</p>
+<p>예를들어 replica.lag.max.message 의 값이 4일 경우
+단순 사본에 보관된 메시지 개수와 리더 사이의 차이가 3개 이하면 ISR 상태.</p>
+<ul>
+<li>리더 사본의 합의 오프셋(committed offset) 의미: 이 오프셋 이전에 기록된 모든 메시지는 ISR 집합 내 모든 사본에 동기화가 끝났다는 것.</li>
+</ul>
+<blockquote>
+<ul>
+<li>ISR 크기가 너무 작아지면 가용성에 문제가 생길 수 있음</li>
+<li>min.insync.replicas 설정값이 너무 높으면 성능이 저하될 수 있음</li>
+</ul>
+</blockquote>
+<p>ISR 이 필요한 이유. 성능과 영속성 사이의 타협점.</p>
+<h3>ACK=all</h3>
+<p>모든 ISR 사본이 메시지를 처리하고 오프셋을 보내야지만 메시지 처리가 완료됨.</p>
+<h3>ACK=1</h3>
+<p>리더 사본만 메시지를 처리하고 오프셋을 보내면 메시지 처리가 완료됨.</p>
+<p>데이터가 사라져도 괜찮은 경우에 사용.</p>
+<h3>ACK=0</h3>
+<p>수신 확인 메시지를 기다리지 않음.</p>
+<p>Metric, Log, Event 등의 데이터에 사용.</p>
+<blockquote>
+<p>리더 사본에 요청이 너무 몰리면 어떻게 될까? ISR 요건을 만족하는 사본에서 메시지를 가져가지 않는 이유?</p>
+<ul>
+<li>설계 및 운영이 단순.</li>
+<li>특정 파티션의 메시지는 같은 소비자 그룹 안에서 오직 한 소비자만 읽어갈 수 있으므로 리더 사본에 대한 연결이 많지 않음.</li>
+<li>인기있는 토픽의 경우 파티션 및 소비자 수를 늘려 규모를 확장.</li>
+</ul>
+</blockquote>
+<h2>규모 확장성</h2>
+<h3>생산자, 소비자</h3>
+<p>생산자 - 간단
+소비자 - 소비자 그룹은 서로 독립적으로 쉽게 추가 및 삭제 가능. 재조정 코디네이터에 의해서 진행.</p>
+<h3>브로커</h3>
+<blockquote>
+<p>146p 그림 4.28 브로커 노드의 장애 참고</p>
+</blockquote>
+<ol>
+<li>메시지가 성공적으로 합의(committed) 되었다고 판단하려면 얼마나 많은 사본에 메시지가 반영되어야하는가? 응답 지연과 안정성 사이의 트레이드 오프 고려</li>
+<li>파티션의 모든 사본이 같은 브로커에 배치되지 않도록 주의. 브로커 장애시 모든 사본이 손실될 수 있음.</li>
+</ol>
+<blockquote>
+<p>148p 그림 4.29 새 브로커 노드의 추가 참고</p>
+</blockquote>
+<p>한시적으로 시스템에 설정된 사본 수 보다 많은 사본을 허용. -> 브로커 추가
+한시적으로 시스템에 설정된 사본 수 보다 적은 사본을 유지. -> 브로커 삭제</p>
+<h3>파티션</h3>
+<p>파티션 수를 조정해야할 때 생산자는 브로커와 통신할 때 통지 받으며 소비자는 재조정을 시행함. -> 생산자와 소비자의 안정성에는 영향을 끼치지 않음.</p>
+<h2>메시지 전달 방식</h2>
+<h3>최대 한번</h3>
+<p>ACK=0</p>
+<h3>최소 한번</h3>
+<p>ACK=1, ACK=all</p>
+<h3>정확히 한번</h3>
+<p><a href="https://huisam.tistory.com/entry/kafka-message-semantics" target="_blank" rel="nofollow">Exactly Once Semantics</a></p>
+<h2>고급 기능</h2>
+<h3>메시지 필터링</h3>
+<p>생산자는 토픽에 모든 메시지를 발행하지만 소비자가 해당 토픽의 특정한 이벤트만 가져오고 싶은 경우가 있음.</p>
+<p>간단한 방법 -> 토픽을 분리하는 것
+다음의 단점이 존재.</p>
+<ol>
+<li>요구사항 마다 토픽을 분리하는 것은 관리상 어려움.</li>
+<li>토픽을 분리하면서 생기는 데이터 중복 문제.</li>
+<li>생산자와 소비자 결합도 증가.</li>
+</ol>
+<p>모든 메시지를 소비자에서 필요없는 메시지는 버리는 방법이 있음.</p>
+<p>다음의 단점이 존재.</p>
+<ol>
+<li>불필요한 트래픽 발생 -> 네트워크 부하</li>
+<li>성능 저하</li>
+</ol>
+<p>브로커 레벨에서 메시지 필터링을 지원하는 방법이 있음.</p>
+<p>다음의 사항들을 고려해야함.</p>
+<ol>
+<li>필터를 위해 복호화나 역직렬화가 필요하다면 성능이 저하됨.</li>
+<li>payload가 아닌 metadata 영역을 효율적으로 활용 -> tag, header 등</li>
+</ol>
+<h3>메시지 지연 전송</h3>
+<h1>추가적으로 알아보기</h1>
+<ul>
+<li>AMQP 프로토콜</li>
+<li>Kafka Protocol</li>
+<li>Retry Consumer (메시지 소비 재시도)</li>
+</ul></div><style data-emotion="css hx9xpc">@media (max-width: 768px){.css-hx9xpc{padding:0 20px;}}</style><div class="css-hx9xpc e1gqsjds0"></div><style data-emotion="css 9w9jmx">.css-9w9jmx{display:grid;place-items:center;margin-top:auto;padding:50px 0;font-size:15px;text-align:center;line-height:1.5;}@media (max-width: 768px){.css-9w9jmx{font-size:13px;}}</style><footer class="css-9w9jmx e1oae0v80">Thank You for Visiting My Blog, Have a Good Day 😆<br/>© 2022 Developer Jung, Powered By Gatsby.</footer></main></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/system-2-4/";/*]]>*/</script><!-- slice-start id="_gatsby-scripts-1" -->
+          <script
+            id="gatsby-chunk-mapping"
+          >
+            window.___chunkMapping="{\"app\":[\"/app-ee4cf338f4a893e52645.js\"],\"component---src-pages-404-tsx\":[\"/component---src-pages-404-tsx-bdbd25ee81c542fefa8b.js\"],\"component---src-pages-index-tsx\":[\"/component---src-pages-index-tsx-2aa8699a20311f44b931.js\"],\"component---src-pages-info-tsx\":[\"/component---src-pages-info-tsx-bfa1691d232f76d31ef7.js\"],\"component---src-templates-post-template-tsx\":[\"/component---src-templates-post-template-tsx-01a689a965e97aa946a4.js\"]}";
+          </script>
+        <script>window.___webpackCompilationHash="4b5d091ecfc85b4335ec";</script><script src="/webpack-runtime-51de550a5549236a2840.js" async></script><script src="/framework-d072e4fbb9b3275b110b.js" async></script><script src="/app-ee4cf338f4a893e52645.js" async></script><!-- slice-end id="_gatsby-scripts-1" --></body></html>
