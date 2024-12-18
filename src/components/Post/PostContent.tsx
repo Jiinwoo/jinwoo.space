@@ -269,7 +269,6 @@ const MarkdownContainer = styled.div`
     border-spacing: 0;
     margin: 1.5rem 0;
     overflow-x: auto;
-    display: block;
     border-radius: 6px;
     border: 1px solid #e2e8f0;
     font-size: 0.9em;
