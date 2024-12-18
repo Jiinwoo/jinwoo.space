@@ -15,14 +15,14 @@ interface TableOfContentsProps {
 const TableOfContents: React.FC<TableOfContentsProps> = ({ contentSelector }) => {
   const [headings, setHeadings] = useState<TOCItem[]>([])
   const [activeId, setActiveId] = useState<string>('')
-  const [isMobile, setIsMobile] = useState(false)
+  const [isNotVisible, setIsNotVisible] = useState(true)
   const tocRef = useRef<HTMLDivElement>(null)
   const tocListRef = useRef<HTMLUListElement>(null)
 
-  // 모바일 체크
+  // 모바일 체크 및 목차를 화면에 표시할 수 있는지 확인
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768)
+      setIsNotVisible(window.innerWidth < 768 || (window.innerWidth - 768) / 2 - 28 < 180)
     }
 
     checkMobile()
@@ -30,9 +30,9 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ contentSelector }) =>
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
 
-  // TOC 초기 위치 저장 및 스크롤 위치 조정
+  // TOC 위치 조정
   useEffect(() => {
-    if (isMobile || tocRef.current === null) return
+    if (isNotVisible || tocRef.current === null) return
 
     const handleScroll = debounce(() => {
       if (tocRef.current) {
@@ -41,10 +41,10 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ contentSelector }) =>
         if (scrollY > 400) {
           tocRef.current.style.top = `${scrollY - 200}px`
         } else {
-          tocRef.current.style.top = '0'
+          tocRef.current.style.top = `${scrollY / 2}px`
         }
       }
-    }, 10)
+    }, 100)
 
     handleScroll()
 
@@ -53,7 +53,7 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ contentSelector }) =>
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
-  }, [isMobile])
+  }, [isNotVisible])
 
   // 제목 요소 추출
   useEffect(() => {
@@ -137,12 +137,12 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ contentSelector }) =>
         behavior: 'smooth',
       })
     },
-    [isMobile],
+    [isNotVisible],
   )
 
   return (
     <>
-      <TOCContainer ref={tocRef} isMobile={isMobile} onClick={e => e.stopPropagation()}>
+      <TOCContainer ref={tocRef} isNotVisible={isNotVisible} onClick={e => e.stopPropagation()}>
         <TOCTitle>목차</TOCTitle>
         <TOCList ref={tocListRef}>
           {headings.map((heading, i) => (
@@ -152,7 +152,10 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ contentSelector }) =>
               isActive={activeId === '' ? i === 0 : activeId === heading.id}
               data-id={heading.id}
             >
-              <TOCLink onClick={() => handleClick(heading.id)} isActive={activeId === heading.id}>
+              <TOCLink
+                onClick={() => handleClick(heading.id)}
+                isActive={activeId === '' ? i === 0 : activeId === heading.id}
+              >
                 {heading.title}
               </TOCLink>
             </TOCItem>
@@ -163,9 +166,9 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ contentSelector }) =>
   )
 }
 
-const TOCContainer = styled.nav<{ isMobile: boolean }>`
-  ${({ isMobile }) =>
-    isMobile
+const TOCContainer = styled.nav<{ isNotVisible: boolean }>`
+  ${({ isNotVisible }) =>
+    isNotVisible
       ? `
         opacity: 0;
         visibility: hidden; 
@@ -175,7 +178,8 @@ const TOCContainer = styled.nav<{ isMobile: boolean }>`
         left: 100%;
         margin-top: 2.5rem;
         margin-left: 2rem;
-        width: 250px;
+        width: calc((100vw - 768px)/2 - 2rem);
+        max-width: 250px;
         background: white;
         border-radius: 8px;
         border: 1px solid #e2e8f0;
