@@ -7,10 +7,12 @@ import CategoryList, { CategoryListProps } from 'components/Main/CategoryList'
 type PostListProps = {
   selectedCategory: string
   posts: Queries.IndexPageQuery['allMarkdownRemark']['edges']
+
   categoryList: CategoryListProps['categoryList']
 }
 const PostList: FunctionComponent<PostListProps> = function ({ posts, selectedCategory, categoryList }) {
   const { containerRef, postList } = useInfiniteScroll(selectedCategory, posts)
+  console.log(postList)
   return (
     <Wrapper>
       <Aside>
@@ -18,7 +20,14 @@ const PostList: FunctionComponent<PostListProps> = function ({ posts, selectedCa
       </Aside>
       <PostListWrapper ref={containerRef}>
         {postList.map(({ node: { id, frontmatter, fields } }) => (
-          <PostItem {...frontmatter} link={fields!.slug!} key={id} />
+          <PostItem
+            key={id}
+            title={frontmatter?.title ?? ''}
+            date={frontmatter?.date ?? ''}
+            summary={frontmatter?.summary ?? ''}
+            thumbnail={frontmatter?.thumbnail ?? null}
+            link={fields?.slug ?? ''}
+          />
         ))}
       </PostListWrapper>
     </Wrapper>

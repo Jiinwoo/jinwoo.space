@@ -9,8 +9,6 @@
 const path = require('path')
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
-// console.log(process.env.NODE_ENV, 'env')
-
 // Setup Import Alias
 exports.onCreateWebpackConfig = ({ getConfig, actions }) => {
   const output = getConfig().output || {}
@@ -34,29 +32,44 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
   if (node.internal.type === `MarkdownRemark`) {
     const parent = getNode(node.parent)
 
-    // 디버깅을 위한 로그 추가
-    console.log('File path:', parent.absolutePath)
-    console.log('Relative directory before:', parent.relativeDirectory)
-
-    let relativeDirectory = parent.relativeDirectory
+    const relativeDirectory = parent.relativeDirectory
 
     const isIndexFile = parent.name === 'index'
 
-    // isIndexFile인 경우 상위 디렉토리를 카테고리로 사용
-    if (isIndexFile && relativeDirectory.includes('/')) {
-      relativeDirectory = relativeDirectory.split('/').slice(0, -1).join('/')
+    // URL 경로 생성을 위한 함수
+    const createUrlPath = path => {
+      return path
+        .split('/')
+        .map(segment => {
+          // 1. 공백을 하이픈으로 변경
+          // 2. 괄호는 그대로 유지
+          // 3. 특수문자는 유지하되 URL safe하게 처리
+          return segment
+            .replace(/ /g, '-')
+            .replace(/[^a-zA-Z0-9가-힣\-_()]/g, '')
+            .replace(/--+/g, '-') // 연속된 하이픈을 하나로
+            .replace(/^-|-$/g, '') // 시작과 끝의 하이픈 제거
+        })
+        .join('/')
     }
 
-    console.log('Is index file:', isIndexFile)
-    console.log('Relative directory after:', relativeDirectory)
+    // slug 생성 부분 수정
+    let slug
 
-    // 카테고리 계층 생성
-    const categoryHierarchy = relativeDirectory.split('/').filter(Boolean)
+    if (isIndexFile) {
+      slug = '/' + createUrlPath(relativeDirectory)
+    } else {
+      const originalSlug = createFilePath({ node, getNode })
+      slug = createUrlPath(originalSlug)
+    }
 
-    console.log(categoryHierarchy)
+    const category = relativeDirectory.split('/')[0]
 
-    // slug 생성?
-    const slug = isIndexFile ? `/${relativeDirectory}` : createFilePath({ node, getNode })
+    createNodeField({
+      node,
+      name: 'category',
+      value: category,
+    })
 
     // Add custom fields
     createNodeField({
@@ -64,32 +77,6 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
       name: 'slug',
       value: slug,
     })
-
-    createNodeField({
-      node,
-      name: 'categoryHierarchy',
-      value: categoryHierarchy,
-    })
-
-    createNodeField({
-      node,
-      name: 'category',
-      value: relativeDirectory,
-    })
-
-    createNodeField({
-      node,
-      name: 'isDirectoryPost',
-      value: isIndexFile,
-    })
-
-    if (isIndexFile) {
-      createNodeField({
-        node,
-        name: 'directoryPath',
-        value: relativeDirectory,
-      })
-    }
   }
 }
 
@@ -106,9 +93,8 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
               slug
               category
               categoryHierarchy
-              isDirectoryPost
-              directoryPath
             }
+
             frontmatter {
               draft
             }
@@ -142,10 +128,6 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
         context: {
           slug: node.fields.slug,
           category: node.fields.category,
-          categoryHierarchy: node.fields.categoryHierarchy,
-          // Pass directory info for image handling
-          isDirectoryPost: node.fields.isDirectoryPost,
-          directoryPath: node.fields.directoryPath,
         },
       })
     }

@@ -42,7 +42,6 @@ const IndexPage: FunctionComponent<PageProps<Queries.IndexPageQuery>> = function
   return (
     <Template>
       <Introduction selectedCategory={selectedCategory} categoryList={categoryList} />
-      {/*<CategoryList selectedCategory={selectedCategory} categoryList={categoryList} />*/}
       <PostList selectedCategory={selectedCategory} posts={edges} categoryList={categoryList} />
     </Template>
   )

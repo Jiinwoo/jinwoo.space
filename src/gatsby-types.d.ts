@@ -1399,33 +1399,25 @@ type MarkdownRemarkFieldSelector = {
 
 type MarkdownRemarkFields = {
   readonly category: Maybe<Scalars['String']>;
-  readonly categoryHierarchy: Maybe<ReadonlyArray<Maybe<Scalars['String']>>>;
-  readonly directoryPath: Maybe<Scalars['String']>;
-  readonly isDirectoryPost: Maybe<Scalars['Boolean']>;
+  readonly categoryHierarchy: Maybe<Scalars['String']>;
   readonly slug: Maybe<Scalars['String']>;
 };
 
 type MarkdownRemarkFieldsFieldSelector = {
   readonly category: InputMaybe<FieldSelectorEnum>;
   readonly categoryHierarchy: InputMaybe<FieldSelectorEnum>;
-  readonly directoryPath: InputMaybe<FieldSelectorEnum>;
-  readonly isDirectoryPost: InputMaybe<FieldSelectorEnum>;
   readonly slug: InputMaybe<FieldSelectorEnum>;
 };
 
 type MarkdownRemarkFieldsFilterInput = {
   readonly category: InputMaybe<StringQueryOperatorInput>;
   readonly categoryHierarchy: InputMaybe<StringQueryOperatorInput>;
-  readonly directoryPath: InputMaybe<StringQueryOperatorInput>;
-  readonly isDirectoryPost: InputMaybe<BooleanQueryOperatorInput>;
   readonly slug: InputMaybe<StringQueryOperatorInput>;
 };
 
 type MarkdownRemarkFieldsSortInput = {
   readonly category: InputMaybe<SortOrderEnum>;
   readonly categoryHierarchy: InputMaybe<SortOrderEnum>;
-  readonly directoryPath: InputMaybe<SortOrderEnum>;
-  readonly isDirectoryPost: InputMaybe<SortOrderEnum>;
   readonly slug: InputMaybe<SortOrderEnum>;
 };
 
@@ -2757,7 +2749,7 @@ type GatsbyImageSharpFluidLimitPresentationSizeFragment = { readonly maxHeight: 
 type IndexPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-type IndexPageQuery = { readonly site: { readonly siteMetadata: { readonly title: string | null, readonly description: string | null, readonly siteUrl: string | null } | null } | null, readonly allMarkdownRemark: { readonly edges: ReadonlyArray<{ readonly node: { readonly id: string, readonly fields: { readonly slug: string | null, readonly category: string | null, readonly categoryHierarchy: ReadonlyArray<string | null> | null } | null, readonly frontmatter: { readonly title: string | null, readonly summary: string | null, readonly date: string | null, readonly draft: boolean | null, readonly thumbnail: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null } }> } };
+type IndexPageQuery = { readonly site: { readonly siteMetadata: { readonly title: string | null, readonly description: string | null, readonly siteUrl: string | null } | null } | null, readonly allMarkdownRemark: { readonly edges: ReadonlyArray<{ readonly node: { readonly id: string, readonly fields: { readonly slug: string | null, readonly category: string | null, readonly categoryHierarchy: string | null } | null, readonly frontmatter: { readonly title: string | null, readonly summary: string | null, readonly date: string | null, readonly draft: boolean | null, readonly thumbnail: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null } }> } };
 
 type IntroductionDataQueryVariables = Exact<{ [key: string]: never; }>;
 
