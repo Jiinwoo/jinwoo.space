@@ -3,32 +3,27 @@ import { PostListItemType } from 'types/PostItem.types'
 
 export type useInfiniteScrollType = {
   containerRef: MutableRefObject<HTMLDivElement | null>
-  postList: PostListItemType[]
+  postList: Queries.IndexPageQuery['allMarkdownRemark']['edges']
 }
 
 const NUMBER_OF_ITEMS_PER_PAGE = 10
 
 const useInfiniteScroll = function (
   selectedCategory: string,
-  posts: PostListItemType[],
+  posts: Queries.IndexPageQuery['allMarkdownRemark']['edges'],
 ): useInfiniteScrollType {
-  const containerRef: MutableRefObject<HTMLDivElement | null> =
-    useRef<HTMLDivElement>(null)
-  const observer: MutableRefObject<IntersectionObserver | null> =
-    useRef<IntersectionObserver>(null)
+  const containerRef: MutableRefObject<HTMLDivElement | null> = useRef<HTMLDivElement>(null)
+  const observer: MutableRefObject<IntersectionObserver | null> = useRef<IntersectionObserver>(null)
   const [count, setCount] = useState<number>(1)
 
   const postListByCategory = useMemo<PostListItemType[]>(
     () =>
       posts.filter(
         ({
-           node: {
-             frontmatter: { categories },
-           },
-         }: PostListItemType) =>
-          selectedCategory !== 'All'
-            ? categories.includes(selectedCategory)
-            : true,
+          node: {
+            frontmatter: { categories },
+          },
+        }: PostListItemType) => (selectedCategory !== 'All' ? true : true),
       ),
     [selectedCategory],
   )
@@ -53,9 +48,7 @@ const useInfiniteScroll = function (
     )
       return
 
-    observer.current.observe(
-      containerRef.current.children[containerRef.current.children.length - 1],
-    )
+    observer.current.observe(containerRef.current.children[containerRef.current.children.length - 1])
   }, [count, selectedCategory])
 
   return {

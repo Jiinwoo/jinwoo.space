@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo } from 'react'
+import React, { FunctionComponent } from 'react'
 import styled from '@emotion/styled'
 import { Link } from 'gatsby'
 import { PostFrontmatterType } from '../../@types/PostItem.types'
@@ -9,7 +9,7 @@ type PostItemProps = PostFrontmatterType & { link: string }
 const PostItem: FunctionComponent<PostItemProps> = function ({
   title,
   date,
-  categories,
+  // categories,
   summary,
   thumbnail: {
     childImageSharp: { gatsbyImageData },
@@ -23,11 +23,11 @@ const PostItem: FunctionComponent<PostItemProps> = function ({
       <PostItemContent>
         <Title>{title}</Title>
         <Date>{date}</Date>
-        <Category>
-          {categories.map(category => (
-            <CategoryItem key={category}>{category}</CategoryItem>
-          ))}
-        </Category>
+        {/*<Category>*/}
+        {/*  {categories.map(category => (*/}
+        {/*    <CategoryItem key={category}>{category}</CategoryItem>*/}
+        {/*  ))}*/}
+        {/*</Category>*/}
         <Summary>{summary}</Summary>
       </PostItemContent>
     </PostItemWrapper>

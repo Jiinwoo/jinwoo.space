@@ -5,6 +5,7 @@ module.exports = {
     author: `jwjung5038@gmail.com`,
     siteUrl: `https://jinwoo.space`,
   },
+  graphqlTypegen: true,
   plugins: [
     {
       resolve: 'gatsby-plugin-robots-txt',
@@ -12,13 +13,13 @@ module.exports = {
         policy: [{ userAgent: '*', allow: '/' }],
       },
     },
-    "gatsby-plugin-sitemap",
+    'gatsby-plugin-sitemap',
     {
-      resolve: "gatsby-plugin-canonical-urls",
+      resolve: 'gatsby-plugin-canonical-urls',
       options: {
-        siteUrl: "https://jinwoo.space",
+        siteUrl: 'https://jinwoo.space',
         stripQueryString: true,
-      }
+      },
     },
     'gatsby-plugin-emotion',
     {

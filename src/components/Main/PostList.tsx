@@ -1,44 +1,55 @@
-import React, { FunctionComponent, useMemo } from 'react'
+import React, { FunctionComponent } from 'react'
 import styled from '@emotion/styled'
 import PostItem from 'components/Main/PostItem'
-import { PostListItemType } from '../../@types/PostItem.types'
 import useInfiniteScroll from 'hooks/useInfiniteScroll'
+import CategoryList, { CategoryListProps } from 'components/Main/CategoryList'
 
 type PostListProps = {
   selectedCategory: string
-  posts: PostListItemType[]
+  posts: Queries.IndexPageQuery['allMarkdownRemark']['edges']
+  categoryList: CategoryListProps['categoryList']
 }
-const PostList: FunctionComponent<PostListProps> = function ({ posts, selectedCategory }) {
+const PostList: FunctionComponent<PostListProps> = function ({ posts, selectedCategory, categoryList }) {
   const { containerRef, postList } = useInfiniteScroll(selectedCategory, posts)
   return (
-    <PostListWrapper ref={containerRef}>
-      {postList.map(
-        ({
-          node: {
-            id,
-            frontmatter,
-            fields: { slug },
-          },
-        }) => (
-          <PostItem {...frontmatter} link={slug} key={id} />
-        ),
-      )}
-    </PostListWrapper>
+    <Wrapper>
+      <Aside>
+        <CategoryList selectedCategory={selectedCategory} categoryList={categoryList} />
+      </Aside>
+      <PostListWrapper ref={containerRef}>
+        {postList.map(({ node: { id, frontmatter, fields } }) => (
+          <PostItem {...frontmatter} link={fields!.slug!} key={id} />
+        ))}
+      </PostListWrapper>
+    </Wrapper>
   )
 }
-
-const PostListWrapper = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 20px;
-  width: 768px;
+const Wrapper = styled.div`
+  display: flex;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 50px 0 100px;
+`
+
+const Aside = styled.aside`
+  width: 250px;
+  padding-right: 40px;
+
   @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-    width: 100%;
-    padding: 50px 20px;
+    display: none; // 모바일에서 숨김
   }
 `
 
+const PostListWrapper = styled.article`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 24px;
+  width: 768px;
+  padding: 50px 0 100px;
+
+  @media (max-width: 768px) {
+    width: 100%; // 전체 너비 사용
+    grid-template-columns: 1fr;
+    padding: 30px 20px;
+  }
+`
 export default PostList

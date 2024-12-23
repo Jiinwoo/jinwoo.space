@@ -122,6 +122,6 @@
     "skipLibCheck": true
     /* Skip type checking all .d.ts files. */
   },
-  "include": ["src/**/*.tsx"],
+  "include": ["./src/**/*"],
   "exclude": ["node_modules"]
 }

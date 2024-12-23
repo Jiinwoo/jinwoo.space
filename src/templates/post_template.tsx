@@ -40,7 +40,7 @@ const PostTemplate: FunctionComponent<PostTemplateProps> = function ({
   } = edges[0]
 
   return (
-    <Template title={title} description={summary} url={href} image={publicURL}>
+    <Template>
       <PostHead title={title} date={date} categories={categories} thumbnail={gatsbyImageData} />
       <PostContent html={html} />
       <CommentWidget />
