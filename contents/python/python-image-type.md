@@ -1,7 +1,7 @@
 ---
 date: '2024-08-05'
 title: '파이썬 라이브러리별 이미지 타입 비교'
-categories: ["AI", "Python", "Image Processing"]
+tags: ["AI", "Python", "Image Processing"]
 summary: "파이썬의 주요 이미지 처리 라이브러리인 OpenCV, PIL, PyTorch에서 이미지를 다루는 방법과 타입의 차이점을 알아봅니다."
 thumbnail: '../common.png'
 ---

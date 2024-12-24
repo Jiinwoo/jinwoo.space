@@ -1,7 +1,7 @@
 ---
 date: '2024-10-30'
 title: "대규모 시스템 설계 기초 2 - DIL (2)"
-categories: [ 'study', "DIL"]
+tags: [ 'study', "DIL"]
 summary: "지오해시"
 thumbnail: '../../common.png'
 ---

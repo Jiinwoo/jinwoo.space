@@ -1,7 +1,7 @@
 ---
 date: '2024-10-29'
 title: "대규모 시스템 설계 기초 2 - DIL (1)"
-categories: [ 'study', "DIL"]
+tags: [ 'study', "DIL"]
 summary: "근접성 서비스"
 thumbnail: '../../common.png'
 #draft: true

@@ -1,7 +1,7 @@
 ---
 date: '2022-09-22' 
 title: 'Kubernetes에서 Datadog을 사용하여 멀티라인 Java 로그 설정하기' 
-categories: ['Kubernetes', 'Datadog', 'Logging'] 
+tags: ['Kubernetes', 'Datadog', 'Logging'] 
 summary: 'Kubernetes 환경에서 Datadog을 사용할 때, JSON 포맷이나 Logback Encoder를 사용하지 않고 stdout으로 출력되는 Java 스택 트레이스를 하나의 로그로 처리하는 방법을 알아봅니다.' 
 thumbnail: '../common.png'
 ---

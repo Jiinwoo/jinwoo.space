@@ -1,7 +1,7 @@
 ---
 date: '2022-09-25'
 title: 'ktor-client sleuth 적용하기'
-categories: ['ktor']
+tags: ['ktor']
 summary: 'ktor client 에서 sleuth 를 적용하는 방법을 알아봅니다.'
 thumbnail: '../common.png'
 ---

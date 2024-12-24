@@ -1,7 +1,7 @@
 ---
 date: '2022-09-01'
 title: 'Raycast로 개발 생산성 높이기: 유용한 플러그인 소개'
-categories: ['Productivity', 'Development Tools']
+tags: ['Productivity', 'Development Tools']
 summary: 'Raycast의 다양한 플러그인을 활용하여 개발 생산성을 높이는 방법을 소개합니다.'
 thumbnail: '../../common.png'
 ---

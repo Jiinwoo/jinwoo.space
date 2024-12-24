@@ -1,7 +1,7 @@
 ---
 date: '2022-09-18' 
 title: 'Spring Boot OAuth2 Client 연동 시 scope에 openid를 지정했을 때 발생하는 에러' 
-categories: ['OAuth2', 'Spring Boot'] 
+tags: ['OAuth2', 'Spring Boot'] 
 summary: 'Spring Boot OAuth2 Client를 Google과 연동할 때 scope에 openid를 지정하면 발생하는 에러의 원인과 해결 방법을 알아봅니다.' 
 thumbnail: '../../common.png'
 ---

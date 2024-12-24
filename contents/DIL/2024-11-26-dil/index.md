@@ -1,7 +1,7 @@
 ---
 date: '2024-11-26'
 title: "대규모 시스템 설계 기초 2 DIL - 2"
-categories: [ 'study', "DIL" ]
+tags: [ 'study', "DIL" ]
 summary: "4장 분산 메시지 큐"
 thumbnail: '../../common.png'
 ---

@@ -1,7 +1,7 @@
 ---
 date: '2022-09-12'
 title: "MySQL 클라이언트 없이 DB 서버 네트워크 연결 확인하기"
-categories: ['Database', 'Linux']
+tags: ['Database', 'Linux']
 summary: 'MySQL 클라이언트 없이 DB 서버의 네트워크 연결 상태를 확인하는 방법을 알아봅니다.'
 thumbnail: '../../common.png'
 ---

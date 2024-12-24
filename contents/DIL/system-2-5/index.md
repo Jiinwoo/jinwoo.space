@@ -1,7 +1,7 @@
 ---
 date: '2024-11-27'
 title: "5장 지표 모니터링 및 경보 시스템"
-categories: [ 'study', "DIL" ]
+tags: [ 'study', "DIL" ]
 summary: "대규모 시스템 설계 기초 2 5장 지표 모니터링 및 경보 시스템 발표 자료"
 thumbnail: '../../common.png'
 ---

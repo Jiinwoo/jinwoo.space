@@ -5,9 +5,9 @@ import useInfiniteScroll from 'hooks/useInfiniteScroll'
 import CategoryList, { CategoryListProps } from 'components/Main/CategoryList'
 
 type PostListProps = {
-  selectedCategory: string
   posts: Queries.IndexPageQuery['allMarkdownRemark']['edges']
 
+  selectedCategory: string
   categoryList: CategoryListProps['categoryList']
 }
 const PostList: FunctionComponent<PostListProps> = function ({ posts, selectedCategory, categoryList }) {
@@ -40,8 +40,7 @@ const Wrapper = styled.div`
 `
 
 const Aside = styled.aside`
-  width: 250px;
-  padding-right: 40px;
+  width: 216px;
 
   @media (max-width: 768px) {
     display: none; // 모바일에서 숨김

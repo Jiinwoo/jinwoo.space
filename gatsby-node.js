@@ -92,19 +92,12 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
             fields {
               slug
               category
-              categoryHierarchy
             }
 
             frontmatter {
               draft
             }
           }
-        }
-      }
-      categories: allMarkdownRemark {
-        group(field: { fields: { category: SELECT } }) {
-          fieldValue
-          totalCount
         }
       }
     }

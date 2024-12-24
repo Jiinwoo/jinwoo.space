@@ -1,7 +1,7 @@
 ---
 date: '2024-11-07'
 title: "대규모 시스템 설계 기초 2 - 1장 근접성 서비스"
-categories: [ 'study', "WIL" ]
+tags: [ 'study', "WIL" ]
 summary: "1장 근접성 서비스 발표자료"
 thumbnail: '../../common.png'
 ---

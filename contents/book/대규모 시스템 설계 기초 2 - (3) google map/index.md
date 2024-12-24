@@ -1,7 +1,7 @@
 ---
 date: '2024-11-20'
 title: "대규모 시스템 설계 기초 2 - 3장 구글 맵"
-categories: [ 'study', "DIL" ]
+tags: [ 'study', "DIL" ]
 summary: "3장 구글 맵 발표자료"
 thumbnail: '../../common.png'
 ---

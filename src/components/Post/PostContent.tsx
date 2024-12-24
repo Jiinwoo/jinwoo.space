@@ -2,14 +2,20 @@ import React, { FunctionComponent } from 'react'
 import styled from '@emotion/styled'
 import { css } from '@emotion/react'
 import TableOfContents from 'components/Post/TableOfContents'
+import CategoryList, { CategoryListProps } from 'components/Main/CategoryList'
 
 interface PostContentProps {
   html: string
+  selectedCategory: string
+  categoryList: CategoryListProps['categoryList']
 }
 
-const PostContent: FunctionComponent<PostContentProps> = function ({ html }) {
+const PostContent: FunctionComponent<PostContentProps> = function ({ html, selectedCategory, categoryList }) {
   return (
     <Container>
+      <Aside>
+        <CategoryList selectedCategory={selectedCategory} categoryList={categoryList} />
+      </Aside>
       <ContentWrapper>
         <MarkdownContainer className="markdown-container" dangerouslySetInnerHTML={{ __html: html }} />
       </ContentWrapper>
@@ -45,12 +51,12 @@ const globalStyles = css`
   }
 
   code {
-    background-color: #f6f8fa;
+    background-color: #24292e;
     padding: 0.2em 0.4em;
     border-radius: 4px;
     font-size: 0.85em;
     font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
-    color: #24292e;
+    color: #f6f8fa;
 
     ${media.tablet} {
       font-size: 0.9em;
@@ -88,8 +94,25 @@ const globalStyles = css`
 const Container = styled.div`
   width: 100%;
   margin: 0 auto;
-  max-width: 768px;
+  max-width: 1200px;
   position: relative;
+  display: flex;
+  overflow-x: auto;
+`
+
+const Aside = styled.aside`
+  min-width: 216px;
+  width: 216px;
+
+  //padding-right: 10px;
+  //position: absolute;
+  //top: 0;
+  //left: -250px;
+  flex-shrink: 0;
+
+  @media (max-width: 768px) {
+    display: none; // 모바일에서 숨김
+  }
 `
 
 const ContentWrapper = styled.div`
@@ -97,18 +120,21 @@ const ContentWrapper = styled.div`
   justify-content: center;
   position: relative;
   padding: 1rem;
+  max-width: 768px;
+  width: 768px; // 추가
+  flex-shrink: 0;
 
-  ${media.mobile} {
-    padding: 1rem;
-  }
-
-  ${media.tablet} {
-    padding: 2rem;
-  }
-
-  ${media.desktop} {
-    padding: 0;
-  }
+  // ${media.mobile} {
+  //   padding: 1rem;
+  // }
+  //
+  // ${media.tablet} {
+  //   padding: 2rem;
+  // }
+  //
+  // ${media.desktop} {
+  //   padding: 0;
+  // }
 `
 
 const MarkdownContainer = styled.div`

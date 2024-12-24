@@ -12,6 +12,13 @@ interface TableOfContentsProps {
   contentSelector: string
 }
 
+const MOBILE_BREAKPOINT = 768
+const MIN_SIDEBAR_WIDTH = 216
+const SCROLL_THRESHOLD = 400
+const SCROLL_OFFSET = 200
+const HEADING_OFFSET = 100
+const DEBOUNCE_DELAY = 100
+
 const TableOfContents: React.FC<TableOfContentsProps> = ({ contentSelector }) => {
   const [headings, setHeadings] = useState<TOCItem[]>([])
   const [activeId, setActiveId] = useState<string>('')
@@ -19,167 +26,130 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ contentSelector }) =>
   const tocRef = useRef<HTMLDivElement>(null)
   const tocListRef = useRef<HTMLUListElement>(null)
 
-  // 모바일 체크 및 목차를 화면에 표시할 수 있는지 확인
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsNotVisible(window.innerWidth < 768 || (window.innerWidth - 768) / 2 - 28 < 180)
-    }
+  const checkMobile = useCallback(() => {
+    setIsNotVisible(
+      window.innerWidth < MOBILE_BREAKPOINT || (window.innerWidth - MOBILE_BREAKPOINT) / 2 < MIN_SIDEBAR_WIDTH,
+    )
+  }, [])
 
+  const handleTOCScroll = useCallback(
+    debounce(() => {
+      if (!tocRef.current) return
+      const scrollY = window.scrollY
+      tocRef.current.style.top = scrollY > SCROLL_THRESHOLD ? `${scrollY - SCROLL_OFFSET}px` : `${scrollY / 2}px`
+    }, DEBOUNCE_DELAY),
+    [],
+  )
+
+  const handleHeadingScroll = useCallback(
+    debounce(() => {
+      const headingElements = headings
+        .map(({ id }) => document.getElementById(id))
+        .filter((element): element is HTMLElement => element !== null)
+
+      const visibleHeadings = headingElements
+        .filter(element => element.getBoundingClientRect().top <= HEADING_OFFSET)
+        .map(element => ({
+          element,
+          top: Math.abs(element.getBoundingClientRect().top - HEADING_OFFSET),
+        }))
+
+      setActiveId(
+        visibleHeadings.length > 0
+          ? visibleHeadings.reduce((prev, curr) => (prev.top < curr.top ? prev : curr)).element.id
+          : '',
+      )
+    }, DEBOUNCE_DELAY),
+    [headings],
+  )
+
+  const scrollToHeading = useCallback((id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+  }, [])
+
+  useEffect(() => {
     checkMobile()
     window.addEventListener('resize', checkMobile)
     return () => window.removeEventListener('resize', checkMobile)
-  }, [])
+  }, [checkMobile])
 
-  // TOC 위치 조정
   useEffect(() => {
-    if (isNotVisible || tocRef.current === null) return
+    if (isNotVisible) return
+    handleTOCScroll()
+    window.addEventListener('scroll', handleTOCScroll)
+    return () => window.removeEventListener('scroll', handleTOCScroll)
+  }, [isNotVisible, handleTOCScroll])
 
-    const handleScroll = debounce(() => {
-      if (tocRef.current) {
-        const scrollY = window.scrollY
-
-        if (scrollY > 400) {
-          tocRef.current.style.top = `${scrollY - 200}px`
-        } else {
-          tocRef.current.style.top = `${scrollY / 2}px`
-        }
-      }
-    }, 100)
-
-    handleScroll()
-
-    window.addEventListener('scroll', handleScroll)
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
-  }, [isNotVisible])
-
-  // 제목 요소 추출
   useEffect(() => {
     const content = document.querySelector(contentSelector)
     if (!content) return
 
     const elements = content.querySelectorAll('h1, h2, h3')
-
-    const items: TOCItem[] = Array.from(elements).map((element, index) => {
-      if (!element.id) {
-        element.id = `heading-${index}`
-      }
-
-      return {
-        id: element.id,
-        title: element.textContent || '',
-        level: parseInt(element.tagName[1]),
-      }
-    })
+    const items: TOCItem[] = Array.from(elements).map((element, index) => ({
+      id: element.id || `heading-${index}`,
+      title: element.textContent || '',
+      level: parseInt(element.tagName[1]),
+    }))
 
     setHeadings(items)
   }, [contentSelector])
 
-  // 활성 항목으로 스크롤
   useEffect(() => {
-    if (!tocListRef.current) return
-
-    const targetId = activeId === '' ? 'heading-0' : activeId
-    const activeElement: HTMLDivElement | null = tocListRef.current.querySelector(`[data-id="${targetId}"]`)
-    if (!activeElement) return
-
     const container = tocListRef.current
+    const activeElement = container?.querySelector(`[data-id="${activeId || 'heading-0'}"]`) as HTMLDivElement
+    if (!container || !activeElement) return
+
     const containerRect = container.getBoundingClientRect()
     const activeRect = activeElement.getBoundingClientRect()
 
-    // 활성 요소가 컨테이너를 벗어났는지 확인
     if (activeRect.top < containerRect.top || activeRect.bottom > containerRect.bottom) {
-      // 활성 요소가 컨테이너의 중앙에 오도록 스크롤
       const scrollTop = activeElement.offsetTop - container.offsetHeight / 2 + activeElement.offsetHeight / 2
-
-      container.scrollTo({
-        top: scrollTop,
-        behavior: 'smooth',
-      })
+      container.scrollTo({ top: scrollTop, behavior: 'smooth' })
     }
   }, [activeId])
 
-  // 스크롤 추적
   useEffect(() => {
-    const callback = debounce(() => {
-      const headingElements = headings
-        .map(({ id }) => document.getElementById(id))
-        .filter((element): element is HTMLElement => element !== null)
-
-      const visibleHeadings: { element: HTMLElement; top: number }[] = []
-
-      headingElements.forEach(element => {
-        const rect = element.getBoundingClientRect()
-        if (rect.top <= 100) {
-          visibleHeadings.push({ element, top: Math.abs(rect.top - 100) })
-        }
-      })
-
-      if (visibleHeadings.length > 0) {
-        const closest = visibleHeadings.reduce((prev, curr) => (prev.top < curr.top ? prev : curr))
-        setActiveId(closest.element.id)
-      } else {
-        // 스크롤이 맨 위에 있을 때
-        setActiveId('')
-      }
-    }, 100)
-    // callback()
-
-    window.addEventListener('scroll', callback)
-    return () => window.removeEventListener('scroll', callback)
-  }, [headings])
-
-  const handleClick = useCallback(
-    (id: string) => {
-      document.getElementById(id)?.scrollIntoView({
-        behavior: 'smooth',
-      })
-    },
-    [isNotVisible],
-  )
+    window.addEventListener('scroll', handleHeadingScroll)
+    return () => window.removeEventListener('scroll', handleHeadingScroll)
+  }, [handleHeadingScroll])
 
   return (
-    <>
-      <TOCContainer ref={tocRef} isNotVisible={isNotVisible} onClick={e => e.stopPropagation()}>
-        <TOCTitle>목차</TOCTitle>
-        <TOCList ref={tocListRef}>
-          {headings.map((heading, i) => (
-            <TOCItem
-              key={heading.id}
-              level={heading.level}
-              isActive={activeId === '' ? i === 0 : activeId === heading.id}
-              data-id={heading.id}
+    <TOCContainer ref={tocRef} $isNotVisible={isNotVisible} onClick={e => e.stopPropagation()}>
+      <TOCTitle>목차</TOCTitle>
+      <TOCList ref={tocListRef}>
+        {headings.map((heading, i) => (
+          <TOCItem
+            key={heading.id}
+            $level={heading.level}
+            $isActive={activeId === '' ? i === 0 : activeId === heading.id}
+            data-id={heading.id}
+          >
+            <TOCLink
+              onClick={() => scrollToHeading(heading.id)}
+              $isActive={activeId === '' ? i === 0 : activeId === heading.id}
             >
-              <TOCLink
-                onClick={() => handleClick(heading.id)}
-                isActive={activeId === '' ? i === 0 : activeId === heading.id}
-              >
-                {heading.title}
-              </TOCLink>
-            </TOCItem>
-          ))}
-        </TOCList>
-      </TOCContainer>
-    </>
+              {heading.title}
+            </TOCLink>
+          </TOCItem>
+        ))}
+      </TOCList>
+    </TOCContainer>
   )
 }
 
-const TOCContainer = styled.nav<{ isNotVisible: boolean }>`
-  ${({ isNotVisible }) =>
-    isNotVisible
+const TOCContainer = styled.nav<{ $isNotVisible: boolean }>`
+  ${({ $isNotVisible }) =>
+    $isNotVisible
       ? `
         opacity: 0;
         visibility: hidden; 
+        display:none;
       `
       : `
         position: absolute;
-        left: 100%;
+        right: -16px;
         margin-top: 2.5rem;
-        margin-left: 2rem;
-        width: calc((100vw - 768px)/2 - 2rem);
-        max-width: 250px;
+        width: 200px;
         background: white;
         border-radius: 8px;
         border: 1px solid #e2e8f0;
@@ -189,8 +159,8 @@ const TOCContainer = styled.nav<{ isNotVisible: boolean }>`
 `
 
 const TOCTitle = styled.h2`
-  font-size: 1.2em;
-  margin-bottom: 1rem;
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
   color: #2d3748;
   font-weight: 600;
   padding: 0.5rem 1rem;
@@ -206,19 +176,19 @@ const TOCList = styled.ul`
   padding-right: 1rem;
 `
 
-const TOCItem = styled.li<{ level: number; isActive: boolean }>`
+const TOCItem = styled.li<{ $level: number; $isActive: boolean }>`
   margin: 0.5rem 0;
-  padding-left: ${props => (props.level - 1) * 1}rem;
-  border-left: 2px solid ${props => (props.isActive ? '#4a9eff' : 'transparent')};
+  padding-left: ${props => (props.$level - 1) * 0.75}rem;
+  border-left: 2px solid ${props => (props.$isActive ? '#4a9eff' : 'transparent')};
 `
 
-const TOCLink = styled.button<{ isActive: boolean }>`
+const TOCLink = styled.button<{ $isActive: boolean }>`
   background: none;
   border: none;
   padding: 4px 8px;
-  color: ${props => (props.isActive ? '#4a9eff' : '#4a5568')};
+  color: ${props => (props.$isActive ? '#4a9eff' : '#4a5568')};
   text-decoration: none;
-  font-size: 0.95em;
+  font-size: 0.875rem;
   cursor: pointer;
   width: 100%;
   text-align: left;

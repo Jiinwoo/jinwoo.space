@@ -67,7 +67,6 @@ export const getPostList = graphql`
           fields {
             slug
             category
-            categoryHierarchy
           }
           frontmatter {
             title

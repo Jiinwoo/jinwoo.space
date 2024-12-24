@@ -1,7 +1,7 @@
 ---
 date: '2024-10-31'
 title: "대규모 시스템 설계 기초 2 - DIL (3)"
-categories: [ 'study', "DIL" ]
+tags: [ 'study', "DIL" ]
 summary: "쿼드트리 및 구글 S2"
 thumbnail: '../../common.png'
 ---

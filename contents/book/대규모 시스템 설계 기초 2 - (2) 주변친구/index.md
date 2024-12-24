@@ -1,7 +1,7 @@
 ---
 date: '2024-11-13'
 title: "대규모 시스템 설계 기초 2 - 2장 주변 친구"
-categories: [ 'study', "WIL" ]
+tags: [ 'study', "WIL" ]
 summary: "2장 주변친구 발표자료"
 thumbnail: '../../common.png'
 ---

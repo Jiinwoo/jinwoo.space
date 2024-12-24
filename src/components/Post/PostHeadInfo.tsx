@@ -1,27 +1,54 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useState } from 'react'
 import styled from '@emotion/styled'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import { faArrowLeft, faBars } from '@fortawesome/free-solid-svg-icons'
+import CategoryList from 'components/Main/CategoryList'
+import { CategoryListProps } from '../../@types/Category.types'
 
 export type PostHeadInfoProps = {
   title: string
   date: string
-  categories: string[]
+  tags: string[]
+  selectedCategory: string
+  categoryList: CategoryListProps['categoryList']
 }
 
-const PostHeadInfo: FunctionComponent<PostHeadInfoProps> = function ({ title, date, categories }) {
+const PostHeadInfo: FunctionComponent<PostHeadInfoProps> = function ({
+  title,
+  date,
+  tags,
+  selectedCategory,
+  categoryList,
+}) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  // 메뉴 닫기 핸들러
+  const closeMenu = () => setIsMenuOpen(false)
+
   const goBackPage = () => window.history.back()
 
   return (
     <PostHeadInfoWrapper>
-      <PrevPageIcon onClick={goBackPage}>
-        <FontAwesomeIcon icon={faArrowLeft} />
-      </PrevPageIcon>
+      <NavWrapper>
+        <PrevPageIcon onClick={goBackPage}>
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </PrevPageIcon>
+        <MenuButton onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <FontAwesomeIcon icon={faBars} />
+        </MenuButton>
+      </NavWrapper>
+
       <Title>{title}</Title>
       <PostData>
-        <div>{categories.join(' / ')}</div>
+        <div>{tags.join(', ')}</div>
         <div>{date}</div>
       </PostData>
+      {/* 모바일 메뉴 오버레이 */}
+      <MobileMenuOverlay isOpen={isMenuOpen} onClick={closeMenu}>
+        <CategoryWrapper onClick={e => e.stopPropagation()} isOpen={isMenuOpen}>
+          <CategoryList selectedCategory={selectedCategory} categoryList={categoryList} />
+        </CategoryWrapper>
+      </MobileMenuOverlay>
     </PostHeadInfoWrapper>
   )
 }
@@ -34,12 +61,11 @@ const PostHeadInfoWrapper = styled.div`
   margin: 0 auto;
   padding: 60px 0;
   color: #ffffff;
-  
+
   @media (max-width: 768px) {
     width: 100%;
     padding: 40px 20px;
   }
-  
 `
 
 const PrevPageIcon = styled.div`
@@ -92,7 +118,76 @@ const PostData = styled.div`
     font-size: 15px;
     font-weight: 400;
   }
-  
+`
+
+const NavWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+`
+
+const MenuButton = styled.button`
+  display: none;
+
+  @media (max-width: 768px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: transparent;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 100;
+  }
+`
+
+const MobileMenuOverlay = styled.div<{ isOpen: boolean }>`
+  display: none;
+
+  @media (max-width: 768px) {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 90;
+    opacity: ${props => (props.isOpen ? 1 : 0)};
+    visibility: ${props => (props.isOpen ? 'visible' : 'hidden')};
+    transition:
+      opacity 0.3s ease-in-out,
+      visibility 0.3s ease-in-out;
+    backdrop-filter: blur(4px);
+  }
+`
+
+const CategoryWrapper = styled.div<{ isOpen: boolean }>`
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 80%;
+  max-width: 300px;
+  height: 100%;
+  background-color: #29323c;
+  padding: 60px 20px 20px;
+  overflow-y: auto;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
+  transform: translateX(${props => (props.isOpen ? '0' : '100%')});
+  transition: transform 0.3s ease-in-out;
+
+  // CategoryList 스타일 오버라이드가 필요한 경우
+
+  & * {
+    color: white;
+  }
 `
 
 export default PostHeadInfo

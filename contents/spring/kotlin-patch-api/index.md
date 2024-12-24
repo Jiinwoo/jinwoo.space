@@ -1,7 +1,7 @@
 ---
 date: '2023-07-30'
 title: 'Kotlin과 Spring WebMVC로 효율적인 PATCH API 작성하기'
-categories: [ 'Kotlin', 'HTTP', 'Spring', 'WebMVC' ]
+tags: [ 'Kotlin', 'HTTP', 'Spring', 'WebMVC' ]
 summary: 'Kotlin과 Spring WebMVC를 사용하여 PATCH API를 효율적으로 작성하는 방법을 알아봅니다. (부제: null을 도메인 로직에 사용하지 않기)'
 thumbnail: '../../common.png'
 ---

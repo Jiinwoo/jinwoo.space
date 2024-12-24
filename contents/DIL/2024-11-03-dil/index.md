@@ -1,7 +1,7 @@
 ---
 date: '2024-11-02'
 title: "Real Mysql dil"
-categories: [ 'study', "DIL" ]
+tags: [ 'study', "DIL" ]
 summary: "1~3장"
 thumbnail: '../../common.png'
 draft: false

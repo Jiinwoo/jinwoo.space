@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react'
 import styled from '@emotion/styled'
 import { GatsbyImage, IGatsbyImageData } from 'gatsby-plugin-image'
 import PostHeadInfo, { PostHeadInfoProps } from 'components/Post/PostHeadInfo'
+import { CategoryListProps } from '../../@types/Category.types'
 
 type GatsbyImgProps = {
   image: IGatsbyImageData
@@ -10,14 +11,29 @@ type GatsbyImgProps = {
 }
 
 type PostHeadProps = PostHeadInfoProps & {
-  thumbnail: IGatsbyImageData
+  thumbnail: IGatsbyImageData | undefined
+  selectedCategory: string
+  categoryList: CategoryListProps['categoryList']
 }
 
-const PostHead: FunctionComponent<PostHeadProps> = function ({ thumbnail, title, date, categories }) {
+const PostHead: FunctionComponent<PostHeadProps> = function ({
+  thumbnail,
+  title,
+  date,
+  tags,
+  selectedCategory,
+  categoryList,
+}) {
   return (
     <PostHeadWrapper>
-      <BackgroundImage image={thumbnail} alt="thumbnail" />
-      <PostHeadInfo title={title} date={date} categories={categories} />
+      {thumbnail && <BackgroundImage image={thumbnail} alt="thumbnail" />}
+      <PostHeadInfo
+        title={title}
+        date={date}
+        tags={tags}
+        selectedCategory={selectedCategory}
+        categoryList={categoryList}
+      />
     </PostHeadWrapper>
   )
 }

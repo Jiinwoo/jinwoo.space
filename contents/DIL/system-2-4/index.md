@@ -1,7 +1,7 @@
 ---
 date: '2024-11-27'
 title: "4장 분산 메시지 큐"
-categories: [ 'study', "DIL" ]
+tags: [ 'study', "DIL" ]
 summary: "대규모 시스템 설계 기초 2 4장 분산 메시지 큐 발표 자료"
 thumbnail: '../../common.png'
 ---
