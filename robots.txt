@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://jinwoo.space/sitemap-index.xml
-Host: https://jinwoo.space
+Sitemap: https://blog.woos.dev/sitemap-index.xml
+Host: https://blog.woos.dev
