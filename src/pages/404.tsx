@@ -1,7 +1,8 @@
 import React, { FunctionComponent } from 'react'
 import styled from '@emotion/styled'
 import { Link } from 'gatsby'
-import GlobalStyle from 'components/common/GlobalStyle'
+import GlobalStyle from '@/styles/GlobalStyle'
+import { Helmet } from 'react-helmet'
 
 const NotFoundPageWrapper = styled.div`
   display: flex;
@@ -43,6 +44,10 @@ const GoToMainButton = styled(Link)`
 const NotFoundPage: FunctionComponent = function () {
   return (
     <NotFoundPageWrapper>
+      <Helmet>
+        <meta name="robots" content="noindex, nofollow" />
+        <title>404: 페이지를 찾을 수 없습니다</title>
+      </Helmet>
       <GlobalStyle />
       <NotFoundText>404</NotFoundText>
       <NotFoundDescription>

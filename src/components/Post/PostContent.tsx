@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from 'react'
 import styled from '@emotion/styled'
 import { css, Theme } from '@emotion/react'
-import TableOfContents from 'components/Post/TableOfContents'
-import CategoryList from 'components/common/CategoryList'
+import TableOfContents from '@/components/Post/TableOfContents'
+import CategoryList from '@/components/common/CategoryList'
 
 interface PostContentProps {
   html: string

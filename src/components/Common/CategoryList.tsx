@@ -43,7 +43,7 @@ const useCategoryData = () => {
   })
 }
 
-const CategoryList: React.FC<CategoryProps> = ({ selectedCategory, variant = 'sidebar', onItemClick }) => {
+const CategoryList = ({ selectedCategory, variant = 'sidebar', onItemClick }: CategoryProps) => {
   const sortedCategories = useCategoryData()
 
   return (

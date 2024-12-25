@@ -3,7 +3,6 @@ import styled from '@emotion/styled'
 import { Link } from 'gatsby'
 import { GatsbyImage, IGatsbyImageData } from 'gatsby-plugin-image'
 
-// type PostItemProps = PostFrontmatterType & { link: string }
 interface PostItemProps {
   title: string
   date: string

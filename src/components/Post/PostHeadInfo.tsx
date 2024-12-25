@@ -2,7 +2,7 @@ import React, { FunctionComponent, useState } from 'react'
 import styled from '@emotion/styled'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft, faBars } from '@fortawesome/free-solid-svg-icons'
-import CategoryList from 'components/common/CategoryList'
+import CategoryList from '@/components/common/CategoryList'
 
 export type PostHeadInfoProps = {
   title: string

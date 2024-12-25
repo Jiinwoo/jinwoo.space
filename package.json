@@ -11,7 +11,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@types/react-helmet": "^6.1.11",
-    "gatsby": "^5.13.3",
+    "gatsby": "^5.14.1",
     "gatsby-plugin-canonical-urls": "^5.13.1",
     "gatsby-plugin-emotion": "^8.13.1",
     "gatsby-plugin-image": "^3.13.1",
@@ -32,8 +32,8 @@
     "prismjs": "^1.29.0",
     "prop-types": "^15.8.1",
     "query-string": "^9.0.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-helmet": "^6.1.0"
   },
   "devDependencies": {

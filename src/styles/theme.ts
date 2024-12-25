@@ -144,7 +144,7 @@ const zIndices = {
   footer: 500,
 }
 
-type CustomTheme = {
+export type CustomTheme = {
   colors: typeof colors
   typography: typeof typography
   spacing: typeof spacing
@@ -164,9 +164,4 @@ export const theme: CustomTheme = {
   borderRadius,
   shadows,
   zIndices,
-}
-
-// emotion의 Theme 타입 확장
-declare module '@emotion/react' {
-  export interface Theme extends CustomTheme {}
 }

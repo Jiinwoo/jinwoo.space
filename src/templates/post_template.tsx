@@ -1,9 +1,10 @@
 import React, { FunctionComponent } from 'react'
 import { graphql, PageProps } from 'gatsby'
-import Layout from 'components/common/Layout'
-import PostHead from 'components/Post/PostHead'
-import PostContent from 'components/Post/PostContent'
-import CommentWidget from 'components/Post/CommentWidget'
+import Layout from '@/components/common/Layout'
+import PostHead from '@/components/Post/PostHead'
+import PostContent from '@/components/Post/PostContent'
+import CommentWidget from '@/components/Post/CommentWidget'
+import SEO from '@/components/common/SEO'
 
 function nonNullable<T>(value: T): value is NonNullable<T> {
   return value !== null && value !== undefined
@@ -26,6 +27,12 @@ const PostTemplate: FunctionComponent<PageProps<Queries.findMarkdownDataBySlugQu
 
   return (
     <Layout>
+      <SEO
+        title={frontmatter?.title}
+        description={frontmatter?.summary}
+        article={true}
+        imageUrl={frontmatter?.thumbnail?.publicURL}
+      />
       <PostHead
         title={title}
         date={date}

@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from 'react'
 import styled from '@emotion/styled'
-import PostItem from 'components/Main/PostItem'
-import useInfiniteScroll from 'hooks/useInfiniteScroll'
-import CategoryList from 'components/common/CategoryList'
+import PostItem from '@/components/Main/PostItem'
+import useInfiniteScroll from '@/hooks/useInfiniteScroll'
+import CategoryList from '@/components/common/CategoryList'
 
 type PostListProps = {
   posts: Queries.IndexPageQuery['allMarkdownRemark']['edges']

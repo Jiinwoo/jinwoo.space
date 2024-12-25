@@ -35,8 +35,25 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ contentSelector }) =>
   const handleTOCScroll = useCallback(
     debounce(() => {
       if (!tocRef.current) return
+
+      const content: HTMLDivElement | null = document.querySelector(contentSelector)
+      if (!content) return
+
+      const contentRect = content.getBoundingClientRect()
+      const contentBottom = content.offsetTop + contentRect.height
       const scrollY = window.scrollY
-      tocRef.current.style.top = scrollY > SCROLL_THRESHOLD ? `${scrollY - SCROLL_OFFSET}px` : `${scrollY / 2}px`
+      const tocHeight = tocRef.current.offsetHeight
+
+      // Calculate the maximum allowed top position for TOC
+      const maxTop = contentBottom - tocHeight - 20
+
+      // Calculate the desired top position based on scroll
+      let desiredTop = scrollY > SCROLL_THRESHOLD ? scrollY - SCROLL_OFFSET : scrollY / 2
+
+      // Ensure TOC doesn't go beyond content bottom
+      const finalTop = Math.min(desiredTop, maxTop)
+
+      tocRef.current.style.top = `${finalTop}px`
     }, DEBOUNCE_DELAY),
     [],
   )

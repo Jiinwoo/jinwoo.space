@@ -1,15 +1,17 @@
 import React from 'react'
 
-import Introduction from 'components/Main/Introduction'
-import PostList from 'components/Main/PostList'
+import Introduction from '@/components/Main/Introduction'
+import PostList from '@/components/Main/PostList'
 import { graphql, PageProps } from 'gatsby'
 import queryString, { ParsedQuery } from 'query-string'
-import Layout from 'components/common/Layout'
+import Layout from '@/components/common/Layout'
+import SEO from '@/components/common/SEO'
 
 const IndexPage = function ({
   location: { search },
   data: {
     allMarkdownRemark: { edges },
+    site,
   },
 }: PageProps<Queries.IndexPageQuery>) {
   const parsed: ParsedQuery = queryString.parse(search)
@@ -17,6 +19,11 @@ const IndexPage = function ({
 
   return (
     <Layout>
+      <SEO
+        title={site?.siteMetadata?.title}
+        description={site?.siteMetadata?.description}
+        imageUrl="/og-image.jpg" // 대표 이미지 설정
+      />
       <Introduction selectedCategory={selectedCategory} />
       <PostList selectedCategory={selectedCategory} posts={edges} />
     </Layout>

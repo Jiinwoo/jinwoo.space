@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <FooterWrapper>
       Thank You for Visiting My Blog, Have a Good Day 😆
-      <br />© 2022 Developer Jung, Powered By Gatsby.
+      <br />© 2025 Developer Jung, Powered By Gatsby.
     </FooterWrapper>
   )
 }

@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react'
 import styled from '@emotion/styled'
-import Footer from 'components/common/Footer'
-import SEO from 'components/common/SEO'
-import ThemeProvider from 'components/common/ThemeProvider'
+import Footer from '@/components/common/Footer'
+import SEO from '@/components/common/SEO'
+import ThemeProvider from '@/components/common/ThemeProvider'
 
 type LayoutProps = {
   children: ReactNode

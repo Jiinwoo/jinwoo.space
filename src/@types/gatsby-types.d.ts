@@ -2767,7 +2767,7 @@ type IntroductionDataQuery = { readonly file: { readonly childImageSharp: { read
 type SEODataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-type SEODataQuery = { readonly site: { readonly siteMetadata: { readonly siteUrl: string | null, readonly defaultTitle: string | null, readonly defaultDescription: string | null } | null } | null };
+type SEODataQuery = { readonly site: { readonly siteMetadata: { readonly siteUrl: string | null, readonly defaultTitle: string | null, readonly defaultDescription: string | null } | null } | null, readonly file: { readonly publicURL: string | null } | null };
 
 
 }

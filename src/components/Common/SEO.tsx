@@ -3,14 +3,14 @@ import { Helmet } from 'react-helmet'
 import { graphql, useStaticQuery } from 'gatsby'
 
 interface SEOProps {
-  title?: string
-  description?: string
-  image?: string
-  article?: boolean
+  title?: string | null
+  description?: string | null
+  imageUrl?: string | null
+  article?: boolean | null
 }
 
-const SEO = ({ title, description, image, article }: SEOProps) => {
-  const { site } = useStaticQuery<Queries.SEODataQuery>(graphql`
+const SEO = ({ title, description, imageUrl, article }: SEOProps) => {
+  const { site, file } = useStaticQuery<Queries.SEODataQuery>(graphql`
     query SEOData {
       site {
         siteMetadata {
@@ -19,13 +19,18 @@ const SEO = ({ title, description, image, article }: SEOProps) => {
           siteUrl
         }
       }
+      file(name: { eq: "seo" }) {
+        publicURL
+      }
     }
   `)
 
   const seo = {
     title: title || site?.siteMetadata?.defaultTitle || '',
     description: description || site?.siteMetadata?.defaultDescription || '',
-    image: image ? `${site?.siteMetadata?.siteUrl}${image}` : null,
+    imageUri: imageUrl
+      ? `${site?.siteMetadata?.siteUrl}${imageUrl}`
+      : `${site?.siteMetadata?.siteUrl}${file?.publicURL}`,
     url: site?.siteMetadata?.siteUrl || '',
   }
 
@@ -39,14 +44,14 @@ const SEO = ({ title, description, image, article }: SEOProps) => {
       <meta property="og:type" content={article ? 'article' : 'website'} />
       <meta property="og:title" content={seo.title} />
       <meta property="og:description" content={seo.description} />
-      {seo.image && <meta property="og:image" content={seo.image} />}
+      {seo.imageUri && <meta property="og:image" content={seo.imageUri} />}
       <meta property="og:url" content={seo.url} />
 
       {/* Twitter Card */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={seo.title} />
       <meta name="twitter:description" content={seo.description} />
-      {seo.image && <meta name="twitter:image" content={seo.image} />}
+      {seo.imageUri && <meta name="twitter:image" content={seo.imageUri} />}
     </Helmet>
   )
 }
