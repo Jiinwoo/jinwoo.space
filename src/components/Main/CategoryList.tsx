@@ -5,8 +5,6 @@ import styled from '@emotion/styled'
 type CategoryNode = {
   name: string
   count: number
-
-  // children: Record<string, CategoryNode>
 }
 
 export type CategoryListProps = {

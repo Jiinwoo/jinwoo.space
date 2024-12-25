@@ -2716,12 +2716,17 @@ type WebPOptions = {
   readonly quality: InputMaybe<Scalars['Int']>;
 };
 
+type CategoryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+type CategoryQuery = { readonly allMarkdownRemark: { readonly group: ReadonlyArray<{ readonly fieldValue: string | null, readonly totalCount: number }> } };
+
 type findMarkdownDataBySlugQueryVariables = Exact<{
   slug: InputMaybe<Scalars['String']>;
 }>;
 
 
-type findMarkdownDataBySlugQuery = { readonly allMarkdownRemark: { readonly edges: ReadonlyArray<{ readonly node: { readonly html: string | null, readonly fields: { readonly category: string | null } | null, readonly frontmatter: { readonly title: string | null, readonly summary: string | null, readonly date: string | null, readonly tags: ReadonlyArray<string | null> | null, readonly thumbnail: { readonly publicURL: string | null, readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null } }> }, readonly categories: { readonly group: ReadonlyArray<{ readonly fieldValue: string | null, readonly totalCount: number }> } };
+type findMarkdownDataBySlugQuery = { readonly allMarkdownRemark: { readonly edges: ReadonlyArray<{ readonly node: { readonly html: string | null, readonly fields: { readonly category: string | null } | null, readonly frontmatter: { readonly title: string | null, readonly summary: string | null, readonly date: string | null, readonly tags: ReadonlyArray<string | null> | null, readonly thumbnail: { readonly publicURL: string | null, readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null } }> } };
 
 type GatsbyImageSharpFixedFragment = { readonly base64: string | null, readonly width: number, readonly height: number, readonly src: string, readonly srcSet: string };
 
@@ -2763,11 +2768,6 @@ type SEODataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 type SEODataQuery = { readonly site: { readonly siteMetadata: { readonly siteUrl: string | null, readonly defaultTitle: string | null, readonly defaultDescription: string | null } | null } | null };
-
-type TemplateDataQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-type TemplateDataQuery = { readonly site: { readonly siteMetadata: { readonly title: string | null, readonly description: string | null, readonly siteUrl: string | null } | null } | null, readonly file: { readonly publicURL: string | null } | null };
 
 
 }

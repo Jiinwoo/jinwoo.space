@@ -1,49 +1,25 @@
-import React, { FunctionComponent, useMemo } from 'react'
-import { CategoryListProps } from 'components/Main/CategoryList'
+import React from 'react'
+
 import Introduction from 'components/Main/Introduction'
 import PostList from 'components/Main/PostList'
 import { graphql, PageProps } from 'gatsby'
 import queryString, { ParsedQuery } from 'query-string'
-import Template from 'components/Common/Template'
+import Layout from 'components/common/Layout'
 
-const IndexPage: FunctionComponent<PageProps<Queries.IndexPageQuery>> = function ({
+const IndexPage = function ({
   location: { search },
   data: {
     allMarkdownRemark: { edges },
   },
-}) {
+}: PageProps<Queries.IndexPageQuery>) {
   const parsed: ParsedQuery = queryString.parse(search)
   const selectedCategory: string = typeof parsed.category !== 'string' || !parsed.category ? 'All' : parsed.category
 
-  // 카테고리 목록 생성 로직 수정
-  const categoryList = useMemo(
-    () =>
-      edges.reduce(
-        (list: CategoryListProps['categoryList'], cur) => {
-          if (!cur?.node?.fields?.category) return list
-
-          if (cur.node.fields.category) {
-            if (!list[cur.node.fields.category]) {
-              list[cur.node.fields.category] = 1
-            } else {
-              list[cur.node.fields.category] += 1
-            }
-          }
-
-          list['All']++
-
-          return list
-        },
-        { All: 0 },
-      ),
-    [edges],
-  )
-
   return (
-    <Template>
-      <Introduction selectedCategory={selectedCategory} categoryList={categoryList} />
-      <PostList selectedCategory={selectedCategory} posts={edges} categoryList={categoryList} />
-    </Template>
+    <Layout>
+      <Introduction selectedCategory={selectedCategory} />
+      <PostList selectedCategory={selectedCategory} posts={edges} />
+    </Layout>
   )
 }
 

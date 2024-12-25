@@ -2,21 +2,18 @@ import React, { FunctionComponent } from 'react'
 import styled from '@emotion/styled'
 import PostItem from 'components/Main/PostItem'
 import useInfiniteScroll from 'hooks/useInfiniteScroll'
-import CategoryList, { CategoryListProps } from 'components/Main/CategoryList'
+import CategoryList from 'components/common/CategoryList'
 
 type PostListProps = {
   posts: Queries.IndexPageQuery['allMarkdownRemark']['edges']
-
   selectedCategory: string
-  categoryList: CategoryListProps['categoryList']
 }
-const PostList: FunctionComponent<PostListProps> = function ({ posts, selectedCategory, categoryList }) {
+const PostList: FunctionComponent<PostListProps> = function ({ posts, selectedCategory }) {
   const { containerRef, postList } = useInfiniteScroll(selectedCategory, posts)
-  console.log(postList)
   return (
     <Wrapper>
       <Aside>
-        <CategoryList selectedCategory={selectedCategory} categoryList={categoryList} />
+        <CategoryList selectedCategory={selectedCategory} variant={'sidebar'} />
       </Aside>
       <PostListWrapper ref={containerRef}>
         {postList.map(({ node: { id, frontmatter, fields } }) => (
@@ -49,15 +46,16 @@ const Aside = styled.aside`
 
 const PostListWrapper = styled.article`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
   grid-gap: 24px;
-  width: 768px;
-  padding: 50px 0 100px;
 
-  @media (max-width: 768px) {
-    width: 100%; // 전체 너비 사용
-    grid-template-columns: 1fr;
-    padding: 30px 20px;
+  width: 100%; // 전체 너비 사용
+  grid-template-columns: 1fr;
+  padding: 30px 20px;
+
+  ${({ theme }) => theme.mediaQueries.tablet} {
+    grid-template-columns: repeat(2, 1fr);
+    width: 768px;
+    padding: 16px 0 100px;
   }
 `
 export default PostList

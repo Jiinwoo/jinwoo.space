@@ -8,7 +8,11 @@ const defaultStyle = css`
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family: 나눔고딕, 'NanumGothic', Nanum Gothic, sans-serif;
+    font-family:
+      나눔고딕,
+      'NanumGothic',
+      Nanum Gothic,
+      sans-serif;
   }
 
   html,

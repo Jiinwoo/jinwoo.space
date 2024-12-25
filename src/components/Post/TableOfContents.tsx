@@ -147,8 +147,8 @@ const TOCContainer = styled.nav<{ $isNotVisible: boolean }>`
       `
       : `
         position: absolute;
-        right: -16px;
-        margin-top: 2.5rem;
+        right: 0px;
+        margin-top: 16px;
         width: 200px;
         background: white;
         border-radius: 8px;

@@ -4,15 +4,13 @@ import { graphql, useStaticQuery } from 'gatsby'
 import { GatsbyImage } from 'gatsby-plugin-image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
-import CategoryList from 'components/Main/CategoryList'
-import { CategoryListProps } from '../../@types/Category.types'
+import CategoryList from 'components/common/CategoryList'
 
 interface IntroductionProps {
   selectedCategory: string
-  categoryList: CategoryListProps['categoryList']
 }
 
-const Introduction = function ({ selectedCategory, categoryList }: IntroductionProps) {
+const Introduction = function ({ selectedCategory }: IntroductionProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   // 메뉴 닫기 핸들러
@@ -47,7 +45,7 @@ const Introduction = function ({ selectedCategory, categoryList }: IntroductionP
         {/* 모바일 메뉴 오버레이 */}
         <MobileMenuOverlay isOpen={isMenuOpen} onClick={closeMenu}>
           <CategoryWrapper onClick={e => e.stopPropagation()} isOpen={isMenuOpen}>
-            <CategoryList selectedCategory={selectedCategory} categoryList={categoryList} />
+            <CategoryList selectedCategory={selectedCategory} onItemClick={closeMenu} variant={'mobile'} />
           </CategoryWrapper>
         </MobileMenuOverlay>
       </Wrapper>

@@ -2,24 +2,16 @@ import React, { FunctionComponent, useState } from 'react'
 import styled from '@emotion/styled'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft, faBars } from '@fortawesome/free-solid-svg-icons'
-import CategoryList from 'components/Main/CategoryList'
-import { CategoryListProps } from '../../@types/Category.types'
+import CategoryList from 'components/common/CategoryList'
 
 export type PostHeadInfoProps = {
   title: string
   date: string
   tags: string[]
   selectedCategory: string
-  categoryList: CategoryListProps['categoryList']
 }
 
-const PostHeadInfo: FunctionComponent<PostHeadInfoProps> = function ({
-  title,
-  date,
-  tags,
-  selectedCategory,
-  categoryList,
-}) {
+const PostHeadInfo: FunctionComponent<PostHeadInfoProps> = function ({ title, date, tags, selectedCategory }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   // 메뉴 닫기 핸들러
@@ -46,7 +38,7 @@ const PostHeadInfo: FunctionComponent<PostHeadInfoProps> = function ({
       {/* 모바일 메뉴 오버레이 */}
       <MobileMenuOverlay isOpen={isMenuOpen} onClick={closeMenu}>
         <CategoryWrapper onClick={e => e.stopPropagation()} isOpen={isMenuOpen}>
-          <CategoryList selectedCategory={selectedCategory} categoryList={categoryList} />
+          <CategoryList selectedCategory={selectedCategory} variant={'mobile'} />
         </CategoryWrapper>
       </MobileMenuOverlay>
     </PostHeadInfoWrapper>
@@ -64,7 +56,7 @@ const PostHeadInfoWrapper = styled.div`
 
   @media (max-width: 768px) {
     width: 100%;
-    padding: 40px 20px;
+    padding: 20px;
   }
 `
 
@@ -124,7 +116,8 @@ const NavWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 20px;
+  //margin-top: 20px;
+  height: 40px;
 `
 
 const MenuButton = styled.button`
