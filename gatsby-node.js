@@ -76,6 +76,12 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
       name: 'slug',
       value: slug,
     })
+
+    createNodeField({
+      node,
+      name: 'shouldShow',
+      value: process.env.NODE_ENV === 'development' || !node.frontmatter.draft,
+    })
   }
 }
 
@@ -107,13 +113,11 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     return
   }
 
-  const isDevelopment = process.env.NODE_ENV === 'development'
-
   // Create post pages
   const PostTemplateComponent = path.resolve(__dirname, 'src/templates/post_template.tsx')
 
   result.data.posts.edges.forEach(({ node }) => {
-    if (isDevelopment || !node.frontmatter.draft) {
+    if (node.fields.shouldShow) {
       createPage({
         path: node.fields.slug,
         component: PostTemplateComponent,

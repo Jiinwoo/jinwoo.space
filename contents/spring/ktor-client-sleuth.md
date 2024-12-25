@@ -2,42 +2,46 @@
 date: '2022-09-25'
 title: 'ktor-client sleuth 적용하기'
 tags: ['ktor']
-summary: 'ktor client 에서 sleuth 를 적용하는 방법을 알아봅니다.'
+summary: 'ktor client 에서 sleuth 를 적용하는 방법을 알아보자.'
 thumbnail: '../common.png'
 ---
 
+# ktor-client sleuth 적용하기
+
+sleuth 는 spring cloud 에서 제공하는 분산 추적 시스템이다.
+MSA 환경에서 트랜잭션을 추적하고 로깅을 할 때 사용된다.
+기본적으로 RestTemplate 이나 WebClient 는 기본적으로 라이브러리를 추가할 시 자동으로 적용되지만 
+나머지 HTTP Client 들에는 직접 적용해줄 필요가 있다.
+
 ## 프로젝트 셋업
 
-우선 테스트 프로젝트가 멀티모듈(client, server) 로 구성되어 있기 때문에 각각의 의존성을 알아서 설정해주면 된다.
-추가로 client 쪽에서는 ktor-client dependency를 추가로 포함시켜주자
-
-project-client dependency
+Client
 ```kotlin dsl
+// build.gradle.kts  
 dependencies {
     implementation(project(":support:logging"))
     implementation("io.ktor:ktor-client-core:${rootProject.extra["ktorVersion"]}")
     implementation("io.ktor:ktor-client-cio:${rootProject.extra["ktorVersion"]}")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    
+    implementation("org.springframework.cloud:spring-cloud-starter-sleuth")
 }
 ```
 
-project-server dependency
+Server
 ```kotlin dsl
+// build.gradle.kts
 dependencies {
     implementation(project(":support:logging"))
     implementation("org.springframework.boot:spring-boot-starter-web")
+    
+    implementation("org.springframework.cloud:spring-cloud-starter-sleuth")
 }
 ```
 
-공통 logging 모듈
-
-```kotlin-dsl
-dependencies {
-    implementation("org.springframework.cloud:spring-cloud-starter-sleuth")
-} 
-```
-
 ### ktor-client features
+
+HTTP 요청에 Header 설정을 추가해주면 된다.
 
 ```kotlin
 class SleuthHeader internal constructor(

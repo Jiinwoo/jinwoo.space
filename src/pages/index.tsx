@@ -41,7 +41,7 @@ export const getPostList = graphql`
       }
     }
     allMarkdownRemark(
-      filter: { frontmatter: { draft: { in: [null, false] } } }
+      filter: { fields: { shouldShow: { eq: true } } }
       sort: { order: DESC, fields: [frontmatter___date, frontmatter___title] }
     ) {
       edges {

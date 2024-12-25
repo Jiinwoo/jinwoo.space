@@ -16,28 +16,22 @@ thumbnail: '../../common.png'
 
 ## 비기능 요구사항
 
-1. [GDPR, CCPA 준수](https://www.appsflyer.com/ko/trust/privacy/) -> 가장 가까운 리전을 사용해서 데이터 저장
+1. [GDPR, CCPA 준수](https://www.appsflyer.com/ko/trust/privacy/) -> 가장 가까운 리전을 사용해서 데이터 저장   
+   광고 대행사에서 Appsflyer 를 통해서 데이터 수집을 하고 해당 데이터를 기반으로
+   마케팅 비용을 책정한 경험이 있음. 이에 따라 Appsflyer 를 연동하였는데,
+   연동하는 과정에서 사용자의 데이터를 굉장히 조심스럽게 수집한다는 느낌을 받음.
 
-광고 대행사에서 Appsflyer 를 통해서 데이터 수집을 하고 해당 데이터를 기반으로
-마케팅 비용을 책정한 경험이 있음. 이에 따라 Appsflyer 를 연동하였는데,
-연동하는 과정에서 사용자의 데이터를 굉장히 조심스럽게 수집한다는 느낌을 받음.
-
-2. 낮은 응답지연 -> [AWS Global Accelerator](https://aws.amazon.com/ko/global-accelerator/) 활용
-
-처음에는 AWS Route53의 지리적 위치 기반 라우팅이 있던데 그걸 사용하면 되는게 아닌가 했는데
-AWS Global Accelerator 는 좀 더 풍부한 기능을 제공.
-
-- 엣지 로케이션 뒤의 백본 네트워크 활용가능 -> 단일 리전에서 사용해도 좋아보임.
-- Global IP 제공
-- 자동 장애조치 및 트래픽 라우팅
-- AWS Shield 기본 적용
-
-AWS Global Accelerator 는 잘 몰랐을 때 ALB의 고정 IP 가 필요해서 사용해본 기억이 있다.
-이런 기능들도 있었다는걸 깨달음.
-
-3. 고가용성
-
-AWS ASG, EKS 등 활용
+2. 낮은 응답지연 -> [AWS Global Accelerator](https://aws.amazon.com/ko/global-accelerator/) 활용   
+   처음에는 AWS Route53의 지리적 위치 기반 라우팅이 있던데 그걸 사용하면 되는게 아닌가 했는데
+   AWS Global Accelerator 는 좀 더 풍부한 기능을 제공.   
+   - 엣지 로케이션 뒤의 백본 네트워크 활용가능 -> 단일 리전에서 사용해도 좋아보임.
+   - Global IP 제공
+   - 자동 장애조치 및 트래픽 라우팅
+   - AWS Shield 기본 적용
+     AWS Global Accelerator 는 잘 몰랐을 때 ALB의 고정 IP 가 필요해서 사용해본 기억이 있다.
+     이런 기능들도 있었다는걸 깨달음.
+3. 고가용성   
+   AWS ASG, EKS 등 활용
 
 # 개략적 설계안 제시 및 피드백
 
@@ -111,7 +105,7 @@ DELETE /v1/business/:id
 ### 해시 - 지오 해시
 
 위도, 경도 데이터를 지오해시 알고리즘을 통해 1차원의 문자열로 변환.
-이 때 문자열의 길이는 정확도를 결정. 
+이 때 문자열의 길이는 정확도를 결정.
 
 사업장 분포가 균등하지 않을 수 있나 인접한 지오해시로부터 점점 확장하면 됨. (상수 시간 해결)
 

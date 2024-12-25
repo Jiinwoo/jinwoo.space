@@ -1399,21 +1399,25 @@ type MarkdownRemarkFieldSelector = {
 
 type MarkdownRemarkFields = {
   readonly category: Maybe<Scalars['String']>;
+  readonly shouldShow: Maybe<Scalars['Boolean']>;
   readonly slug: Maybe<Scalars['String']>;
 };
 
 type MarkdownRemarkFieldsFieldSelector = {
   readonly category: InputMaybe<FieldSelectorEnum>;
+  readonly shouldShow: InputMaybe<FieldSelectorEnum>;
   readonly slug: InputMaybe<FieldSelectorEnum>;
 };
 
 type MarkdownRemarkFieldsFilterInput = {
   readonly category: InputMaybe<StringQueryOperatorInput>;
+  readonly shouldShow: InputMaybe<BooleanQueryOperatorInput>;
   readonly slug: InputMaybe<StringQueryOperatorInput>;
 };
 
 type MarkdownRemarkFieldsSortInput = {
   readonly category: InputMaybe<SortOrderEnum>;
+  readonly shouldShow: InputMaybe<SortOrderEnum>;
   readonly slug: InputMaybe<SortOrderEnum>;
 };
 
