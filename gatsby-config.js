@@ -5,7 +5,9 @@ module.exports = {
     author: `jwjung5038@gmail.com`,
     siteUrl: `https://blog.woos.dev`,
   },
-  graphqlTypegen: true,
+  graphqlTypegen: {
+    typesOutputPath: `src/@types/gatsby-types.d.ts`,
+  },
   plugins: [
     {
       resolve: 'gatsby-plugin-robots-txt',

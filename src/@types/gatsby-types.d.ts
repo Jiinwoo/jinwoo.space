@@ -2759,6 +2759,11 @@ type IntroductionDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 type IntroductionDataQuery = { readonly file: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null };
 
+type SEODataQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+type SEODataQuery = { readonly site: { readonly siteMetadata: { readonly siteUrl: string | null, readonly defaultTitle: string | null, readonly defaultDescription: string | null } | null } | null };
+
 type TemplateDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
