@@ -1,0 +1,3 @@
+/*! For license information please see c16184b3-dd7f3e8691089e3d1af3.js.LICENSE.txt */
+"use strict";(self.webpackChunkgatsby_starter_default=self.webpackChunkgatsby_starter_default||[]).push([[69],{6188:function(c,s,t){t.d(s,{ckx:function(){return a}});const a={prefix:"fas",iconName:"bars",icon:[448,512,["navicon"],"f0c9","M0 96C0 78.3 14.3 64 32 64l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 128C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32L32 448c-17.7 0-32-14.3-32-32s14.3-32 32-32l384 0c17.7 0 32 14.3 32 32z"]}}}]);
+//# sourceMappingURL=c16184b3-dd7f3e8691089e3d1af3.js.map
