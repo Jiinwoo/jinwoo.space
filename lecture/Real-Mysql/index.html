@@ -1,0 +1,521 @@
+<!DOCTYPE html><html lang="ko"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="ie=edge"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><meta name="generator" content="Gatsby 5.14.1"/><meta data-react-helmet="true" name="description" content="Real MySQL 강의 정리"/><meta data-react-helmet="true" name="viewport" content="width=device-width, initial-scale=1.0"/><meta data-react-helmet="true" property="og:type" content="article"/><meta data-react-helmet="true" property="og:title" content="Real MySQL"/><meta data-react-helmet="true" property="og:description" content="Real MySQL 강의 정리"/><meta data-react-helmet="true" property="og:image" content="https://blog.woos.dev/static/a229594a2de7c0ed63d877869e75fd38/common.png"/><meta data-react-helmet="true" property="og:url" content="https://blog.woos.dev"/><meta data-react-helmet="true" name="twitter:card" content="summary_large_image"/><meta data-react-helmet="true" name="twitter:title" content="Real MySQL"/><meta data-react-helmet="true" name="twitter:description" content="Real MySQL 강의 정리"/><meta data-react-helmet="true" name="twitter:image" content="https://blog.woos.dev/static/a229594a2de7c0ed63d877869e75fd38/common.png"/><style data-href="/styles.9e907bc32054b7771552.css" data-identity="gatsby-global-css">code[class*=language-],pre[class*=language-]{word-wrap:normal;background:none;color:#ccc;font-family:Consolas,Monaco,Andale Mono,Ubuntu Mono,monospace;font-size:1em;-webkit-hyphens:none;hyphens:none;line-height:1.5;tab-size:4;text-align:left;white-space:pre;word-break:normal;word-spacing:normal}pre[class*=language-]{margin:.5em 0;overflow:auto;padding:1em}:not(pre)>code[class*=language-],pre[class*=language-]{background:#2d2d2d}:not(pre)>code[class*=language-]{border-radius:.3em;padding:.1em;white-space:normal}.token.block-comment,.token.cdata,.token.comment,.token.doctype,.token.prolog{color:#999}.token.punctuation{color:#ccc}.token.attr-name,.token.deleted,.token.namespace,.token.tag{color:#e2777a}.token.function-name{color:#6196cc}.token.boolean,.token.function,.token.number{color:#f08d49}.token.class-name,.token.constant,.token.property,.token.symbol{color:#f8c555}.token.atrule,.token.builtin,.token.important,.token.keyword,.token.selector{color:#cc99cd}.token.attr-value,.token.char,.token.regex,.token.string,.token.variable{color:#7ec699}.token.entity,.token.operator,.token.url{color:#67cdcc}.token.bold,.token.important{font-weight:700}.token.italic{font-style:italic}.token.entity{cursor:help}.token.inserted{color:green}</style><link rel="sitemap" type="application/xml" href="/sitemap-index.xml"/><link rel="canonical" href="https://blog.woos.dev/lecture/Real-Mysql/" data-baseprotocol="https:" data-basehost="blog.woos.dev"/><title data-react-helmet="true">Real MySQL</title><style>.gatsby-image-wrapper{position:relative;overflow:hidden}.gatsby-image-wrapper picture.object-fit-polyfill{position:static!important}.gatsby-image-wrapper img{bottom:0;height:100%;left:0;margin:0;max-width:none;padding:0;position:absolute;right:0;top:0;width:100%;object-fit:cover}.gatsby-image-wrapper [data-main-image]{opacity:0;transform:translateZ(0);transition:opacity .25s linear;will-change:opacity}.gatsby-image-wrapper-constrained{display:inline-block;vertical-align:top}</style><noscript><style>.gatsby-image-wrapper noscript [data-main-image]{opacity:1!important}.gatsby-image-wrapper [data-placeholder-image]{opacity:0!important}</style></noscript><script type="module">const e="undefined"!=typeof HTMLImageElement&&"loading"in HTMLImageElement.prototype;e&&document.body.addEventListener("load",(function(e){const t=e.target;if(void 0===t.dataset.mainImage)return;if(void 0===t.dataset.gatsbyImageSsr)return;let a=null,n=t;for(;null===a&&n;)void 0!==n.parentNode.dataset.gatsbyImageWrapper&&(a=n.parentNode),n=n.parentNode;const o=a.querySelector("[data-placeholder-image]"),r=new Image;r.src=t.currentSrc,r.decode().catch((()=>{})).then((()=>{t.style.opacity=1,o&&(o.style.opacity=0,o.style.transition="opacity 500ms linear")}))}),!0);</script></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><style data-emotion="css-global rtmpxr">@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');*{padding:0;margin:0;box-sizing:border-box;font-family:나눔고딕,'NanumGothic',Nanum Gothic,sans-serif;}html,body,#___gatsby{height:100%;}a,a:hover{color:inherit;-webkit-text-decoration:none;text-decoration:none;cursor:pointer;}</style><style data-emotion="css 11pfcjj">.css-11pfcjj{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;min-height:100vh;}</style><div class="css-11pfcjj ef79xez0"> <main><style data-emotion="css 16cz9yp">.css-16cz9yp{position:relative;width:100%;height:400px;}@media (max-width: 768px){.css-16cz9yp{height:300px;}}</style><div class="css-16cz9yp e1opi4mu1"><style data-emotion="css 1bjn9yo">.css-1bjn9yo{z-index:-1;width:100%;height:400px;object-fit:cover;-webkit-filter:brightness(0.25);filter:brightness(0.25);}@media (max-width: 768px){.css-1bjn9yo{height:300px;}}</style><div data-gatsby-image-wrapper="" style="position:absolute" class="gatsby-image-wrapper gatsby-image-wrapper-constrained css-1bjn9yo e1opi4mu0"><div style="max-width:1080px;display:block"><img alt="" role="presentation" aria-hidden="true" src="data:image/svg+xml;charset=utf-8,%3Csvg%20height=&#x27;1080&#x27;%20width=&#x27;1080&#x27;%20xmlns=&#x27;http://www.w3.org/2000/svg&#x27;%20version=&#x27;1.1&#x27;%3E%3C/svg%3E" style="max-width:100%;display:block;position:static"/></div><img aria-hidden="true" data-placeholder-image="" style="opacity:1;transition:opacity 500ms linear" decoding="async" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAABjElEQVR42u2U207CQBCG+8g+go9hYvTCExeoGAWDB2JQsIDFghwUiJwKrXLoAkVUvPidWUAw8cIE4pUXf3e7s/v905lmlZ5dwyKl/AMXC3REfXFAhomWgX5nPqjSIchwYCEQTGBp2YtS8REv3Qm0Do5326zaeBypJ+j9RyAFPwioJ+/hP9cl8K1vwm5U5YHhi4W3nol3h0bHJFl4pZGNBrTuiJrUt082KkX4Azo8xzcIhu9kBmo0De9pHFEtg0TyAXriHvHbrDSOxTO4UlNIp3MQTQNtNm+Pgc2nKjTamM8XcKNlkcsVpI78GtZdIRyQyfZeBKtbIbgPY9h0q3DtRxCOpOAjQzU2Mj670FEghsKHr65TaBGYg+x4QtnG9ax05lpxWdidY9y4SUY8t2mNy1MpF9GwKlCezQplEsbaTghbuypWNi7h8Wl4pfpMOu5Qc7hOfVGXf8PXupiKG8kxhR/sxkUWY/Hmrj3t4uz8V//hrNNsx/4vhz8CitE9MNKcQIY0n8owjBLsliX1CTPZynf2Ss39AAAAAElFTkSuQmCC" alt=""/><picture><source type="image/webp" data-srcset="/static/a229594a2de7c0ed63d877869e75fd38/7e223/common.webp 270w,/static/a229594a2de7c0ed63d877869e75fd38/5cfb6/common.webp 540w,/static/a229594a2de7c0ed63d877869e75fd38/941f9/common.webp 1080w" sizes="(min-width: 1080px) 1080px, 100vw"/><img data-gatsby-image-ssr="" data-main-image="" style="opacity:0" sizes="(min-width: 1080px) 1080px, 100vw" decoding="async" loading="lazy" data-src="/static/a229594a2de7c0ed63d877869e75fd38/d0859/common.png" data-srcset="/static/a229594a2de7c0ed63d877869e75fd38/f1689/common.png 270w,/static/a229594a2de7c0ed63d877869e75fd38/42fd3/common.png 540w,/static/a229594a2de7c0ed63d877869e75fd38/d0859/common.png 1080w" alt="thumbnail"/></picture><noscript><picture><source type="image/webp" srcSet="/static/a229594a2de7c0ed63d877869e75fd38/7e223/common.webp 270w,/static/a229594a2de7c0ed63d877869e75fd38/5cfb6/common.webp 540w,/static/a229594a2de7c0ed63d877869e75fd38/941f9/common.webp 1080w" sizes="(min-width: 1080px) 1080px, 100vw"/><img data-gatsby-image-ssr="" data-main-image="" style="opacity:0" sizes="(min-width: 1080px) 1080px, 100vw" decoding="async" loading="lazy" src="/static/a229594a2de7c0ed63d877869e75fd38/d0859/common.png" srcSet="/static/a229594a2de7c0ed63d877869e75fd38/f1689/common.png 270w,/static/a229594a2de7c0ed63d877869e75fd38/42fd3/common.png 540w,/static/a229594a2de7c0ed63d877869e75fd38/d0859/common.png 1080w" alt="thumbnail"/></picture></noscript><script type="module">const t="undefined"!=typeof HTMLImageElement&&"loading"in HTMLImageElement.prototype;if(t){const t=document.querySelectorAll("img[data-main-image]");for(let e of t){e.dataset.src&&(e.setAttribute("src",e.dataset.src),e.removeAttribute("data-src")),e.dataset.srcset&&(e.setAttribute("srcset",e.dataset.srcset),e.removeAttribute("data-srcset"));const t=e.parentNode.querySelectorAll("source[data-srcset]");for(let e of t)e.setAttribute("srcset",e.dataset.srcset),e.removeAttribute("data-srcset");e.complete&&(e.style.opacity=1,e.parentNode.parentNode.querySelector("[data-placeholder-image]").style.opacity=0)}}</script></div><style data-emotion="css hsn85d">.css-hsn85d{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;width:768px;height:100%;margin:0 auto;padding:60px 0;color:#ffffff;}@media (max-width: 768px){.css-hsn85d{width:100%;padding:20px;}}</style><div class="css-hsn85d e1st1jau7"><style data-emotion="css 175ryad">.css-175ryad{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:justify;-webkit-justify-content:space-between;justify-content:space-between;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;height:40px;}</style><div class="css-175ryad e1st1jau3"><style data-emotion="css gywgo7">.css-gywgo7{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:#ffffff;color:#000000;font-size:22px;cursor:pointer;box-shadow:0 0 10px rgba(0, 0, 0, 0.3);}@media (max-width: 768px){.css-gywgo7{width:30px;height:30px;font-size:18px;}}</style><div class="css-gywgo7 e1st1jau6"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="arrow-left" class="svg-inline--fa fa-arrow-left " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"></path></svg></div><style data-emotion="css ellqtz">.css-ellqtz{display:none;}@media (max-width: 768px){.css-ellqtz{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-ms-flex-pack:center;-webkit-justify-content:center;justify-content:center;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;position:absolute;top:20px;right:20px;width:40px;height:40px;border:none;background:transparent;color:white;font-size:24px;cursor:pointer;z-index:100;}}</style><button class="css-ellqtz e1st1jau2"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bars" class="svg-inline--fa fa-bars " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 78.3 14.3 64 32 64l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 128C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32L32 448c-17.7 0-32-14.3-32-32s14.3-32 32-32l384 0c17.7 0 32 14.3 32 32z"></path></svg></button></div><style data-emotion="css gn4qtp">.css-gn4qtp{display:-webkit-box;overflow:hidden;overflow-wrap:break-word;margin-top:auto;text-overflow:ellipsis;white-space:normal;-webkit-line-clamp:2;-webkit-box-orient:vertical;font-size:45px;font-weight:800;}@media (max-width: 768px){.css-gn4qtp{font-size:30px;}}</style><div class="css-gn4qtp e1st1jau5">Real MySQL</div><style data-emotion="css 3gcnt2">.css-3gcnt2{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:justify;-webkit-justify-content:space-between;justify-content:space-between;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;margin-top:10px;font-size:18px;font-weight:700;}@media (max-width: 768px){.css-3gcnt2{-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;-webkit-align-items:flex-start;-webkit-box-align:flex-start;-ms-flex-align:flex-start;align-items:flex-start;font-size:15px;font-weight:400;}}</style><div class="css-3gcnt2 e1st1jau4"><div>lecture</div><div>2024.12.31.</div></div><style data-emotion="css ptdzip">.css-ptdzip{display:none;}@media (max-width: 768px){.css-ptdzip{display:block;position:fixed;top:0;left:0;right:0;bottom:0;background-color:rgba(0, 0, 0, 0.7);z-index:90;opacity:0;visibility:hidden;-webkit-transition:opacity 0.3s ease-in-out,visibility 0.3s ease-in-out;transition:opacity 0.3s ease-in-out,visibility 0.3s ease-in-out;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);}}</style><div class="css-ptdzip e1st1jau1"><style data-emotion="css 11uhifz">.css-11uhifz{position:fixed;top:0;right:0;width:80%;max-width:300px;height:100%;background-color:#29323c;padding:60px 20px 20px;overflow-y:auto;box-shadow:-2px 0 8px rgba(0, 0, 0, 0.2);-webkit-transform:translateX(100%);-moz-transform:translateX(100%);-ms-transform:translateX(100%);transform:translateX(100%);-webkit-transition:-webkit-transform 0.3s ease-in-out;transition:transform 0.3s ease-in-out;}.css-11uhifz *{color:white;}</style><div class="css-11uhifz e1st1jau0"><style data-emotion="css 1wpu666">.css-1wpu666{width:100%;padding:0.5rem;}</style><nav class="css-1wpu666 e15bpype3"><style data-emotion="css 16tlvlx">.css-16tlvlx{margin:0.5rem 0;padding:0.5rem;border-radius:4px;color:#1a202c;background-color:transparent;-webkit-transition:background-color 0.2s ease-in-out,color 0.2s ease-in-out;transition:background-color 0.2s ease-in-out,color 0.2s ease-in-out;}.css-16tlvlx:hover{background-color:#edf2f7;color:#2d3748;}</style><div class="css-16tlvlx e15bpype2"><style data-emotion="css uq8nah">.css-uq8nah{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:justify;-webkit-justify-content:space-between;justify-content:space-between;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;width:100%;color:inherit;-webkit-text-decoration:none;text-decoration:none;}</style><a class="css-uq8nah e15bpype1" href="/?category=All">All<style data-emotion="css 5a5cp1">.css-5a5cp1{font-size:0.875rem;color:#4a5568;}</style><span class="css-5a5cp1 e15bpype0">(<!-- -->13<!-- -->)</span></a></div><div class="css-16tlvlx e15bpype2"><a class="css-uq8nah e15bpype1" href="/?category=book">book<span class="css-5a5cp1 e15bpype0">(<!-- -->1<!-- -->)</span></a></div><div class="css-16tlvlx e15bpype2"><a class="css-uq8nah e15bpype1" href="/?category=fictalk">fictalk<span class="css-5a5cp1 e15bpype0">(<!-- -->1<!-- -->)</span></a></div><style data-emotion="css bm1ri0">.css-bm1ri0{margin:0.5rem 0;padding:0.5rem;border-radius:4px;color:#ffffff;background-color:#3890ff;-webkit-transition:background-color 0.2s ease-in-out,color 0.2s ease-in-out;transition:background-color 0.2s ease-in-out,color 0.2s ease-in-out;}.css-bm1ri0:hover{background-color:#edf2f7;color:#2776c2;}</style><div class="css-bm1ri0 e15bpype2"><a class="css-uq8nah e15bpype1" href="/?category=lecture">lecture<style data-emotion="css 1vicht9">.css-1vicht9{font-size:0.875rem;color:#ffffff;}</style><span class="css-1vicht9 e15bpype0">(<!-- -->2<!-- -->)</span></a></div><div class="css-16tlvlx e15bpype2"><a class="css-uq8nah e15bpype1" href="/?category=python">python<span class="css-5a5cp1 e15bpype0">(<!-- -->1<!-- -->)</span></a></div><div class="css-16tlvlx e15bpype2"><a class="css-uq8nah e15bpype1" href="/?category=spring">spring<span class="css-5a5cp1 e15bpype0">(<!-- -->3<!-- -->)</span></a></div><div class="css-16tlvlx e15bpype2"><a class="css-uq8nah e15bpype1" href="/?category=TIL">TIL<span class="css-5a5cp1 e15bpype0">(<!-- -->3<!-- -->)</span></a></div><div class="css-16tlvlx e15bpype2"><a class="css-uq8nah e15bpype1" href="/?category=tool">tool<span class="css-5a5cp1 e15bpype0">(<!-- -->2<!-- -->)</span></a></div></nav></div></div></div></div><style data-emotion="css 8k0if6">.css-8k0if6{width:100%;margin:0 auto;max-width:1200px;position:relative;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;overflow-x:auto;}</style><div class="css-8k0if6 e1ijh0y13"><style data-emotion="css q3ydz">.css-q3ydz{min-width:216px;width:216px;-webkit-flex-shrink:0;-ms-flex-negative:0;flex-shrink:0;}@media (min-width: 768px){.css-q3ydz{display:block;}}@media (max-width: 768px){.css-q3ydz{display:none;}}</style><aside class="css-q3ydz e1ijh0y12"><style data-emotion="css 1fyttco">.css-1fyttco{width:100%;padding:1rem;}</style><nav class="css-1fyttco e15bpype3"><div class="css-16tlvlx e15bpype2"><a class="css-uq8nah e15bpype1" href="/?category=All">All<span class="css-5a5cp1 e15bpype0">(<!-- -->13<!-- -->)</span></a></div><div class="css-16tlvlx e15bpype2"><a class="css-uq8nah e15bpype1" href="/?category=book">book<span class="css-5a5cp1 e15bpype0">(<!-- -->1<!-- -->)</span></a></div><div class="css-16tlvlx e15bpype2"><a class="css-uq8nah e15bpype1" href="/?category=fictalk">fictalk<span class="css-5a5cp1 e15bpype0">(<!-- -->1<!-- -->)</span></a></div><div class="css-bm1ri0 e15bpype2"><a class="css-uq8nah e15bpype1" href="/?category=lecture">lecture<span class="css-1vicht9 e15bpype0">(<!-- -->2<!-- -->)</span></a></div><div class="css-16tlvlx e15bpype2"><a class="css-uq8nah e15bpype1" href="/?category=python">python<span class="css-5a5cp1 e15bpype0">(<!-- -->1<!-- -->)</span></a></div><div class="css-16tlvlx e15bpype2"><a class="css-uq8nah e15bpype1" href="/?category=spring">spring<span class="css-5a5cp1 e15bpype0">(<!-- -->3<!-- -->)</span></a></div><div class="css-16tlvlx e15bpype2"><a class="css-uq8nah e15bpype1" href="/?category=TIL">TIL<span class="css-5a5cp1 e15bpype0">(<!-- -->3<!-- -->)</span></a></div><div class="css-16tlvlx e15bpype2"><a class="css-uq8nah e15bpype1" href="/?category=tool">tool<span class="css-5a5cp1 e15bpype0">(<!-- -->2<!-- -->)</span></a></div></nav></aside><style data-emotion="css 2ys6mr">.css-2ys6mr{position:relative;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-ms-flex-pack:center;-webkit-justify-content:center;justify-content:center;-webkit-flex-shrink:0;-ms-flex-negative:0;flex-shrink:0;width:100%;padding:1rem;}@media (min-width: 768px){.css-2ys6mr{width:768px;padding:0;}}</style><div class="css-2ys6mr e1ijh0y11"><style data-emotion="css sufrps">.css-sufrps{width:100%;font-size:1rem;line-height:1.6;color:#1a202c;word-break:keep-all;overflow-wrap:break-word;}.css-sufrps img{max-width:100%;height:auto;border-radius:8px;margin:1rem 0;box-shadow:0 4px 6px -1px rgba(0, 0, 0, 0.1);}@media (min-width: 768px){.css-sufrps img{border-radius:12px;margin:1.5rem 0;}}.css-sufrps code{background-color:#29323c;padding:0.25rem 0.5rem;border-radius:4px;font-size:0.875rem;font-family:'JetBrains Mono','Fira Code','Consolas',monospace;color:#ffffff;}@media (min-width: 768px){.css-sufrps code{font-size:1rem;}}.css-sufrps pre{background-color:#f8fafc;padding:1rem;border-radius:8px;overflow-x:auto;margin:1rem 0;border:1px solid #e2e8f0;}@media (min-width: 768px){.css-sufrps pre{padding:1.5rem;border-radius:12px;margin:1.5rem 0;}}.css-sufrps pre code{background-color:transparent;padding:0;font-size:0.875rem;line-height:1.6;}@media (min-width: 768px){.css-sufrps pre code{font-size:1rem;line-height:1.7;}}@media (min-width: 768px){.css-sufrps{line-height:1.8;}}.css-sufrps h1,.css-sufrps h2,.css-sufrps h3,.css-sufrps h4,.css-sufrps h5,.css-sufrps h6{margin:2rem 0 1rem;font-weight:700;line-height:1.3;color:#1a202c;}@media (min-width: 768px){.css-sufrps h1,.css-sufrps h2,.css-sufrps h3,.css-sufrps h4,.css-sufrps h5,.css-sufrps h6{margin:2.5rem 0 1.5rem;}}.css-sufrps h1{font-size:2rem;letter-spacing:-0.02em;}@media (min-width: 768px){.css-sufrps h1{font-size:2.5rem;}}.css-sufrps h2{font-size:1.5rem;letter-spacing:-0.01em;}@media (min-width: 768px){.css-sufrps h2{font-size:2rem;}}.css-sufrps h3{font-size:1.25rem;}@media (min-width: 768px){.css-sufrps h3{font-size:1.5rem;}}.css-sufrps p{margin:1rem 0;line-height:1.6;font-size:0.875rem;letter-spacing:-0.003em;}@media (min-width: 768px){.css-sufrps p{margin:1.5rem 0;line-height:1.8;font-size:1rem;}}.css-sufrps a{color:#4a9eff;-webkit-text-decoration:none;text-decoration:none;-webkit-transition:all 0.2s ease;transition:all 0.2s ease;border-bottom:1px solid transparent;}.css-sufrps a:hover{color:#1778ff;border-bottom-color:currentColor;}.css-sufrps a:focus{outline:2px solid #4a9eff;outline-offset:2px;}.css-sufrps ul,.css-sufrps ol{padding-left:1.25rem;margin:1rem 0;}@media (min-width: 768px){.css-sufrps ul,.css-sufrps ol{padding-left:2rem;margin:1.5rem 0;}}.css-sufrps ul ul,.css-sufrps ol ul,.css-sufrps ul ol,.css-sufrps ol ol{margin:0.5rem 0;}@media (min-width: 768px){.css-sufrps ul ul,.css-sufrps ol ul,.css-sufrps ul ol,.css-sufrps ol ol{margin:0.75rem 0;}}.css-sufrps li{margin:0.5rem 0;padding-left:0.25rem;line-height:1.6;}@media (min-width: 768px){.css-sufrps li{margin:0.75rem 0;line-height:1.8;}}.css-sufrps blockquote{margin:1.5rem 0;padding:0.75rem 1rem;border-left:3px solid #4a9eff;background-color:#f8fafc;font-style:italic;color:#4a5568;border-radius:0 8px 8px 0;font-size:0.875rem;}@media (min-width: 768px){.css-sufrps blockquote{margin:2rem 0;padding:1rem 1.5rem;border-left:4px solid #4a9eff;border-radius:0 12px 12px 0;font-size:1rem;}}.css-sufrps blockquote p{margin:0.5rem 0;}@media (min-width: 768px){.css-sufrps blockquote p{margin:0.75rem 0;}}.css-sufrps table{width:100%;border-collapse:separate;border-spacing:0;margin:1.5rem 0;overflow-x:auto;border-radius:8px;border:1px solid #e2e8f0;font-size:0.875rem;-webkit-overflow-scrolling:touch;scrollbar-width:thin;}@media (min-width: 768px){.css-sufrps table{margin:2rem 0;font-size:1rem;border-radius:12px;}}.css-sufrps table::-webkit-scrollbar{height:6px;}.css-sufrps table::-webkit-scrollbar-thumb{background-color:#cbd5e0;border-radius:3px;}.css-sufrps th{background-color:#f8fafc;font-weight:600;white-space:nowrap;padding:0.5rem 0.75rem;}@media (min-width: 768px){.css-sufrps th{padding:0.75rem 1rem;}}.css-sufrps td{padding:0.5rem 0.75rem;word-break:break-word;border:1px solid #e2e8f0;}@media (min-width: 768px){.css-sufrps td{padding:0.75rem 1rem;}}.css-sufrps tr:hover{background-color:#f8fafc;}.css-sufrps hr{border:none;border-top:1px solid #e2e8f0;margin:2rem 0;}@media (min-width: 768px){.css-sufrps hr{border-top:2px solid #e2e8f0;margin:3rem 0;}}</style><div class="markdown-container css-sufrps e1ijh0y10"><blockquote>
+<p>강의 내용 중 필요하다고 생각되는 부분과 개인적인 생각을 포함했습니다.</p>
+</blockquote>
+<h1>MySQL 성능 최적화 가이드</h1>
+<h2>TEXT VS VARCHAR</h2>
+<p>데이터 조회 시 주의사항:</p>
+<ul>
+<li>대용량 컬럼이 불필요한 경우 SELECT 시 제외하고 쿼리하기</li>
+<li>큰 데이터가 있는 경우 Off-Page 저장으로 인해 성능 저하 가능</li>
+<li>대용량 컬럼을 자주 조회해야 하는 경우 Redis 같은 캐시 솔루션 고려</li>
+</ul>
+<h2>Count(*) &#x26; Select * 비교</h2>
+<h3>쿼리 예시</h3>
+<div class="gatsby-highlight" data-language="sql"><pre class="language-sql"><code class="language-sql"><span class="token comment">/* Count 쿼리 */</span>
+<span class="token keyword">SELECT</span> <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">FROM</span> <span class="token keyword">table</span> <span class="token keyword">WHERE</span> ix_fd <span class="token operator">=</span> <span class="token string">'A'</span> <span class="token operator">AND</span> non_ix_fd <span class="token operator">=</span> <span class="token string">'B'</span><span class="token punctuation">;</span>
+
+<span class="token comment">/* All 쿼리 */</span>
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> <span class="token keyword">table</span> <span class="token keyword">WHERE</span> ix_fd <span class="token operator">=</span> <span class="token string">'A'</span> <span class="token operator">AND</span> non_ix_fd <span class="token operator">=</span> <span class="token string">'B'</span><span class="token punctuation">;</span></code></pre></div>
+<p>두 쿼리의 특징:</p>
+<ul>
+<li>네트워크 트래픽을 제외하면 거의 동일한 성능</li>
+<li>처리 과정:
+<ol>
+<li>인덱스된 ix_fd로부터 레코드 조회</li>
+<li>non_ix_fd 비교를 위한 테이블 액세스 수행</li>
+</ol>
+</li>
+</ul>
+<h3>Covering Index 활용</h3>
+<blockquote>
+<p><strong>Covering Index</strong>: 쿼리 실행에 필요한 모든 데이터를 인덱스에서 가져오는 방식</p>
+</blockquote>
+<p>최적화된 쿼리 예시:</p>
+<div class="gatsby-highlight" data-language="sql"><pre class="language-sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">WHERE</span> ix_fd <span class="token operator">=</span> <span class="token string">'A'</span> <span class="token operator">AND</span> ix_fd <span class="token operator">=</span> <span class="token string">'B'</span><span class="token punctuation">;</span>
+<span class="token comment">-- 또는</span>
+<span class="token keyword">SELECT</span> <span class="token function">COUNT</span><span class="token punctuation">(</span>ix_fd<span class="token punctuation">)</span> <span class="token keyword">WHERE</span> ix_fd <span class="token operator">=</span> <span class="token string">'A'</span><span class="token punctuation">;</span></code></pre></div>
+<p>주의사항:</p>
+<ul>
+<li>실제 환경에서는 인덱스 컬럼만으로 Count 쿼리를 구성하기 어려움</li>
+<li>모든 컬럼을 인덱스로 만드는 것은 권장되지 않음</li>
+</ul>
+<h2>Count(*) &#x26; Count(DISTINCT)</h2>
+<p>특징 비교:</p>
+<ul>
+<li><strong>Count(*)</strong>: 단순 레코드 수 확인</li>
+<li><strong>Count(DISTINCT)</strong>: 임시 테이블 생성 후 중복 제거된 레코드 수 확인</li>
+</ul>
+<p><span
+      class="gatsby-resp-image-wrapper"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 727px; "
+    >
+      <a
+    class="gatsby-resp-image-link"
+    href="/static/4854026484caab2806c79a7f0ab04067/96343/count_distinct.png"
+    style="display: block"
+    target="_blank"
+    rel="noopener"
+  >
+    <span
+    class="gatsby-resp-image-background-image"
+    style="padding-bottom: 33.33333333333333%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAYAAAAIy204AAAACXBIWXMAAAsTAAALEwEAmpwYAAABbklEQVR42m2RDWsTQRCG8/9/h0WCtGiFBNtirCltkr2vNKFajYELIULS5uN6H3u7e/e4e1Ks6MDDDDPDO7OzLW00iTqQlim5ysisd7HUklrVqFxhZIUpDXmeUeQ58ikj3e8pihylS4tCa93QKqVkOh4ziSJCz2cchkyCkNnyG2ERIhJBkAZMd7dMJhF+r0/vtMNl94zgY5/Z/Veqyg40pqEliwIxHCJGgvfvTjn/cEY4DPBmI453JxyvT2hv3tD92cXv3/Cpc87rdptXR0dcvO1wN76lqq2gfiEYCIEvPDwr6tlYDEbM4++s9ZpltmRVrlglK6bCJ/p8TTAcEV3eEPSuuP9y9++Gnttw8BvPNg+urlnGC5zVpobK+qrG3dvIkuqpQO9SW6uauyml/gi6xPbh4S8eNxuyNMVUphFpsH1O9HG75cd8ThzHLBaLhmdBt2nLBf+zl894xuWk/cS9/eHD4UCSJKRusKtZDrnkF0S2BtNs2Qn8AAAAAElFTkSuQmCC'); background-size: cover; display: block;"
+  ></span>
+  <picture>
+          <source
+              srcset="/static/4854026484caab2806c79a7f0ab04067/a59e9/count_distinct.webp 192w,
+/static/4854026484caab2806c79a7f0ab04067/0ca9f/count_distinct.webp 384w,
+/static/4854026484caab2806c79a7f0ab04067/c55bc/count_distinct.webp 727w"
+              sizes="(max-width: 727px) 100vw, 727px"
+              type="image/webp"
+            />
+          <source
+            srcset="/static/4854026484caab2806c79a7f0ab04067/3b721/count_distinct.png 192w,
+/static/4854026484caab2806c79a7f0ab04067/66595/count_distinct.png 384w,
+/static/4854026484caab2806c79a7f0ab04067/96343/count_distinct.png 727w"
+            sizes="(max-width: 727px) 100vw, 727px"
+            type="image/png"
+          />
+          <img
+            class="gatsby-resp-image-image"
+            src="/static/4854026484caab2806c79a7f0ab04067/96343/count_distinct.png"
+            alt="중복 데이터 확인 프로세스"
+            title=""
+            loading="lazy"
+            decoding="async"
+            style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;"
+          />
+        </picture>
+  </a>
+    </span></p>
+<h3>Count(*) 최적화 방법</h3>
+<ol>
+<li>불필요한 쿼리 제거</li>
+<li>대략적인 건수 활용</li>
+<li>WHERE 조건이 없는 경우 INFORMATION_SCHEMA.TABLES 활용</li>
+</ol>
+<h2>페이징 쿼리 최적화</h2>
+<blockquote>
+<p><a href="https://cheese10yun.github.io/page-performance/" target="_blank" rel="nofollow">JPA에서 Page 쿼리 성능 최적화</a></p>
+</blockquote>
+<h3>LIMIT &#x26; OFFSET 문제점</h3>
+<ul>
+<li>DBMS가 순차적으로 레코드를 읽어야 함</li>
+<li>OFFSET이 커질수록 성능 저하</li>
+<li>전체 레코드를 읽는 것보다 비효율적</li>
+</ul>
+<h3>최적화 방법</h3>
+<h4>1. 범위 기반 방식</h4>
+<ul>
+<li>배치, 데이터 마이그레이션 등에 적합</li>
+<li>1회차와 N회차 쿼리 형태가 동일</li>
+</ul>
+<div class="gatsby-highlight" data-language="sql"><pre class="language-sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span>
+<span class="token keyword">FROM</span> <span class="token keyword">table</span>
+<span class="token keyword">WHERE</span> id <span class="token operator">BETWEEN</span> <span class="token number">100</span> <span class="token operator">AND</span> <span class="token number">200</span><span class="token punctuation">;</span>
+
+<span class="token keyword">SELECT</span> <span class="token operator">*</span>
+<span class="token keyword">FROM</span> <span class="token keyword">table</span>
+<span class="token keyword">WHERE</span> <span class="token keyword">data</span> <span class="token operator">BETWEEN</span> <span class="token string">'2020-01-01'</span> <span class="token operator">AND</span> <span class="token string">'2020-01-31'</span><span class="token punctuation">;</span></code></pre></div>
+<h4>2. 데이터 개수 기반 방식</h4>
+<p>첫 조회와 이후 쿼리를 분리하여 처리</p>
+<p>예시 데이터:</p>
+<table>
+<thead>
+<tr>
+<th>finished_at</th>
+<th>id</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2020-01-01</td>
+<td>5</td>
+</tr>
+<tr>
+<td>2020-01-01</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2020-01-01</td>
+<td>2</td>
+</tr>
+<tr>
+<td>2020-01-01</td>
+<td>3</td>
+</tr>
+<tr>
+<td>2020-01-02</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+<p>쿼리 구현:</p>
+<div class="gatsby-highlight" data-language="sql"><pre class="language-sql"><code class="language-sql"><span class="token comment">/* 첫 조회 쿼리 */</span>
+<span class="token keyword">SELECT</span> <span class="token operator">*</span>
+<span class="token keyword">FROM</span> <span class="token keyword">table</span>
+<span class="token keyword">WHERE</span> finished_at <span class="token operator">>=</span> <span class="token string">"시작날짜"</span>
+  <span class="token operator">AND</span> finished_at <span class="token operator">&lt;</span> <span class="token string">"종료날짜"</span>
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> finished_at<span class="token punctuation">,</span> id
+<span class="token keyword">LIMIT</span> <span class="token number">30</span><span class="token punctuation">;</span>
+
+<span class="token comment">/* 이후 쿼리 */</span>
+<span class="token keyword">SELECT</span> <span class="token operator">*</span>
+<span class="token keyword">FROM</span> <span class="token keyword">table</span>
+<span class="token keyword">WHERE</span> <span class="token punctuation">(</span>finished_at <span class="token operator">=</span> <span class="token string">"이전 마지막 데이터의 날짜 값"</span> <span class="token operator">AND</span> id <span class="token operator">></span> <span class="token string">"이전 데이터의 ID"</span><span class="token punctuation">)</span>
+   <span class="token operator">OR</span> <span class="token punctuation">(</span>finished_at <span class="token operator">></span> <span class="token string">"이전 마지막 데이터의 날짜 값"</span> <span class="token operator">AND</span> finished_at <span class="token operator">&lt;</span> <span class="token string">"종료날짜"</span><span class="token punctuation">)</span>
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> finished_at<span class="token punctuation">,</span> id
+<span class="token keyword">LIMIT</span> <span class="token number">30</span><span class="token punctuation">;</span></code></pre></div>
+<p><strong>주의</strong>: 이전 데이터의 ID만 WHERE 조건으로 사용하면 데이터 누락 가능성 있음</p>
+<h2>Stored Function</h2>
+<h3>MySQL Function 종류</h3>
+<ol>
+<li>Built-in Function</li>
+<li>User Defined Function</li>
+<li>Stored Function</li>
+</ol>
+<h3>Stored Function 특징</h3>
+<h4>Deterministic Function</h4>
+<ul>
+<li>동일한 인자에 대해 항상 동일한 결과 반환</li>
+<li>Primary key 읽을 때 const 타입으로 처리</li>
+<li>실행계획에서 재수행되지 않아 성능이 좋음</li>
+</ul>
+<h4>Not Deterministic Function</h4>
+<ul>
+<li>동일한 인자에 대해 결과가 다를 수 있음</li>
+<li>Primary key 읽을 때 All 타입으로 처리</li>
+<li>Index를 사용하지 못하고 Full Scan 발생</li>
+<li>대표적인 예: RAND(), NOW(), UUID(), SYSDATE()
+<ul>
+<li>NOW()는 하나의 Statement 내에서는 Deterministic처럼 동작</li>
+</ul>
+</li>
+</ul>
+<h3>주의사항</h3>
+<ul>
+<li>기본값은 NOT DETERMINISTIC</li>
+<li>DEFINER: Stored Function 소유자 지정 옵션</li>
+<li>SQL Security: 실행 권한 지정 (INVOKER 권장)</li>
+</ul>
+<h2>Lateral Derived Table</h2>
+<p>LATERAL은 FROM 절에서 파생 테이블이나 테이블 함수가 이전 항목을 참조할 수 있게 하는 기능입니다.</p>
+<h2>SELECT .. FOR UPDATE</h2>
+<p><a href="https://hudi.blog/mysql-8.0-shared-lock-and-exclusive-lock/" target="_blank" rel="nofollow">공유 락(Shared Lock)과 배타 락(Exclusive Lock)</a></p>
+<h3>특징</h3>
+<ul>
+<li>격리 수준과 무관하게 최신 커밋 데이터 조회</li>
+<li>Exclusive Lock 사용</li>
+<li>원격 시스템 처리 시 트랜잭션이 길어질 수 있음</li>
+</ul>
+<h3>권장사항</h3>
+<ul>
+<li>WHERE 조건을 최대한 구체적으로 사용</li>
+<li>트랜잭션 시간 최소화</li>
+</ul>
+<h2>SELECT .. FOR SHARE</h2>
+<h3>사용 예시</h3>
+<p>부모-자식 테이블 관계에서 데이터 정합성 유지:</p>
+<div class="gatsby-highlight" data-language="sql"><pre class="language-sql"><code class="language-sql"><span class="token keyword">BEGIN</span><span class="token punctuation">;</span>
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> article <span class="token keyword">WHERE</span> id <span class="token operator">=</span> <span class="token number">1</span> <span class="token keyword">FOR</span> <span class="token keyword">SHARE</span><span class="token punctuation">;</span>
+
+<span class="token keyword">IF</span> <span class="token punctuation">(</span>article<span class="token punctuation">.</span>canAddComment<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> {
+   <span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> <span class="token keyword">comment</span> <span class="token punctuation">(</span>article_id<span class="token punctuation">,</span> content<span class="token punctuation">)</span> <span class="token keyword">VALUES</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">'comment'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token keyword">COMMIT</span><span class="token punctuation">;</span>
+} <span class="token keyword">ELSE</span> {
+    <span class="token keyword">ROLLBACK</span><span class="token punctuation">;</span>
+}</code></pre></div>
+<h3>주의사항</h3>
+<ul>
+<li>Article 수정이 필요한 경우 처음부터 FOR UPDATE 사용 권장</li>
+<li>FOR SHARE에서 FOR UPDATE로의 잠금 업그레이드는 데드락 위험</li>
+</ul>
+<h2>JPA Optimistic Lock VS Pessimistic Lock</h2>
+<h3>락 유형 비교</h3>
+<p><strong>Optimistic Locking</strong>:</p>
+<ul>
+<li>데이터 변경 시점에 잠금</li>
+<li>Application Level에서 구현 필요</li>
+<li>충돌이 적은 경우에 적합</li>
+</ul>
+<p><strong>Pessimistic Locking</strong>:</p>
+<ul>
+<li>데이터 조회 시점에 잠금</li>
+<li>MySQL 서버에서 직접 지원</li>
+<li>충돌이 많은 경우에 적합</li>
+</ul>
+<blockquote>
+<p><a href="https://seongwon.dev/Spring-MVC/20230430-%EB%B9%84%EA%B4%80%EC%A0%81%EB%9D%BD%EA%B3%BC_%EB%82%99%EA%B4%80%EC%A0%81%EB%9D%BD/" target="_blank" rel="nofollow">자세한 내용 참고</a></p>
+</blockquote>
+<h2>Generated Column</h2>
+<h3>유형과 특징</h3>
+<h4>1. Virtual Column</h4>
+<ul>
+<li>실시간 계산된 값 반환</li>
+<li>디스크에 저장하지 않음</li>
+<li>레코드 읽기 전 또는 BEFORE 트리거 실행 직후 계산</li>
+</ul>
+<div class="gatsby-highlight" data-language="sql"><pre class="language-sql"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> t1 <span class="token punctuation">(</span>
+    a <span class="token keyword">INT</span><span class="token punctuation">,</span>
+    b <span class="token keyword">INT</span><span class="token punctuation">,</span>
+    c <span class="token keyword">INT</span> <span class="token keyword">AS</span> <span class="token punctuation">(</span>a <span class="token operator">+</span> b<span class="token punctuation">)</span> VIRTUAL
+<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div>
+<p>특징:</p>
+<ul>
+<li>인덱스 생성 가능 (인덱스는 디스크에 저장)</li>
+<li>일반 칼럼과의 상호 변환 불가</li>
+</ul>
+<h4>2. Stored Column</h4>
+<ul>
+<li>계산된 값을 실제로 저장</li>
+<li>삽입/갱신 시 계산하여 저장</li>
+<li>인덱스 생성 가능</li>
+</ul>
+<div class="gatsby-highlight" data-language="sql"><pre class="language-sql"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> t1 <span class="token punctuation">(</span>
+    a <span class="token keyword">INT</span><span class="token punctuation">,</span>
+    b <span class="token keyword">INT</span><span class="token punctuation">,</span>
+    c <span class="token keyword">INT</span> <span class="token keyword">AS</span> <span class="token punctuation">(</span>a <span class="token operator">+</span> b<span class="token punctuation">)</span> STORED
+<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div>
+<p>특징:</p>
+<ul>
+<li>일반 칼럼과 상호 변환 가능</li>
+</ul>
+<h2>함수 기반 인덱스</h2>
+<p>함수나 표현식의 결과값을 인덱스로 생성하는 방식</p>
+<h3>활용 사례</h3>
+<h4>1. 문자열 처리</h4>
+<div class="gatsby-highlight" data-language="sql"><pre class="language-sql"><code class="language-sql"><span class="token comment">-- 대소문자 구분 없는 검색</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">INDEX</span> idx_name <span class="token keyword">ON</span> table_name <span class="token punctuation">(</span>LOWER<span class="token punctuation">(</span>column_name<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">-- 이메일 도메인 검색</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">INDEX</span> idx_email <span class="token keyword">ON</span> <span class="token keyword">user</span> <span class="token punctuation">(</span>SUBSTRING<span class="token punctuation">(</span>email<span class="token punctuation">,</span> <span class="token string">'@'</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div>
+<h4>2. 날짜 처리</h4>
+<div class="gatsby-highlight" data-language="sql"><pre class="language-sql"><code class="language-sql"><span class="token comment">-- 월별/연도별 검색 최적화</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">INDEX</span> idx_month <span class="token keyword">ON</span> <span class="token keyword">table</span> <span class="token punctuation">(</span><span class="token keyword">MONTH</span><span class="token punctuation">(</span><span class="token keyword">date</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">INDEX</span> idx_year <span class="token keyword">ON</span> <span class="token keyword">table</span> <span class="token punctuation">(</span><span class="token keyword">YEAR</span><span class="token punctuation">(</span><span class="token keyword">date</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div>
+<h4>3. 해시값 검색</h4>
+<div class="gatsby-highlight" data-language="sql"><pre class="language-sql"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">INDEX</span> idx_hash <span class="token keyword">ON</span> <span class="token keyword">table</span> <span class="token punctuation">(</span>MD5<span class="token punctuation">(</span><span class="token keyword">column</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div>
+<h3>주의사항</h3>
+<ol>
+<li>실행 계획 확인 필수</li>
+<li>데이터 타입 명확히 지정
+<div class="gatsby-highlight" data-language="sql"><pre class="language-sql"><code class="language-sql"><span class="token comment">-- double 타입 예시</span>
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> <span class="token keyword">table</span> <span class="token keyword">WHERE</span> <span class="token punctuation">(</span>col1 <span class="token operator">+</span> col2<span class="token punctuation">)</span> <span class="token operator">&lt;</span> CAST<span class="token punctuation">(</span><span class="token number">1000</span> <span class="token keyword">AS</span> <span class="token keyword">DOUBLE</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div>
+</li>
+<li>표현식 결과 타입 확인 방법:
+<div class="gatsby-highlight" data-language="sql"><pre class="language-sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token keyword">MONTH</span><span class="token punctuation">(</span><span class="token string">'2024-01-01'</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> EXPR_RESULT<span class="token punctuation">;</span></code></pre></div>
+</li>
+</ol>
+<h3>제한사항</h3>
+<ul>
+<li>일반 인덱스보다 추가 계산 비용 발생</li>
+<li>Non-Deterministic Function 사용 불가</li>
+<li>공간/전문검색 인덱스 미지원</li>
+<li>Primary Key에 표현식 포함 불가</li>
+</ul>
+<h2>에러 핸들링</h2>
+<h3>에러 유형</h3>
+<ol>
+<li>Global Error (1-999)</li>
+<li>Server Error (1000-1999, 3000+)</li>
+<li>Client Error (2000-2999)</li>
+</ol>
+<h3>MySQL 에러 구성요소</h3>
+<h4>1. Error No</h4>
+<ul>
+<li>Global Error: 1-999</li>
+<li>Server Error: 1000-1999, 3000+</li>
+<li>Client Error: 2000-2999</li>
+</ul>
+<h4>2. SQLState</h4>
+<p>5자리 문자열 구조:</p>
+<ul>
+<li>00: 성공</li>
+<li>01: 경고</li>
+<li>02: No Data</li>
+<li>HY: 벤더 의존적 상태값</li>
+<li>기타: 에러</li>
+</ul>
+<h4>3. Error Message</h4>
+<ul>
+<li>사람이 읽을 수 있는 형태</li>
+<li>버전별로 변경될 수 있어 에러 처리에 사용 지양</li>
+</ul>
+<h3>에러 처리 권장사항</h3>
+<ul>
+<li>SQLState 기반 처리 권장 (ANSI SQL 표준)</li>
+<li>HY 상태값은 ErrorNo와 함께 사용</li>
+<li>Error Message 기반 처리 지양</li>
+</ul>
+<h2>LEFT JOIN 주의사항 &#x26; 튜닝</h2>
+<h3>예시 데이터</h3>
+<table>
+<thead>
+<tr>
+<th>테이블명</th>
+<th>전체 데이터</th>
+<th>상세</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>user</td>
+<td>30,000 rows</td>
+<td>-</td>
+</tr>
+<tr>
+<td>user_coupon</td>
+<td>100,000 rows</td>
+<td>coupon_id=1: 1,000</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>coupon_id=2: 1,000</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>coupon_id=3: 1,000</td>
+</tr>
+</tbody>
+</table>
+<h3>JOIN 동작 방식 비교</h3>
+<h4>데이터 연결</h4>
+<div class="gatsby-highlight" data-language="sql"><pre class="language-sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span>
+<span class="token keyword">FROM</span> <span class="token keyword">user</span> u
+<span class="token keyword">LEFT</span> <span class="token keyword">JOIN</span> user_coupon uc 
+    <span class="token keyword">ON</span> u<span class="token punctuation">.</span>id <span class="token operator">=</span> uc<span class="token punctuation">.</span>user_id 
+    <span class="token operator">AND</span> uc<span class="token punctuation">.</span>coupon_id <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span></code></pre></div>
+<ul>
+<li>결과: 30,000 rows (0.04 sec)</li>
+<li>역할: 데이터 연결</li>
+</ul>
+<h4>데이터 필터링</h4>
+<div class="gatsby-highlight" data-language="sql"><pre class="language-sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span>
+<span class="token keyword">FROM</span> <span class="token keyword">user</span> u
+<span class="token keyword">LEFT</span> <span class="token keyword">JOIN</span> user_coupon uc 
+    <span class="token keyword">ON</span> u<span class="token punctuation">.</span>id <span class="token operator">=</span> uc<span class="token punctuation">.</span>user_id
+<span class="token keyword">WHERE</span> uc<span class="token punctuation">.</span>coupon_id <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span></code></pre></div>
+<ul>
+<li>결과: 1,000 rows (0.00 sec)</li>
+<li>역할: 데이터 필터링</li>
+<li>특징: INNER JOIN과 동일한 효과</li>
+</ul>
+<h3>실행 계획 특징</h3>
+<p><strong>LEFT JOIN</strong>:</p>
+<ul>
+<li>FROM 테이블 먼저 full scan</li>
+<li>이후 참조 데이터 검색</li>
+</ul>
+<p><strong>INNER JOIN</strong>:</p>
+<ul>
+<li>Optimizer가 참조 테이블 먼저 검색</li>
+<li>필터링 후 데이터 연결</li>
+</ul>
+<h3>최적화 팁</h3>
+<ul>
+<li>COUNT(*) 쿼리에서 불필요한 JOIN 제거</li>
+<li>JOIN 조건은 ON절에 명시 (IS NULL 조건 제외)</li>
+<li>LEFT JOIN과 INNER JOIN의 특성을 고려하여 선택</li>
+</ul>
+<h2>Prepared Statement</h2>
+<h3>기본 사용법</h3>
+<div class="gatsby-highlight" data-language="java"><pre class="language-java"><code class="language-java">pstmt <span class="token operator">=</span> connection<span class="token punctuation">.</span><span class="token function">prepareStatement</span><span class="token punctuation">(</span><span class="token string">"SELECT * FROM matt WHERE id=?"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+pstmt<span class="token punctuation">.</span><span class="token function">setInt</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1234</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+rs <span class="token operator">=</span> pstmt<span class="token punctuation">.</span><span class="token function">executeQuery</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div>
+<h3>장단점</h3>
+<h4>장점</h4>
+<ul>
+<li>SQL Injection 방지</li>
+<li>쿼리 파싱 비용 감소</li>
+</ul>
+<h4>단점</h4>
+<ul>
+<li>메모리 사용량 증가</li>
+<li>MySQL에서는 Parse Tree만 캐시 (실행 계획 제외)</li>
+<li>Connection 단위 캐시</li>
+</ul>
+<h3>캐시 방식</h3>
+<ol>
+<li>Client Side PreparedStatement</li>
+<li>Server Side PreparedStatement</li>
+</ol>
+<blockquote>
+<p><a href="https://stackoverflow.com/questions/32286518/whats-the-difference-between-cacheprepstmts-and-useserverprepstmts-in-mysql-jdb" target="_blank" rel="nofollow">상세 비교 참조</a></p>
+</blockquote>
+<h3>Server Side 사용 시 고려사항</h3>
+<p>메모리 사용량 예시:</p>
+<ul>
+<li>전체 커넥션: 5,000개</li>
+<li>필요 쿼리 패턴: 100개</li>
+<li>필요 PS 객체: 500,000개</li>
+<li>기본 max_prepared_stmt_count: 16,382</li>
+</ul>
+<h3>사용 권장사항</h3>
+<ol>
+<li>
+<p>쿼리 복잡도에 따른 선택:</p>
+<ul>
+<li>단순 쿼리: PreparedStatement 미사용 권장</li>
+<li>복잡한 쿼리: PreparedStatement 사용 권장</li>
+</ul>
+</li>
+<li>
+<p>리소스 고려:</p>
+<ul>
+<li>AWS RDS 환경(db.t3.medium, db.r5.large)에서는 메모리가 제한적</li>
+<li>CPU vs 메모리 사용량 균형 필요</li>
+</ul>
+</li>
+</ol>
+<h3>주의사항</h3>
+<ul>
+<li>Server-side PreparedStatement의 부작용 주의</li>
+<li>ORM 애플리케이션의 단순 쿼리 특성 고려</li>
+<li>성능 향상이 제한적일 수 있음</li>
+<li>max_prepared_stmt_count 부족 시 효과 감소</li>
+</ul>
+<h2>SQL 문장의 가독성 향상</h2>
+<h3>1. DISTINCT 사용법</h3>
+<div class="gatsby-highlight" data-language="sql"><pre class="language-sql"><code class="language-sql"><span class="token comment">/* 지양할 형태 */</span>
+<span class="token keyword">SELECT</span> <span class="token keyword">DISTINCT</span> <span class="token punctuation">(</span><span class="token keyword">column</span><span class="token punctuation">)</span> <span class="token keyword">FROM</span> <span class="token keyword">table</span><span class="token punctuation">;</span>
+
+<span class="token comment">/* 권장 형태 */</span>
+<span class="token keyword">SELECT</span> <span class="token keyword">DISTINCT</span> <span class="token keyword">column</span> <span class="token keyword">FROM</span> <span class="token keyword">table</span><span class="token punctuation">;</span></code></pre></div>
+<h3>2. LEFT JOIN 작성 규칙</h3>
+<ul>
+<li>조인 대상 테이블 조건은 ON절에 명시</li>
+<li>WHERE절 사용 시 INNER JOIN과 동일 효과</li>
+<li>불필요한 LEFT JOIN 제거 (단순 SELECT/COUNT 등)</li>
+</ul>
+<h3>3. ORDER BY와 LIMIT</h3>
+<ul>
+<li>ORDER BY 없는 LIMIT 사용 지양</li>
+<li>페이지네이션 시 반드시 ORDER BY 포함</li>
+</ul>
+<h3>4. FULL Group By 형식</h3>
+<div class="gatsby-highlight" data-language="sql"><pre class="language-sql"><code class="language-sql"><span class="token comment">/* 지양할 형태 */</span>
+<span class="token keyword">SELECT</span> column1<span class="token punctuation">,</span> column2 
+<span class="token keyword">FROM</span> <span class="token keyword">table</span> 
+<span class="token keyword">GROUP</span> <span class="token keyword">BY</span> column1<span class="token punctuation">;</span>
+
+<span class="token comment">/* 권장 형태 */</span>
+<span class="token keyword">SELECT</span> column1<span class="token punctuation">,</span> <span class="token function">SUM</span><span class="token punctuation">(</span>column2<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> 
+<span class="token keyword">FROM</span> <span class="token keyword">table</span> 
+<span class="token keyword">GROUP</span> <span class="token keyword">BY</span> column1<span class="token punctuation">;</span></code></pre></div>
+<h3>5. 논리 연산자 사용</h3>
+<ul>
+<li>AND/OR 조건 혼용 시 괄호 필수</li>
+</ul>
+<h3>6. COUNT 사용법</h3>
+<div class="gatsby-highlight" data-language="sql"><pre class="language-sql"><code class="language-sql"><span class="token comment">/* 지양할 형태 */</span>
+<span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">SUM</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">COUNT</span><span class="token punctuation">(</span>pk_col<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">COUNT</span><span class="token punctuation">(</span>not_null_col<span class="token punctuation">)</span>
+
+<span class="token comment">/* 권장 형태 */</span>
+<span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span></code></pre></div></div></div><style data-emotion="css 116wdba">.css-116wdba{opacity:0;visibility:hidden;display:none;}</style><nav class="css-116wdba etse75s4"><style data-emotion="css 1ayvp3u">.css-1ayvp3u{font-size:1rem;margin-bottom:0.75rem;color:#2d3748;font-weight:600;padding:0.5rem 1rem;}</style><h2 class="css-1ayvp3u etse75s3">목차</h2><style data-emotion="css 1ojlqnt">.css-1ojlqnt{list-style:none;margin:0;overflow-y:auto;max-height:calc(400px - 4rem);border-top:1px solid #e2e8f0;padding-left:1rem;padding-right:1rem;}</style><ul class="css-1ojlqnt etse75s2"></ul></nav></div><style data-emotion="css hx9xpc">@media (max-width: 768px){.css-hx9xpc{padding:0 20px;}}</style><div class="css-hx9xpc e1gqsjds0"></div></main><style data-emotion="css 9w9jmx">.css-9w9jmx{display:grid;place-items:center;margin-top:auto;padding:50px 0;font-size:15px;text-align:center;line-height:1.5;}@media (max-width: 768px){.css-9w9jmx{font-size:13px;}}</style><footer class="css-9w9jmx evi8j960">Thank You for Visiting My Blog, Have a Good Day 😆<br/>© 2025 Developer Jung, Powered By Gatsby.</footer></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/lecture/Real-Mysql/";/*]]>*/</script><!-- slice-start id="_gatsby-scripts-1" -->
+          <script
+            id="gatsby-chunk-mapping"
+          >
+            window.___chunkMapping="{\"app\":[\"/app-d15ac3e53f49f32106ed.js\"],\"component---src-pages-404-tsx\":[\"/component---src-pages-404-tsx-36db6f73a4f925d8624b.js\"],\"component---src-pages-index-tsx\":[\"/component---src-pages-index-tsx-8f9e739c16d1deaf3fb1.js\"],\"component---src-templates-post-template-tsx\":[\"/component---src-templates-post-template-tsx-08fc1cf45523101ace6f.js\"]}";
+          </script>
+        <script>window.___webpackCompilationHash="77b7e4faec04b2582ef2";</script><script src="/webpack-runtime-411c27bee340e9109536.js" async></script><script src="/framework-9d608f77b5c9a88afabd.js" async></script><script src="/app-d15ac3e53f49f32106ed.js" async></script><!-- slice-end id="_gatsby-scripts-1" --></body></html>
