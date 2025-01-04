@@ -50,6 +50,7 @@ export const getPostList = graphql`
           fields {
             slug
             category
+            shouldShow
           }
           frontmatter {
             title

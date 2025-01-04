@@ -2761,7 +2761,7 @@ type GatsbyImageSharpFluidLimitPresentationSizeFragment = { readonly maxHeight: 
 type IndexPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-type IndexPageQuery = { readonly site: { readonly siteMetadata: { readonly title: string | null, readonly description: string | null, readonly siteUrl: string | null } | null } | null, readonly allMarkdownRemark: { readonly edges: ReadonlyArray<{ readonly node: { readonly id: string, readonly fields: { readonly slug: string | null, readonly category: string | null } | null, readonly frontmatter: { readonly title: string | null, readonly summary: string | null, readonly date: string | null, readonly draft: boolean | null, readonly thumbnail: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null } }> } };
+type IndexPageQuery = { readonly site: { readonly siteMetadata: { readonly title: string | null, readonly description: string | null, readonly siteUrl: string | null } | null } | null, readonly allMarkdownRemark: { readonly edges: ReadonlyArray<{ readonly node: { readonly id: string, readonly fields: { readonly slug: string | null, readonly category: string | null, readonly shouldShow: boolean | null } | null, readonly frontmatter: { readonly title: string | null, readonly summary: string | null, readonly date: string | null, readonly draft: boolean | null, readonly thumbnail: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null } }> } };
 
 type IntroductionDataQueryVariables = Exact<{ [key: string]: never; }>;
 
